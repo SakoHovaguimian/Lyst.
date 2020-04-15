@@ -227,6 +227,7 @@ class HomeViewController: UIViewController {
         self.updateButtonState()
         self.homeViewModel.handleSettingsButtonTapped(sender)
         self.updateUIForSettingsButton(shouldHide: self.homeViewModel.shouldHideTableView)
+        
     }
     
 
