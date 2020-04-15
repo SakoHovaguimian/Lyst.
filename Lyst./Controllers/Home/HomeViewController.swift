@@ -13,7 +13,7 @@ class HomeViewController: UIViewController {
     
     //MARK:- Properties
     
-    private var homeViewModel: HomeViewModel!
+    private(set) var homeViewModel: HomeViewModel!
     
     //MARK:- Views
     
@@ -80,7 +80,18 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.configureViews()
+        if !self.homeViewModel.presentLoginController() {
+            self.configureViews()
+        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if !self.homeViewModel.presentLoginController() {
+            self.configureViews()
+        }
         
     }
     
@@ -108,7 +119,7 @@ class HomeViewController: UIViewController {
         vw.anchor(left: self.view.leftAnchor,
                   bottom: self.view.bottomAnchor,
                   right: self.view.rightAnchor,
-                  height: self.view.frame.height / 6)
+                  height: self.view.frame.height / 8.6)
         
     }
     
@@ -180,6 +191,7 @@ class HomeViewController: UIViewController {
         
         UIView.animate(withDuration: 0.3) {
             self.settingsStackView.alpha = shouldHide ? 1.0 : 0.0
+            self.settingsStackView.transform = shouldHide ? .identity : CGAffineTransform(translationX: 0, y: self.view.frame.height)
             self.homeTableView.alpha = shouldHide ? 0.0  : 1.0
         }
         
@@ -206,6 +218,7 @@ class HomeViewController: UIViewController {
             button.setDimmensions(height: 60, width: self.view.frame.width - 64)
             
             self.settingsStackView.addArrangedSubview(button)
+            self.settingsStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
             
         }
         
@@ -253,6 +266,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let vw = self.homeTableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as! TableHeaderView
+        vw.configure(user: testUser)
         return vw
     }
     

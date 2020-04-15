@@ -9,11 +9,21 @@
 import UIKit
 import Animo
 
+protocol PresentLoginViewControllerDelegate: class {
+    func presentLoginVC()
+}
+
 class HomeViewModel {
     
-    private(set) var name: String = "Sako Hovaguimian"
+    weak var loginDelegate: PresentLoginViewControllerDelegate!
+    
+    private(set) var user: User? = nil
     
     public var shouldHideTableView: Bool = false
+    
+    public func updateUser(withUser user: User) {
+        self.user = user
+    }
     
     public func handleAddButtonTapped(_ sender: UIButton) {
         //Delegate to present modally Coordinator
@@ -27,6 +37,16 @@ class HomeViewModel {
     public func handleSettingsButtonTapped(_ sender: UIButton) {
         self.shouldHideTableView = true
         sender.tintColor = .charcoalBlack
+    }
+    
+    public func presentLoginController() -> Bool {
+        
+        guard self.user == nil else { return false }
+        
+        logDebugMessage("Load Login Controller")
+        self.loginDelegate.presentLoginVC()
+        return true
+        
     }
     
 }

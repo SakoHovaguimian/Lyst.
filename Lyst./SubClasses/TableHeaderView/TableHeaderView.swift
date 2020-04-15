@@ -12,11 +12,10 @@ class TableHeaderView: UITableViewHeaderFooterView {
     
     static let identifier = "TableHeaderView"
 
-//    var user: User? {
-//        didSet {
-//            self.configure(user: self.user!)
-//        }
-//    }
+    private(set) var user: User!
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var listCountLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,10 +26,13 @@ class TableHeaderView: UITableViewHeaderFooterView {
        super.init(coder: aDecoder)
     }
     
-//    private func configure(user: User) {
-//
-//
-//
-//    }
+    public func configure(user: User) {
+        
+        self.user = user
+        
+        self.nameLabel.text = "Hi, \(self.user.firstName)"
+        self.listCountLabel.text = "You have 4 lysts"
+        
+    }
 
 }

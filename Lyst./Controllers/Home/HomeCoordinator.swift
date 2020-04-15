@@ -22,12 +22,51 @@ class HomeCoordinator: Coordinator {
     func start() {
         
         let viewModel = HomeViewModel()
+        viewModel.loginDelegate = self
+        
         let homeVC = HomeViewController(viewModel: viewModel)
             
         self.navigationController.modalPresentationStyle = .fullScreen
         self.navigationController.navigationBar.isHidden = true
         self.navigationController.pushViewController(homeVC, animated: false)
         
+    }
+    
+    private func presentLoginCoordinator() {
+        
+        let nc = UINavigationController()
+        
+        let loginCoord = LoginCoordinator(navigationController: nc)
+        loginCoord.userCreatedDelegate = self
+        
+        loginCoord.start()
+        
+        self.navigationController.present(nc, animated: true, completion: nil)
+        
+        self.childCoordinators.append(loginCoord)
+        
+    }
+    
+}
+
+extension HomeCoordinator: UserCreatedDelegate {
+    
+    func userCreated(user: User) {
+        
+        if let homeVC = self.navigationController.viewControllers.first as? HomeViewController {
+            homeVC.homeViewModel.updateUser(withUser: user)
+            self.childCoordinators.removeLast()
+        }
+        
+    }
+    
+}
+
+extension HomeCoordinator: PresentLoginViewControllerDelegate {
+    
+    func presentLoginVC() {
+        logDebugMessage("Coordinator is attemplting to log")
+        self.presentLoginCoordinator()
     }
     
 }
