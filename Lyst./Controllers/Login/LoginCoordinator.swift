@@ -31,7 +31,7 @@ class LoginCoordinator: Coordinator {
         viewModel.dismissLoginDelegate = self
         
         let loginVC = LoginViewController(viewModel: viewModel)
-            
+        
         self.navigationController.modalPresentationStyle = .fullScreen
         self.navigationController.navigationBar.isHidden = true
         self.navigationController.pushViewController(loginVC, animated: false)

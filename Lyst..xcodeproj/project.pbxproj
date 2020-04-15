@@ -12,6 +12,8 @@
 		3D42A3032446A3D400415B50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D42A3012446A3D400415B50 /* Main.storyboard */; };
 		3D42A3052446A3D500415B50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D42A3042446A3D500415B50 /* Assets.xcassets */; };
 		3D42A3082446A3D500415B50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D42A3062446A3D500415B50 /* LaunchScreen.storyboard */; };
+		3D5F731E2447BBA2003BCF16 /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731D2447BBA2003BCF16 /* InputTextField.swift */; };
+		3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731F2447BD06003BCF16 /* UIView+ext.swift */; };
 		3DB753342446A47C00CC183C /* Animo in Frameworks */ = {isa = PBXBuildFile; productRef = 3DB753332446A47C00CC183C /* Animo */; };
 		3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753352446A49E00CC183C /* MainCoordinator.swift */; };
 		3DB7533A2446A4E100CC183C /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753392446A4E100CC183C /* HomeCoordinator.swift */; };
@@ -38,6 +40,8 @@
 		3D42A3042446A3D500415B50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D42A3072446A3D500415B50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D42A3092446A3D500415B50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D5F731D2447BBA2003BCF16 /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
+		3D5F731F2447BD06003BCF16 /* UIView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
 		3DB753352446A49E00CC183C /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		3DB753392446A4E100CC183C /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		3DB7533D2446B04900CC183C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				3DC71365244760840062303C /* UIColor+ext.swift */,
+				3D5F731F2447BD06003BCF16 /* UIView+ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				3DB753412447434A00CC183C /* TableHeaderView */,
+				3D5F731D2447BBA2003BCF16 /* InputTextField.swift */,
 			);
 			path = SubClasses;
 			sourceTree = "<group>";
@@ -278,7 +284,9 @@
 				3DB753402446B07300CC183C /* HomeViewModel.swift in Sources */,
 				3DDB3C9F2447919700DB770E /* LoginCoordinator.swift in Sources */,
 				3D42A2FC2446A3D400415B50 /* AppDelegate.swift in Sources */,
+				3D5F731E2447BBA2003BCF16 /* InputTextField.swift in Sources */,
 				3DDB3C96244781DD00DB770E /* Constants.swift in Sources */,
+				3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */,
 				3DB7533A2446A4E100CC183C /* HomeCoordinator.swift in Sources */,
 				3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */,
 				3DDB3C9A244787F100DB770E /* User.swift in Sources */,

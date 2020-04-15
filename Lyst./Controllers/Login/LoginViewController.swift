@@ -11,9 +11,15 @@ import Animo
 
 class LoginViewController: UIViewController {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     //MARK:- Properties
     
     private var loginViewModel: LoginViewModel!
+    
+    //MARK:- Views
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -24,15 +30,19 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    private lazy var emailTextField: UITextField = {
-        self.configureTextField(isSecure: false)
+    private lazy var submitButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Login", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: avenirNextBold, size: 20.0)
+        btn.addTarget(self,
+                      action: #selector(self.submitButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
     }()
     
-    private lazy var passwordTextField: UITextField = {
-        self.configureTextField(isSecure: true)
-    }()
-    
-    //MARK:- Views
+    private lazy var emailTextField = InputTextField(secureEntry: false)
+    private lazy var passwordTextField = InputTextField(secureEntry: true)
     
     //MARK:- Life Cycle
     
@@ -50,6 +60,12 @@ class LoginViewController: UIViewController {
         self.view.backgroundColor = .white
         
         self.configureViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     //MARK:- Helper Functions
@@ -73,6 +89,8 @@ class LoginViewController: UIViewController {
         //Email TextField
         self.view.addSubview(self.emailTextField)
         
+        self.emailTextField.delegate = self
+        
         self.emailTextField.centerY(inView: self.view, constant: -50)
         self.emailTextField.anchor(left: self.view.leftAnchor,
                                    right: self.view.rightAnchor,
@@ -83,6 +101,8 @@ class LoginViewController: UIViewController {
         //Password TextField
         self.view.addSubview(self.passwordTextField)
         
+        self.passwordTextField.delegate = self
+        
         self.passwordTextField.anchor(top: self.emailTextField.bottomAnchor,
                                    left: self.view.leftAnchor,
                                    right: self.view.rightAnchor,
@@ -91,30 +111,45 @@ class LoginViewController: UIViewController {
                                    paddingRight: 32,
                                    height: 50)
         
+        //Submit Button
+        self.view.addSubview(self.submitButton)
+        
+        self.submitButton.anchor(top: self.passwordTextField.bottomAnchor,
+                                 left: self.view.leftAnchor,
+                                 right: self.view.rightAnchor,
+                                 paddingTop: 64,
+                                 paddingLeft: 32,
+                                 paddingRight: 32,
+                                 height: 60)
+        
+        let frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 64, height: 60)
+        self.submitButton.applyGradient(colors: [.skyBlue, .systemBlue], frame: frame)
+        
+        self.submitButton.roundCorners(.allCorners, radius: 11)
+        
     }
     
-    private func configureTextField(isSecure: Bool) -> UITextField {
-        
-        let tf = UITextField()
-        tf.autocapitalizationType = .none
-        tf.delegate = self
-        tf.backgroundColor = .lighterGray
-        tf.textColor = .charcoalBlack
-        tf.isSecureTextEntry = isSecure
-        tf.font = UIFont(name: avenirNextBold, size: 15.0)
-        tf.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 50))
-        tf.leftViewMode = .always
-        tf.addShadow(shadow: .black,
-                     opacity: 0.5, offSet: .zero, raidus: 1.0)
-        tf.attributedPlaceholder = NSAttributedString(string: isSecure ? "Password" : "Email",
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        return tf
-        
+    //MARK:- OBJC Functions
+    @objc private func submitButtonTapped(_ sender: UIButton) {
+        self.loginViewModel.handleCloseButtonTapped(sender)
     }
     
 }
 
+//MARK:- Extensions
+
+//MARK:- Textfield Delegates
 extension LoginViewController: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        
+        if textField == self.emailTextField {
+            self.loginViewModel.email = textField.text ?? ""
+        } else {
+            self.loginViewModel.password = textField.text ?? ""
+        }
+        
+    }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         

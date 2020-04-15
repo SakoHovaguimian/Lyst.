@@ -31,6 +31,8 @@ class TableHeaderView: UITableViewHeaderFooterView {
         self.user = user
         
         self.nameLabel.text = "Hi, \(self.user.firstName)"
+        self.nameLabel.textColor = .charcoalBlack
+        
         self.listCountLabel.text = "You have 4 lysts"
         
     }

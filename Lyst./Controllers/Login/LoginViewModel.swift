@@ -19,7 +19,7 @@ class LoginViewModel {
     
     private(set) var user: User? = nil
     
-    public var username: String = ""
+    public var email: String = ""
     public var password: String = ""
     
     public func updateUser(withUser user: User) {

@@ -11,6 +11,10 @@ import Animo
 
 class HomeViewController: UIViewController {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     //MARK:- Properties
     
     private(set) var homeViewModel: HomeViewModel!
@@ -88,7 +92,9 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
+        setNeedsStatusBarAppearanceUpdate()
+        
         guard self.homeViewModel.user != nil else { return }
         self.configureViews()
         
