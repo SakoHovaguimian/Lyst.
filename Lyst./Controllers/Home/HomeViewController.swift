@@ -89,9 +89,8 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        if !self.homeViewModel.presentLoginController() {
-            self.configureViews()
-        }
+        guard self.homeViewModel.user != nil else { return }
+        self.configureViews()
         
     }
     
@@ -199,6 +198,8 @@ class HomeViewController: UIViewController {
     
     private func configureSettingsStackView() {
         
+        guard self.settingsStackView.arrangedSubviews.count == 0 else { return }
+        
         self.view.addSubview(self.settingsStackView)
         
         self.settingsStackView.anchor(left: self.view.leftAnchor,
@@ -278,5 +279,4 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return self.view.frame.height / 4
     }
 
-    
 }

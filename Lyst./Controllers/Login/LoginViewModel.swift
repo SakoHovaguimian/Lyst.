@@ -19,6 +19,9 @@ class LoginViewModel {
     
     private(set) var user: User? = nil
     
+    public var username: String = ""
+    public var password: String = ""
+    
     public func updateUser(withUser user: User) {
         self.user = user
     }
@@ -28,7 +31,7 @@ class LoginViewModel {
     }
     
     public func handleLinkUpButtonTapped(_ sender: UIButton) {
-
+        
     }
     
     public func handleCloseButtonTapped(_ sender: UIButton) {
