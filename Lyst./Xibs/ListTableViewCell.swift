@@ -37,8 +37,15 @@ class ListTableViewCell: UITableViewCell {
         self.gradientView.clipsToBounds = true
         self.gradientView.layer.cornerRadius = 23
         
-        self.gradientView.simpleGradient(colors: [.systemBlue, .blue])
-        self.gradientImageView.image = UIImage(systemName: "plus")
+        self.gradientView.simpleGradient(colors: graidentColors.randomElement()!)
+        
+        self.gradientImageView.tintColor = .white
+        
+        let category = Category.shopping
+        
+        self.gradientImageView.image = UIImage(named: category.imageName)?.withRenderingMode(.alwaysTemplate)
+        
+        self.listNameLabel.text = category.name
         
     }
     
