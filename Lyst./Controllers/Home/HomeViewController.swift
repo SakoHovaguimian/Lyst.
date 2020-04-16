@@ -142,11 +142,7 @@ class HomeViewController: UIViewController {
         self.configureButtons()
         self.configureSettingsStackView()
         
-        self.homeViewModel.shouldHideTableView = false
-        self.animateUISettingsButton()
-        self.updateButtonState()
-        
-        self.listsButton.tintColor = .charcoalBlack
+        self.toggleSettingMenu(hide: true)
         
     }
     
@@ -263,6 +259,15 @@ class HomeViewController: UIViewController {
         
     }
     
+    private func toggleSettingMenu(hide: Bool) {
+        
+        self.homeViewModel.shouldHideTableView = !hide
+        self.animateUISettingsButton()
+        self.updateButtonState()
+        self.listsButton.tintColor = .charcoalBlack
+        
+    }
+    
     private func createSettingsButton(text: String) -> UIButton {
         
         let button = UIButton(type: .system)
@@ -311,8 +316,7 @@ class HomeViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
          let touch = touches.first
          if touch?.view != self.settingsStackView {
-            self.homeViewModel.shouldHideTableView = false
-            self.animateUISettingsButton()
+            self.toggleSettingMenu(hide: true)
             print("TAPPED REGION")
         }
     }
