@@ -24,3 +24,6 @@ let graidentColors: [[UIColor]] = [
 let testUser: User = User(name: "Mitch", email: "sako@sako.com", listId: "1234")
 
 let avenirNextBold = "AvenirNextCondensed-Bold"
+let avenirNextRegular = "AvenirNextCondensed-Regular"
+let avenirNextMedium = "AvenirNextCondensed-Medium"
+

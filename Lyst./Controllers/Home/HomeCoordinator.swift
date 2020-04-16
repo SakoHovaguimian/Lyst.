@@ -32,7 +32,7 @@ class HomeCoordinator: Coordinator {
         
     }
     
-    private func presentLoginCoordinator() {
+    private func presentLoginCoordinator(animated: Bool) {
         
         let nc = UINavigationController()
         
@@ -41,7 +41,7 @@ class HomeCoordinator: Coordinator {
         
         loginCoord.start()
         
-        self.navigationController.present(nc, animated: true, completion: nil)
+        self.navigationController.present(nc, animated: animated, completion: nil)
         
         self.childCoordinators.append(loginCoord)
         
@@ -64,9 +64,9 @@ extension HomeCoordinator: UserCreatedDelegate {
 
 extension HomeCoordinator: PresentLoginViewControllerDelegate {
     
-    func presentLoginVC() {
+    func presentLoginVC(animated: Bool) {
         logDebugMessage("Coordinator is attemplting to log")
-        self.presentLoginCoordinator()
+        self.presentLoginCoordinator(animated: animated)
     }
     
 }

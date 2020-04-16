@@ -10,7 +10,7 @@ import UIKit
 import Animo
 
 protocol PresentLoginViewControllerDelegate: class {
-    func presentLoginVC()
+    func presentLoginVC(animated: Bool)
 }
 
 class HomeViewModel {
@@ -39,12 +39,25 @@ class HomeViewModel {
         sender.tintColor = .charcoalBlack
     }
     
+    public func handleLogOutButtonTapped(_ sender: UIButton) {
+        self.loginDelegate.presentLoginVC(animated: true)
+        logSuccess("LOGGING OUT")
+    }
+    
+    public func handleSettingButtonTapped(_ sender: UIButton) {
+        logSuccess("SETTING BUTTON TAPPED")
+    }
+    
+    public func handleLinkAccountButtonTapped(_ sender: UIButton) {
+        logSuccess("LINKING ACCOUNTS...")
+    }
+    
     public func presentLoginController() -> Bool {
         
         guard self.user == nil else { return false }
         
         logDebugMessage("Load Login Controller")
-        self.loginDelegate.presentLoginVC()
+        self.loginDelegate.presentLoginVC(animated: false)
         return true
         
     }

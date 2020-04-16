@@ -9,13 +9,14 @@
 import UIKit
 import Animo
 
-protocol DismissLoginViewControllerDelegate: class {
+protocol LoginActionDelegate: class {
+    func pushSignUpVC()
     func dismissLoginVC(user: User)
 }
 
 class LoginViewModel {
 
-    weak var dismissLoginDelegate: DismissLoginViewControllerDelegate!
+    weak var actionDelegate: LoginActionDelegate!
     
     private(set) var user: User? = nil
     
@@ -27,15 +28,11 @@ class LoginViewModel {
     }
 
     public func handleSignUpButtonTapped(_ sender: UIButton) {
-
-    }
-    
-    public func handleLinkUpButtonTapped(_ sender: UIButton) {
-        
+        self.actionDelegate.pushSignUpVC()
     }
     
     public func handleCloseButtonTapped(_ sender: UIButton) {
-        self.dismissLoginDelegate.dismissLoginVC(user: testUser)
+        self.actionDelegate.dismissLoginVC(user: testUser)
     }
     
 }

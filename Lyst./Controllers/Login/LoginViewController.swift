@@ -17,16 +17,25 @@ class LoginViewController: UIViewController {
     
     //MARK:- Properties
     
-    private var loginViewModel: LoginViewModel!
+    private(set) var loginViewModel: LoginViewModel!
     
     //MARK:- Views
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "LYST."
+        label.text = " LYST."
         label.textAlignment = .center
         label.textColor = .charcoalBlack
         label.font = UIFont(name: avenirNextBold, size: 80.0)
+        return label
+    }()
+    
+    private let detailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "The last lyst you'll ever need"
+        label.textAlignment = .center
+        label.textColor = .charcoalBlack
+        label.font = UIFont(name: avenirNextMedium, size: 18.0)
         return label
     }()
     
@@ -41,8 +50,15 @@ class LoginViewController: UIViewController {
         return btn
     }()
     
-    private lazy var emailTextField = InputTextField(secureEntry: false)
-    private lazy var passwordTextField = InputTextField(secureEntry: true)
+    private lazy var dontHaveAccountButton: UIButton = {
+        return configureDontHaveAccountButton()
+    }()
+    
+    private let emailTextField = InputTextField(placeholder: "Email",
+                                             secureEntry: false)
+    
+    private let passwordTextField = InputTextField(placeholder: "Password",
+                                                   secureEntry: true)
     
     //MARK:- Life Cycle
     
@@ -86,6 +102,19 @@ class LoginViewController: UIViewController {
                                paddingRight: 64,
                                height: 70)
         
+        //Detail Label
+        self.view.addSubview(self.detailLabel)
+        
+        self.detailLabel.centerX(inView: self.view)
+        self.detailLabel.anchor(top: self.titleLabel.bottomAnchor,
+                               left: self.view.leftAnchor,
+                               right: self.view.rightAnchor,
+                               paddingTop: 8,
+                               paddingLeft: 64,
+                               paddingRight: 64,
+                               height: 20)
+        
+        
         //Email TextField
         self.view.addSubview(self.emailTextField)
         
@@ -127,11 +156,53 @@ class LoginViewController: UIViewController {
         
         self.submitButton.roundCorners(.allCorners, radius: 11)
         
+        //DontHaveAccountButton
+        self.view.addSubview(self.dontHaveAccountButton)
+        
+        self.dontHaveAccountButton.anchor(left: self.view.leftAnchor,
+                                          bottom: self.view.safeAreaLayoutGuide.bottomAnchor,
+                                          right: self.view.rightAnchor,
+                                          paddingLeft: 32,
+                                          paddingBottom: 0,
+                                          paddingRight: 32,
+                                          height: 20)
+        
+    }
+    
+    private func configureDontHaveAccountButton() -> UIButton {
+        
+        let btn = UIButton(type: .system)
+        
+        let font1 = UIFont(name: avenirNextRegular, size: 15.0)
+        let font2 = UIFont(name: avenirNextMedium, size: 15.0)
+        let text1 = "Don't have an account? "
+        let text2 = " Sign Up!"
+        
+        let attributedString = String().customAttributedString(text1,
+                                                               text2,
+                                                               font1: font1,
+                                                               font2: font2,
+                                                               font1Size: 15.0,
+                                                               font2Size: 15.0,
+                                                               color1: .darkGray,
+                                                               color2: .systemBlue)
+        
+        btn.setAttributedTitle(attributedString, for: .normal)
+        
+        btn.addTarget(self,
+                      action: #selector(self.signUpButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+        
     }
     
     //MARK:- OBJC Functions
     @objc private func submitButtonTapped(_ sender: UIButton) {
         self.loginViewModel.handleCloseButtonTapped(sender)
+    }
+    
+    @objc private func signUpButtonTapped(_ sender: UIButton) {
+        self.loginViewModel.handleSignUpButtonTapped(sender)
     }
     
 }

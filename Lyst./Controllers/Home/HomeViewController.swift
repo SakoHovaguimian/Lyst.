@@ -68,6 +68,31 @@ class HomeViewController: UIViewController {
         return stackView
     }()
     
+    //SettingsButtons
+    
+    private lazy var logoutButton: UIButton = {
+        let btn = self.createSettingsButton(text: "Logout")
+        btn.addTarget(self,
+                      action: #selector(self.logoutButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var linkAccountButton: UIButton = {
+        let btn = self.createSettingsButton(text: "Link Account")
+        btn.addTarget(self,
+                      action: #selector(self.linkAccountButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var settingButton: UIButton = {
+        let btn = self.createSettingsButton(text: "Settings")
+        btn.addTarget(self,
+                      action: #selector(self.settingButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
     
     
     //MARK:- Life Cycle
@@ -93,9 +118,15 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.updateUIForSettingsButton(shouldHide: false)
+        self.updateButtonState()
+        self.listsButton.tintColor = .charcoalBlack
+        
         setNeedsStatusBarAppearanceUpdate()
         
         guard self.homeViewModel.user != nil else { return }
+        guard self.view.subviews.isEmpty else { return }
+        
         self.configureViews()
         
     }
@@ -215,19 +246,25 @@ class HomeViewController: UIViewController {
                                       paddingBottom: 80,
                                       paddingRight: 32)
         
-        for _ in 0...2 {
             
-            let button = UIButton(type: .system)
-            button.setTitle("Notifications", for: .normal)
-            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40.0)
-            button.setTitleColor(.charcoalBlack, for: .normal)
-            
-            button.setDimmensions(height: 60, width: self.view.frame.width - 64)
-            
-            self.settingsStackView.addArrangedSubview(button)
-            self.settingsStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
-            
-        }
+        self.settingsStackView.addArrangedSubview(self.settingButton)
+        self.settingsStackView.addArrangedSubview(self.linkAccountButton)
+        self.settingsStackView.addArrangedSubview(self.logoutButton)
+        
+        self.settingsStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
+        
+    }
+    
+    private func createSettingsButton(text: String) -> UIButton {
+        
+        let button = UIButton(type: .system)
+        button.setTitle(text, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40.0)
+        button.setTitleColor(.charcoalBlack, for: .normal)
+        
+        button.setDimmensions(height: 60, width: self.view.frame.width - 64)
+        
+        return button
         
     }
     
@@ -247,6 +284,18 @@ class HomeViewController: UIViewController {
         self.updateButtonState()
         self.homeViewModel.handleSettingsButtonTapped(sender)
         self.updateUIForSettingsButton(shouldHide: self.homeViewModel.shouldHideTableView)
+    }
+    
+    @objc private func logoutButtonTapped(_ sender: UIButton) {
+        self.homeViewModel.handleLogOutButtonTapped(sender)
+    }
+    
+    @objc private func settingButtonTapped(_ sender: UIButton) {
+        self.homeViewModel.handleSettingButtonTapped(sender)
+    }
+    
+    @objc private func linkAccountButtonTapped(_ sender: UIButton) {
+        self.homeViewModel.handleLinkAccountButtonTapped(sender)
     }
     
 

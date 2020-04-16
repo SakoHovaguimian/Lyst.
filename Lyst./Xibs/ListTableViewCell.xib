@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cyR-nv-wgv">
-                        <rect key="frame" x="32" y="5" width="376" height="100"/>
+                        <rect key="frame" x="16" y="5" width="408" height="100"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1BZ-FC-PNP">
                                 <rect key="frame" x="16" y="18" width="64" height="64"/>
@@ -41,30 +41,30 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EKm-fa-FEc">
-                                <rect key="frame" x="112" y="18" width="248" height="64"/>
+                                <rect key="frame" x="112" y="18" width="280" height="64"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6XM-9g-L9Y">
-                                        <rect key="frame" x="0.0" y="0.0" width="248" height="5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="5" id="RCd-Dt-bKG"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Shopping" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ORx-bp-zsx">
-                                        <rect key="frame" x="0.0" y="5" width="248" height="31"/>
+                                        <rect key="frame" x="0.0" y="5" width="280" height="31"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="20"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 items in the list" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMr-gu-CcW">
-                                        <rect key="frame" x="0.0" y="36" width="248" height="18"/>
+                                        <rect key="frame" x="0.0" y="36" width="280" height="18"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HjK-DE-xQI">
-                                        <rect key="frame" x="0.0" y="54" width="248" height="10"/>
+                                        <rect key="frame" x="0.0" y="54" width="280" height="10"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="10" id="r7d-5S-eGJ"/>
@@ -86,10 +86,10 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="cyR-nv-wgv" secondAttribute="trailing" constant="32" id="2Pf-eo-G6D"/>
+                    <constraint firstAttribute="trailing" secondItem="cyR-nv-wgv" secondAttribute="trailing" constant="16" id="2Pf-eo-G6D"/>
                     <constraint firstAttribute="bottom" secondItem="cyR-nv-wgv" secondAttribute="bottom" constant="5" id="N22-4d-CmA"/>
                     <constraint firstItem="cyR-nv-wgv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="OmT-Zm-WYU"/>
-                    <constraint firstItem="cyR-nv-wgv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="uDL-J3-AKf"/>
+                    <constraint firstItem="cyR-nv-wgv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="uDL-J3-AKf"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
