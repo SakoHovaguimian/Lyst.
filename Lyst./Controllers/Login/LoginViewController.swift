@@ -19,6 +19,8 @@ class LoginViewController: UIViewController {
     
     private(set) var loginViewModel: LoginViewModel!
     
+    private var textFields: [UITextField] = []
+    
     //MARK:- Views
     
     private let titleLabel: UILabel = {
@@ -73,7 +75,10 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.view.backgroundColor = .white
+        
+        self.textFields = [self.emailTextField, self.passwordTextField]
         
         self.configureViews()
     }
@@ -156,6 +161,8 @@ class LoginViewController: UIViewController {
         
         self.submitButton.roundCorners(.allCorners, radius: 11)
         
+        self.updateButtonState(self.textFields, self.submitButton)
+        
         //DontHaveAccountButton
         self.view.addSubview(self.dontHaveAccountButton)
         
@@ -196,12 +203,16 @@ class LoginViewController: UIViewController {
         
     }
     
-    private func updateTextFieldForViewModel(_ textField: UITextField) {
+    private func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
+        
+        var text = (textField.text ?? "")
+        
+        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
         
         if textField == self.emailTextField {
-            self.loginViewModel.email = textField.text ?? ""
+            self.loginViewModel.email = text
         } else {
-            self.loginViewModel.password = passwordTextField.text ?? ""
+            self.loginViewModel.password = text
         }
         
     }
@@ -227,12 +238,14 @@ class LoginViewController: UIViewController {
 extension LoginViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        self.updateTextFieldForViewModel(textField)
+        self.updateTextFieldForViewModel(textField, string: string)
+        self.updateButtonState(self.textFields, self.submitButton)
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.updateTextFieldForViewModel(textField)
+        self.updateButtonState(self.textFields, self.submitButton)
+        self.updateTextFieldForViewModel(textField, string: nil)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

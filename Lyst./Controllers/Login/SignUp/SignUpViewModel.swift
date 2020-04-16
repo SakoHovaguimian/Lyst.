@@ -36,7 +36,12 @@ class SignUpViewModel {
 
     weak var actionDelegate: SignUpActionDelegate!
     
-    public var fullName: String = ""
+    public var fullName: String = "" {
+        didSet {
+            print(self.fullName)
+        }
+    }
+    
     public var email: String = ""
     public var password: String = ""
     

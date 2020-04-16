@@ -13,6 +13,8 @@ class SignUpViewController: UIViewController {
     //MARK:- Properties
     private(set) var signUpViewModel: SignUpViewModel!
     
+    private var textFields: [UITextField] = []
+    
     //MARK:- Views
     
     private lazy var submitButton: UIButton = {
@@ -69,6 +71,8 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.textFields = [self.emailTextField, self.fullNameTextField, self.passwordTextField]
         
         self.configureBackButtonView()
         self.configureViews()
@@ -146,6 +150,9 @@ class SignUpViewController: UIViewController {
         self.submitButton.applyGradient(colors: [.skyBlue, .systemBlue], frame: frame)
         
         self.submitButton.roundCorners(.allCorners, radius: 11)
+        
+        self.updateButtonState(self.textFields, self.submitButton)
+        
     }
     
     private func configureBackButtonView() {
@@ -191,14 +198,18 @@ class SignUpViewController: UIViewController {
         self.signUpViewModel.handleBackButtonTapped(sender)
     }
     
-    private func updateTextFieldForViewModel(_ textField: UITextField) {
+    private func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
+        
+        var text = (textField.text ?? "")
+        
+        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
         
         if textField == self.emailTextField {
-            self.signUpViewModel.email = textField.text ?? ""
+            self.signUpViewModel.email = text
         } else if textField == self.fullNameTextField {
-            self.signUpViewModel.fullName = textField.text ?? ""
+            self.signUpViewModel.fullName = text
         } else {
-            self.signUpViewModel.password = passwordTextField.text ?? ""
+            self.signUpViewModel.password = text
         }
         
     }
@@ -211,14 +222,15 @@ class SignUpViewController: UIViewController {
 
 extension SignUpViewController: UITextFieldDelegate {
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        self.updateTextFieldForViewModel(textField)
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        self.updateTextFieldForViewModel(textField, string: string)
+        self.updateButtonState(self.textFields, self.submitButton)
+        return true
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        self.updateTextFieldForViewModel(textField)
-        return true
-        
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.updateButtonState(self.textFields, self.submitButton)
+        self.updateTextFieldForViewModel(textField, string: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
