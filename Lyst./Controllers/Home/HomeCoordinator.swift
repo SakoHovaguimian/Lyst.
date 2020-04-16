@@ -22,7 +22,7 @@ class HomeCoordinator: Coordinator {
     func start() {
         
         let viewModel = HomeViewModel()
-        viewModel.loginDelegate = self
+        viewModel.actionDelegate = self
         
         let homeVC = HomeViewController(viewModel: viewModel)
             
@@ -47,8 +47,31 @@ class HomeCoordinator: Coordinator {
         
     }
     
+    private func pushItemViewController(list: String) {
+        
+        let viewModel = ItemsViewModel(list: list)
+        viewModel.actionDelegate = self
+        
+        let itemVC = ItemsViewController(viewModel: viewModel)
+        
+        self.navigationController.pushViewController(itemVC, animated: true)
+        
+        
+    }
+    
 }
 
+//MARK:- ITEM VIEW MODEL DELEGATE
+extension HomeCoordinator: ItemVCActionDelegate {
+    
+    func popItemViewController() {
+        self.navigationController.popViewController(animated: true)
+        logSuccess("POPPING ITEM VIEW CONTROLLER")
+    }
+    
+}
+
+//MARK:- LOGIN COORDINATOR DELEGATE
 extension HomeCoordinator: UserCreatedDelegate {
     
     func userCreated(user: User) {
@@ -62,11 +85,18 @@ extension HomeCoordinator: UserCreatedDelegate {
     
 }
 
-extension HomeCoordinator: PresentLoginViewControllerDelegate {
+//MARK:- HOME VIEW MODEL DELEGATE
+extension HomeCoordinator: HomeVCActionsDelegate {
+    
+    func pushItemVC(list: String) {
+        self.pushItemViewController(list: list)
+    }
+    
     
     func presentLoginVC(animated: Bool) {
         logDebugMessage("Coordinator is attemplting to log")
         self.presentLoginCoordinator(animated: animated)
     }
+
     
 }

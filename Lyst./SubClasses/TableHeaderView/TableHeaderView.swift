@@ -12,7 +12,7 @@ class TableHeaderView: UITableViewHeaderFooterView {
     
     static let identifier = "TableHeaderView"
 
-    private(set) var user: User!
+    private(set) var user: User?
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var listCountLabel: UILabel!
@@ -30,10 +30,20 @@ class TableHeaderView: UITableViewHeaderFooterView {
         
         self.user = user
         
-        self.nameLabel.text = "Hi, \(self.user.firstName)"
+        self.nameLabel.text = "Hi, \(user.firstName)"
         self.nameLabel.textColor = .charcoalBlack
         
         self.listCountLabel.text = "You have 4 lysts"
+        
+    }
+    
+    public func configure(list: String) {
+
+        
+        self.nameLabel.text = list
+        self.nameLabel.textColor = .charcoalBlack
+        
+        self.listCountLabel.text = "You have 10 items"
         
     }
 

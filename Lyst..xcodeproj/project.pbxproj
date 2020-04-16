@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3D09C70B2447F620005C5D3C /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09C70A2447F620005C5D3C /* SignUpViewModel.swift */; };
 		3D09C70D2447F6BF005C5D3C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */; };
+		3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1210722448FC6400C8107A /* ItemsViewModel.swift */; };
+		3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1210742448FCE200C8107A /* ItemsViewController.swift */; };
 		3D42A2FC2446A3D400415B50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42A2FB2446A3D400415B50 /* AppDelegate.swift */; };
 		3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42A2FD2446A3D400415B50 /* SceneDelegate.swift */; };
 		3D42A3032446A3D400415B50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D42A3012446A3D400415B50 /* Main.storyboard */; };
@@ -38,6 +40,8 @@
 /* Begin PBXFileReference section */
 		3D09C70A2447F620005C5D3C /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		3D1210722448FC6400C8107A /* ItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewModel.swift; sourceTree = "<group>"; };
+		3D1210742448FCE200C8107A /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		3D42A2F82446A3D400415B50 /* Lyst..app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lyst..app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D42A2FB2446A3D400415B50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D42A2FD2446A3D400415B50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +88,24 @@
 				3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */,
 			);
 			path = SignUp;
+			sourceTree = "<group>";
+		};
+		3D1210712448FC2500C8107A /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				3D1210722448FC6400C8107A /* ItemsViewModel.swift */,
+				3D1210742448FCE200C8107A /* ItemsViewController.swift */,
+			);
+			path = Items;
+			sourceTree = "<group>";
+		};
+		3D1210762448FDDA00C8107A /* ListTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				3DB753462447478100CC183C /* ListTableViewCell.swift */,
+				3DB753472447478100CC183C /* ListTableViewCell.xib */,
+			);
+			path = ListTableViewCell;
 			sourceTree = "<group>";
 		};
 		3D42A2EF2446A3D400415B50 = {
@@ -154,7 +176,9 @@
 			children = (
 				3DB753352446A49E00CC183C /* MainCoordinator.swift */,
 				3DDB3C9B244790A000DB770E /* Login */,
+				3D09C7092447F601005C5D3C /* SignUp */,
 				3DB753382446A4CF00CC183C /* Home */,
+				3D1210712448FC2500C8107A /* Items */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -181,8 +205,7 @@
 		3DB7533B2446A55300CC183C /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				3DB753462447478100CC183C /* ListTableViewCell.swift */,
-				3DB753472447478100CC183C /* ListTableViewCell.xib */,
+				3D1210762448FDDA00C8107A /* ListTableViewCell */,
 			);
 			path = Xibs;
 			sourceTree = "<group>";
@@ -209,7 +232,6 @@
 				3DDB3C9E244790BE00DB770E /* LoginCoordinator.swift */,
 				3DDB3C9C244790BE00DB770E /* LoginViewModel.swift */,
 				3DDB3C9D244790BE00DB770E /* LoginViewController.swift */,
-				3D09C7092447F601005C5D3C /* SignUp */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -310,6 +332,8 @@
 				3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */,
 				3DDB3C9A244787F100DB770E /* User.swift in Sources */,
 				3DB753442447440000CC183C /* TableHeaderView.swift in Sources */,
+				3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */,
+				3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */,
 				3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */,
 				3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */,
 				3DDB3C98244787C100DB770E /* Category.swift in Sources */,

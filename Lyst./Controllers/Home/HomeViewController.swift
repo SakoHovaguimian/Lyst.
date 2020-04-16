@@ -108,19 +108,19 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.homeViewModel.updateUser(withUser: testUser)
 
-        if !self.homeViewModel.presentLoginController() {
+        if self.homeViewModel.isUserAvailable {
             self.configureViews()
+        } else {
+            self.homeViewModel.presentLoginController()
         }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.updateUIForSettingsButton(shouldHide: false)
-        self.updateButtonState()
-        self.listsButton.tintColor = .charcoalBlack
         
         setNeedsStatusBarAppearanceUpdate()
         
@@ -141,6 +141,12 @@ class HomeViewController: UIViewController {
         self.configureAlphaView()
         self.configureButtons()
         self.configureSettingsStackView()
+        
+        self.homeViewModel.shouldHideTableView = false
+        self.animateUISettingsButton()
+        self.updateButtonState()
+        
+        self.listsButton.tintColor = .charcoalBlack
         
     }
     
@@ -223,7 +229,9 @@ class HomeViewController: UIViewController {
         self.listsButton.tintColor = .lightGray
     }
     
-    private func updateUIForSettingsButton(shouldHide: Bool) {
+    private func animateUISettingsButton() {
+        
+        let shouldHide = self.homeViewModel.shouldHideTableView
         
         UIView.animate(withDuration: 0.3) {
             self.settingsStackView.alpha = shouldHide ? 1.0 : 0.0
@@ -242,9 +250,9 @@ class HomeViewController: UIViewController {
         self.settingsStackView.anchor(left: self.view.leftAnchor,
                                       bottom: self.addButton.topAnchor,
                                       right: self.view.rightAnchor,
-                                      paddingLeft: 32,
+                                      paddingLeft: 64,
                                       paddingBottom: 80,
-                                      paddingRight: 32)
+                                      paddingRight: 64)
         
             
         self.settingsStackView.addArrangedSubview(self.settingButton)
@@ -277,16 +285,18 @@ class HomeViewController: UIViewController {
     @objc private func listsButtonTapped(_ sender: UIButton) {
         self.updateButtonState()
         self.homeViewModel.handleListsButtonTapped(sender)
-        self.updateUIForSettingsButton(shouldHide: self.homeViewModel.shouldHideTableView)
+        self.animateUISettingsButton()
     }
     
     @objc private func settingsButtonTapped(_ sender: UIButton) {
         self.updateButtonState()
         self.homeViewModel.handleSettingsButtonTapped(sender)
-        self.updateUIForSettingsButton(shouldHide: self.homeViewModel.shouldHideTableView)
+        self.animateUISettingsButton()
     }
     
     @objc private func logoutButtonTapped(_ sender: UIButton) {
+        self.settingsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+        self.view.subviews.forEach({ $0.removeFromSuperview() })
         self.homeViewModel.handleLogOutButtonTapped(sender)
     }
     
@@ -298,6 +308,14 @@ class HomeViewController: UIViewController {
         self.homeViewModel.handleLinkAccountButtonTapped(sender)
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+         let touch = touches.first
+         if touch?.view != self.settingsStackView {
+            self.homeViewModel.shouldHideTableView = false
+            self.animateUISettingsButton()
+            print("TAPPED REGION")
+        }
+    }
 
 }
 
@@ -318,6 +336,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         return UITableViewCell()
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let category = Category.home.name
+        self.homeViewModel.handlePushItemsViewController(list: category)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
