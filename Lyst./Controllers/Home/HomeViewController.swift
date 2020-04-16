@@ -322,7 +322,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let vw = self.homeTableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as! TableHeaderView
-        vw.configure(user: testUser)
+        vw.configure(user: self.homeViewModel.user!)
         return vw
     }
     

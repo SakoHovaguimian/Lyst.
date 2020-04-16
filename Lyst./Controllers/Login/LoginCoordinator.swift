@@ -69,6 +69,8 @@ extension LoginCoordinator: LoginActionDelegate {
 extension LoginCoordinator: SignUpActionDelegate {
     func didCreateUser(user: User) {
         logSuccess("did create user (COORDINATOR)")
+        self.userCreatedDelegate.userCreated(user: user)
+        self.navigationController.dismiss(animated: true, completion: nil)
     }
     
     func popSignUpVC() {

@@ -18,21 +18,37 @@ class LoginViewModel {
 
     weak var actionDelegate: LoginActionDelegate!
     
-    private(set) var user: User? = nil
-    
     public var email: String = ""
     public var password: String = ""
-    
-    public func updateUser(withUser user: User) {
-        self.user = user
-    }
 
     public func handleSignUpButtonTapped(_ sender: UIButton) {
         self.actionDelegate.pushSignUpVC()
     }
     
-    public func handleCloseButtonTapped(_ sender: UIButton) {
-        self.actionDelegate.dismissLoginVC(user: testUser)
+    public func handleLoginButtonTapped(_ sender: UIButton) -> String? {
+
+       if let error = self.validateTextFields() {
+           return error
+       }
+        
+        let user = User(name: "Sako Hovaguimian",
+                        email: self.email,
+                        listId: "234")
+        
+        self.actionDelegate.dismissLoginVC(user: user)
+        
+        return nil
+        
+    }
+    
+    private func validateTextFields() -> String? {
+        
+        guard email.count > 2 else { return ValidationError.invalidEmail.error }
+        guard email.isValidEmail() else { return ValidationError.invalidEmail.error }
+        guard password.count > 2 else { return ValidationError.invalidPassword.error }
+        
+        return nil
+        
     }
     
 }

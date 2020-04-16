@@ -38,13 +38,22 @@ class SignUpViewController: UIViewController {
         return btn
     }()
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Getting Started"
+        label.textAlignment = .left
+        label.textColor = .charcoalBlack
+        label.font = UIFont(name: avenirNextBold, size: 40.0)
+        return label
+    }()
+    
+    private let fullNameTextField = InputTextField(placeholder: "Full Name", secureEntry: false, tag: 0)
+    
     private let emailTextField = InputTextField(placeholder: "Email",
-                                                secureEntry: false)
+                                                secureEntry: false, tag: 1)
     
     private let passwordTextField = InputTextField(placeholder: "Password",
-                                                   secureEntry: true)
-    
-    private let fullNameTextField = InputTextField(placeholder: "Full Name", secureEntry: false)
+                                                   secureEntry: true, tag: 2)
     
     
     //MARK:- Life Cycle
@@ -61,8 +70,8 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.configureViews()
         self.configureBackButtonView()
+        self.configureViews()
         
     }
     
@@ -72,16 +81,26 @@ class SignUpViewController: UIViewController {
         
         self.view.simpleGradient(colors: backgroundGradient.reversed())
         
+        //Title Label
+        self.view.addSubview(self.titleLabel)
+        
+        self.titleLabel.anchor(top: self.backButton.bottomAnchor,
+                               left: self.backButton.leftAnchor,
+                               right: self.view.rightAnchor,
+                               paddingTop: 48,
+                               paddingLeft: 0,
+                               paddingRight: 32,
+                               height: 50)
         
         //FullName TextField
         self.view.addSubview(self.fullNameTextField)
         
         self.fullNameTextField.delegate = self
         
-        self.fullNameTextField.anchor(top: self.view.safeAreaLayoutGuide.topAnchor,
+        self.fullNameTextField.anchor(top: self.titleLabel.bottomAnchor,
                                       left: self.view.leftAnchor,
                                       right: self.view.rightAnchor,
-                                      paddingTop: 128,
+                                      paddingTop: 100,
                                       paddingLeft: 32,
                                       paddingRight: 32,
                                       height: 50)
@@ -118,7 +137,7 @@ class SignUpViewController: UIViewController {
         self.submitButton.anchor(top: self.passwordTextField.bottomAnchor,
                                  left: self.view.leftAnchor,
                                  right: self.view.rightAnchor,
-                                 paddingTop: 64,
+                                 paddingTop: 100,
                                  paddingLeft: 32,
                                  paddingRight: 32,
                                  height: 60)
@@ -163,11 +182,25 @@ class SignUpViewController: UIViewController {
     //MARK:- @OBJC Functions
     
     @objc private func signUpButtonTapped(_ sender: UIButton) {
-        self.signUpViewModel.handleSignUpButtonTapped(sender)
+        if let error = self.signUpViewModel.handleSignUpButtonTapped(sender) {
+            self.showSimpleError(title: "Error", message: error)
+        }
     }
     
     @objc private func backButtonTapped(_ sender: UIButton) {
         self.signUpViewModel.handleBackButtonTapped(sender)
+    }
+    
+    private func updateTextFieldForViewModel(_ textField: UITextField) {
+        
+        if textField == self.emailTextField {
+            self.signUpViewModel.email = textField.text ?? ""
+        } else if textField == self.fullNameTextField {
+            self.signUpViewModel.fullName = textField.text ?? ""
+        } else {
+            self.signUpViewModel.password = passwordTextField.text ?? ""
+        }
+        
     }
     
 }
@@ -178,6 +211,29 @@ class SignUpViewController: UIViewController {
 
 extension SignUpViewController: UITextFieldDelegate {
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.updateTextFieldForViewModel(textField)
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        self.updateTextFieldForViewModel(textField)
+        return true
+        
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let nextTag = textField.tag + 1
+        
+        if let nextTextField = textField.superview?.viewWithTag(nextTag) {
+            nextTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+        
+    }
     
     
 }

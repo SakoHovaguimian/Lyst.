@@ -55,10 +55,10 @@ class LoginViewController: UIViewController {
     }()
     
     private let emailTextField = InputTextField(placeholder: "Email",
-                                             secureEntry: false)
+                                                secureEntry: false, tag: 0)
     
     private let passwordTextField = InputTextField(placeholder: "Password",
-                                                   secureEntry: true)
+                                                   secureEntry: true, tag: 1)
     
     //MARK:- Life Cycle
     
@@ -196,9 +196,23 @@ class LoginViewController: UIViewController {
         
     }
     
+    private func updateTextFieldForViewModel(_ textField: UITextField) {
+        
+        if textField == self.emailTextField {
+            self.loginViewModel.email = textField.text ?? ""
+        } else {
+            self.loginViewModel.password = passwordTextField.text ?? ""
+        }
+        
+    }
+    
     //MARK:- OBJC Functions
     @objc private func submitButtonTapped(_ sender: UIButton) {
-        self.loginViewModel.handleCloseButtonTapped(sender)
+        
+        if let error = self.loginViewModel.handleLoginButtonTapped(sender) {
+            self.showSimpleError(title: "Error", message: error)
+        }
+        
     }
     
     @objc private func signUpButtonTapped(_ sender: UIButton) {
@@ -212,14 +226,13 @@ class LoginViewController: UIViewController {
 //MARK:- Textfield Delegates
 extension LoginViewController: UITextFieldDelegate {
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        self.updateTextFieldForViewModel(textField)
+        return true
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        if textField == self.emailTextField {
-            self.loginViewModel.email = textField.text ?? ""
-        } else {
-            self.loginViewModel.password = textField.text ?? ""
-        }
-        
+        self.updateTextFieldForViewModel(textField)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

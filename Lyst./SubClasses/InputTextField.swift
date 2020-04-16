@@ -10,23 +10,26 @@ import UIKit
 
 class InputTextField: UITextField {
 
-    init(placeholder: String, secureEntry: Bool) {
+    init(placeholder: String, secureEntry: Bool, tag: Int) {
         super.init(frame: .zero)
-        self.configureTextField(placeholder: placeholder, isSecure: secureEntry)
+        self.configureTextField(placeholder: placeholder, isSecure: secureEntry, tag: tag)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureTextField(placeholder: String, isSecure: Bool) {
+    private func configureTextField(placeholder: String, isSecure: Bool, tag: Int) {
+        
+        if placeholder == "Email" { self.keyboardType = .emailAddress }
     
         self.autocapitalizationType = .none
         self.borderStyle = .roundedRect
+        self.tag = tag
         self.backgroundColor = .lighterGray
         self.textColor = .charcoalBlack
         self.isSecureTextEntry = isSecure
-        self.font = UIFont(name: avenirNextBold, size: 15.0)
+        self.font = UIFont(name: avenirNextBold, size: 18.0)
         self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 50))
         self.leftViewMode = .always
         self.addShadow(shadow: .black,
