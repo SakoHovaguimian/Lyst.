@@ -22,4 +22,8 @@ class ItemsViewModel {
         self.list = list
     }
     
+    public func handleBackButtonTapped(_ sender: UIButton) {
+        self.actionDelegate.popItemViewController()
+    }
+    
 }

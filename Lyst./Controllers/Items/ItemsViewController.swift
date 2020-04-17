@@ -20,6 +20,18 @@ class ItemsViewController: UIViewController {
         return self.setupTableView()
     }()
     
+    private lazy var backButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Back", for: .normal)
+        btn.setTitleColor(.charcoalBlack, for: .normal)
+        btn.titleLabel?.textAlignment = .right
+        btn.titleLabel?.font = UIFont(name: avenirNextBold, size: 18.0)
+        btn.addTarget(self,
+                      action: #selector(self.backButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
     //MARK:- Life Cycle
     
     init(viewModel: ItemsViewModel) {
@@ -38,8 +50,6 @@ class ItemsViewController: UIViewController {
         
     }
     
-    //MARK:- @OBJC Functions
-    
     //MARK:- Helper Functions
     private func configureViews() {
         
@@ -47,6 +57,7 @@ class ItemsViewController: UIViewController {
         
         self.configureTableView()
         self.configureAlphaView()
+        self.configureBackButtonView()
         
     }
     
@@ -60,15 +71,46 @@ class ItemsViewController: UIViewController {
     private func configureAlphaView() {
         
         let vw = UIView()
-        vw.alpha = 0.70
+        vw.alpha = 0.8
         vw.backgroundColor = .white
         
         self.view.addSubview(vw)
         
-        vw.anchor(left: self.view.leftAnchor,
-                  bottom: self.view.bottomAnchor,
+        vw.anchor(top: self.view.topAnchor,
+                  left: self.view.leftAnchor,
                   right: self.view.rightAnchor,
                   height: self.view.frame.height / 8.6)
+    
+    }
+    
+    private func configureBackButtonView() {
+        
+        //Back ImageView
+        
+        let image = UIImage(named: "back2")?.withRenderingMode(.alwaysTemplate)
+        let backImageView = UIImageView(image: image)
+        backImageView.contentMode = .scaleAspectFill
+        backImageView.clipsToBounds = true
+        backImageView.tintColor = .charcoalBlack
+        
+        self.view.addSubview(backImageView)
+        
+        backImageView.anchor(top: self.view.safeAreaLayoutGuide.topAnchor,
+                             left: self.view.leftAnchor,
+                             paddingTop: 16,
+                             paddingLeft: 16,
+                             width: 20,
+                             height: 20)
+        
+        //Back Button
+        self.view.addSubview(self.backButton)
+        
+        self.backButton.anchor(top: backImageView.topAnchor,
+                               left: backImageView.leftAnchor,
+                               bottom: backImageView.bottomAnchor,
+                               right: backImageView.rightAnchor,
+                               paddingRight: -60)
+        
         
     }
     
@@ -89,6 +131,12 @@ class ItemsViewController: UIViewController {
                     forHeaderFooterViewReuseIdentifier: TableHeaderView.identifier)
         return tv
         
+    }
+    
+    
+    //MARK:- @OBJC Functions
+    @objc private func backButtonTapped(_ sender: UIButton) {
+        self.itemsViewModel.handleBackButtonTapped(sender)
     }
     
 }

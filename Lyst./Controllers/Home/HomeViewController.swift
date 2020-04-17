@@ -228,7 +228,7 @@ class HomeViewController: UIViewController {
     private func animateUISettingsButton() {
         
         let shouldHide = self.homeViewModel.shouldHideTableView
-        
+
         UIView.animate(withDuration: 0.3) {
             self.settingsStackView.alpha = shouldHide ? 1.0 : 0.0
             self.settingsStackView.transform = shouldHide ? .identity : CGAffineTransform(translationX: 0, y: self.view.frame.height)

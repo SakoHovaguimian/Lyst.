@@ -32,6 +32,5 @@ extension UIViewController {
         button.alpha = isEnabled ? 1.0 : 0.4
         
     }
-
     
 }
