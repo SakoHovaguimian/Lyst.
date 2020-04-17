@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Animo
 
 protocol ItemVCActionDelegate: class {
     func popItemViewController()
@@ -24,6 +25,10 @@ class ItemsViewModel {
     
     public func handleBackButtonTapped(_ sender: UIButton) {
         self.actionDelegate.popItemViewController()
+    }
+    
+    public func handleAddButtonTapped(_ sender: UIButton) {
+        logSuccess("Add Button Tapped in View Model")
     }
     
 }

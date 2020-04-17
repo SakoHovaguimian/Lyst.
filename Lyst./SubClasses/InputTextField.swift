@@ -33,7 +33,7 @@ class InputTextField: UITextField {
         self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 50))
         self.leftViewMode = .always
         self.addShadow(shadow: .black,
-                     opacity: 0.5, offSet: .zero, raidus: 1.0)
+                       opacity: 0.7, offSet: .zero, raidus: 1.0)
         self.attributedPlaceholder = NSAttributedString(string: placeholder,
         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         

@@ -32,6 +32,17 @@ class ItemsViewController: UIViewController {
         return btn
     }()
     
+    private lazy var addButton: UIButton = {
+        let btn = UIButton(type: .system)
+        let image = UIImage(named: "add2")?.withRenderingMode(.alwaysTemplate)
+        btn.setImage(image, for: .normal)
+        btn.tintColor = .charcoalBlack
+        btn.addTarget(self,
+                      action: #selector(self.addButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
     //MARK:- Life Cycle
     
     init(viewModel: ItemsViewModel) {
@@ -111,6 +122,14 @@ class ItemsViewController: UIViewController {
                                right: backImageView.rightAnchor,
                                paddingRight: -60)
         
+        //Add Button
+        self.view.addSubview(self.addButton)
+        
+        self.addButton.centerY(inView: backImageView, constant: 3)
+        self.addButton.anchor(right: self.view.rightAnchor,
+                              paddingRight: 16,
+                              width: 32,
+                              height: 32)
         
     }
     
@@ -123,9 +142,9 @@ class ItemsViewController: UIViewController {
         tv.separatorStyle = .none
         tv.backgroundColor = .white
         tv.contentInsetAdjustmentBehavior = .never
-        tv.register(UINib(nibName: ListTableViewCell.identifier,
+        tv.register(UINib(nibName: ItemTableViewCell.identifier,
                           bundle: nil),
-                    forCellReuseIdentifier: ListTableViewCell.identifier)
+                    forCellReuseIdentifier: ItemTableViewCell.identifier)
         tv.register(UINib(nibName: TableHeaderView.identifier,
                           bundle: nil),
                     forHeaderFooterViewReuseIdentifier: TableHeaderView.identifier)
@@ -137,6 +156,10 @@ class ItemsViewController: UIViewController {
     //MARK:- @OBJC Functions
     @objc private func backButtonTapped(_ sender: UIButton) {
         self.itemsViewModel.handleBackButtonTapped(sender)
+    }
+    
+    @objc private func addButtonTapped(_ sender: UIButton) {
+        self.itemsViewModel.handleAddButtonTapped(sender)
     }
     
 }
@@ -152,7 +175,9 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let cell = self.itemsTableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell {
+        if let cell = self.itemsTableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.identifier, for: indexPath) as? ItemTableViewCell {
+            cell.isFirstCell = indexPath.row == 0
+            cell.isLastCell = indexPath.row == 9
             return cell
         }
         

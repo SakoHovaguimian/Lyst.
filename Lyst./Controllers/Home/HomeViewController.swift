@@ -144,6 +144,8 @@ class HomeViewController: UIViewController {
         
         self.toggleSettingMenu(hide: true)
         
+        self.homeTableView.reloadData()
+        
     }
     
     private func configureAlphaView() {
@@ -314,6 +316,7 @@ class HomeViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard self.homeViewModel.shouldHideTableView == true else { return }
          let touch = touches.first
          if touch?.view != self.settingsStackView {
             self.toggleSettingMenu(hide: true)

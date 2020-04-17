@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D00763D244A11DF0016E5CA /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D00763B244A11DF0016E5CA /* ItemTableViewCell.swift */; };
+		3D00763E244A11DF0016E5CA /* ItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D00763C244A11DF0016E5CA /* ItemTableViewCell.xib */; };
 		3D09C70B2447F620005C5D3C /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09C70A2447F620005C5D3C /* SignUpViewModel.swift */; };
 		3D09C70D2447F6BF005C5D3C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */; };
 		3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1210722448FC6400C8107A /* ItemsViewModel.swift */; };
@@ -38,6 +40,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D00763B244A11DF0016E5CA /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
+		3D00763C244A11DF0016E5CA /* ItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemTableViewCell.xib; sourceTree = "<group>"; };
 		3D09C70A2447F620005C5D3C /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3D1210722448FC6400C8107A /* ItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewModel.swift; sourceTree = "<group>"; };
@@ -81,6 +85,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D00763F244A11E20016E5CA /* ItemTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				3D00763B244A11DF0016E5CA /* ItemTableViewCell.swift */,
+				3D00763C244A11DF0016E5CA /* ItemTableViewCell.xib */,
+			);
+			name = ItemTableViewCell;
+			sourceTree = "<group>";
+		};
 		3D09C7092447F601005C5D3C /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				3D1210762448FDDA00C8107A /* ListTableViewCell */,
+				3D00763F244A11E20016E5CA /* ItemTableViewCell */,
 			);
 			path = Xibs;
 			sourceTree = "<group>";
@@ -304,6 +318,7 @@
 				3D42A3082446A3D500415B50 /* LaunchScreen.storyboard in Resources */,
 				3D42A3052446A3D500415B50 /* Assets.xcassets in Resources */,
 				3D42A3032446A3D400415B50 /* Main.storyboard in Resources */,
+				3D00763E244A11DF0016E5CA /* ItemTableViewCell.xib in Resources */,
 				3DB753492447478100CC183C /* ListTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,6 +347,7 @@
 				3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */,
 				3DDB3C9A244787F100DB770E /* User.swift in Sources */,
 				3DB753442447440000CC183C /* TableHeaderView.swift in Sources */,
+				3D00763D244A11DF0016E5CA /* ItemTableViewCell.swift in Sources */,
 				3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */,
 				3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */,
 				3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */,
