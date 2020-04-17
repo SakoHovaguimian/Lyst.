@@ -9,30 +9,46 @@
 import UIKit
 import Animo
 
-protocol DismissLoginViewControllerDelegate: class {
+protocol LoginActionDelegate: class {
+    func pushSignUpVC()
     func dismissLoginVC(user: User)
 }
 
 class LoginViewModel {
 
-    weak var dismissLoginDelegate: DismissLoginViewControllerDelegate!
+    weak var actionDelegate: LoginActionDelegate!
     
-    private(set) var user: User? = nil
-    
-    public func updateUser(withUser user: User) {
-        self.user = user
-    }
+    public var email: String = ""
+    public var password: String = ""
 
     public func handleSignUpButtonTapped(_ sender: UIButton) {
-
+        self.actionDelegate.pushSignUpVC()
     }
     
-    public func handleLinkUpButtonTapped(_ sender: UIButton) {
+    public func handleLoginButtonTapped(_ sender: UIButton) -> String? {
 
+       if let error = self.validateTextFields() {
+           return error
+       }
+        
+        let user = User(name: "Sako Hovaguimian",
+                        email: self.email,
+                        listId: "234")
+        
+        self.actionDelegate.dismissLoginVC(user: user)
+        
+        return nil
+        
     }
     
-    public func handleCloseButtonTapped(_ sender: UIButton) {
-        self.dismissLoginDelegate.dismissLoginVC(user: testUser)
+    private func validateTextFields() -> String? {
+        
+        guard email.count > 2 else { return ValidationError.invalidEmail.error }
+        guard email.isValidEmail() else { return ValidationError.invalidEmail.error }
+        guard password.count > 2 else { return ValidationError.invalidPassword.error }
+        
+        return nil
+        
     }
     
 }

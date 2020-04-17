@@ -11,6 +11,10 @@ import Animo
 
 class HomeViewController: UIViewController {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     //MARK:- Properties
     
     private(set) var homeViewModel: HomeViewModel!
@@ -64,6 +68,31 @@ class HomeViewController: UIViewController {
         return stackView
     }()
     
+    //SettingsButtons
+    
+    private lazy var logoutButton: UIButton = {
+        let btn = self.createSettingsButton(text: "Logout")
+        btn.addTarget(self,
+                      action: #selector(self.logoutButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var linkAccountButton: UIButton = {
+        let btn = self.createSettingsButton(text: "Link Account")
+        btn.addTarget(self,
+                      action: #selector(self.linkAccountButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var settingButton: UIButton = {
+        let btn = self.createSettingsButton(text: "Settings")
+        btn.addTarget(self,
+                      action: #selector(self.settingButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
     
     
     //MARK:- Life Cycle
@@ -79,19 +108,26 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.homeViewModel.updateUser(withUser: testUser)
 
-        if !self.homeViewModel.presentLoginController() {
+        if self.homeViewModel.isUserAvailable {
             self.configureViews()
+        } else {
+            self.homeViewModel.presentLoginController()
         }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        if !self.homeViewModel.presentLoginController() {
-            self.configureViews()
-        }
+        
+        setNeedsStatusBarAppearanceUpdate()
+        
+        guard self.homeViewModel.user != nil else { return }
+        guard self.view.subviews.isEmpty else { return }
+        
+        self.configureViews()
         
     }
     
@@ -105,6 +141,8 @@ class HomeViewController: UIViewController {
         self.configureAlphaView()
         self.configureButtons()
         self.configureSettingsStackView()
+        
+        self.toggleSettingMenu(hide: true)
         
     }
     
@@ -187,8 +225,10 @@ class HomeViewController: UIViewController {
         self.listsButton.tintColor = .lightGray
     }
     
-    private func updateUIForSettingsButton(shouldHide: Bool) {
+    private func animateUISettingsButton() {
         
+        let shouldHide = self.homeViewModel.shouldHideTableView
+
         UIView.animate(withDuration: 0.3) {
             self.settingsStackView.alpha = shouldHide ? 1.0 : 0.0
             self.settingsStackView.transform = shouldHide ? .identity : CGAffineTransform(translationX: 0, y: self.view.frame.height)
@@ -199,28 +239,45 @@ class HomeViewController: UIViewController {
     
     private func configureSettingsStackView() {
         
+        guard self.settingsStackView.arrangedSubviews.count == 0 else { return }
+        
         self.view.addSubview(self.settingsStackView)
         
         self.settingsStackView.anchor(left: self.view.leftAnchor,
                                       bottom: self.addButton.topAnchor,
                                       right: self.view.rightAnchor,
-                                      paddingLeft: 32,
+                                      paddingLeft: 64,
                                       paddingBottom: 80,
-                                      paddingRight: 32)
+                                      paddingRight: 64)
         
-        for _ in 0...2 {
             
-            let button = UIButton(type: .system)
-            button.setTitle("Notifications", for: .normal)
-            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40.0)
-            button.setTitleColor(.charcoalBlack, for: .normal)
-            
-            button.setDimmensions(height: 60, width: self.view.frame.width - 64)
-            
-            self.settingsStackView.addArrangedSubview(button)
-            self.settingsStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
-            
-        }
+        self.settingsStackView.addArrangedSubview(self.settingButton)
+        self.settingsStackView.addArrangedSubview(self.linkAccountButton)
+        self.settingsStackView.addArrangedSubview(self.logoutButton)
+        
+        self.settingsStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
+        
+    }
+    
+    private func toggleSettingMenu(hide: Bool) {
+        
+        self.homeViewModel.shouldHideTableView = !hide
+        self.animateUISettingsButton()
+        self.updateButtonState()
+        self.listsButton.tintColor = .charcoalBlack
+        
+    }
+    
+    private func createSettingsButton(text: String) -> UIButton {
+        
+        let button = UIButton(type: .system)
+        button.setTitle(text, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 40.0)
+        button.setTitleColor(.charcoalBlack, for: .normal)
+        
+        button.setDimmensions(height: 60, width: self.view.frame.width - 64)
+        
+        return button
         
     }
     
@@ -233,15 +290,36 @@ class HomeViewController: UIViewController {
     @objc private func listsButtonTapped(_ sender: UIButton) {
         self.updateButtonState()
         self.homeViewModel.handleListsButtonTapped(sender)
-        self.updateUIForSettingsButton(shouldHide: self.homeViewModel.shouldHideTableView)
+        self.animateUISettingsButton()
     }
     
     @objc private func settingsButtonTapped(_ sender: UIButton) {
         self.updateButtonState()
         self.homeViewModel.handleSettingsButtonTapped(sender)
-        self.updateUIForSettingsButton(shouldHide: self.homeViewModel.shouldHideTableView)
+        self.animateUISettingsButton()
     }
     
+    @objc private func logoutButtonTapped(_ sender: UIButton) {
+        self.settingsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+        self.view.subviews.forEach({ $0.removeFromSuperview() })
+        self.homeViewModel.handleLogOutButtonTapped(sender)
+    }
+    
+    @objc private func settingButtonTapped(_ sender: UIButton) {
+        self.homeViewModel.handleSettingButtonTapped(sender)
+    }
+    
+    @objc private func linkAccountButtonTapped(_ sender: UIButton) {
+        self.homeViewModel.handleLinkAccountButtonTapped(sender)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+         let touch = touches.first
+         if touch?.view != self.settingsStackView {
+            self.toggleSettingMenu(hide: true)
+            print("TAPPED REGION")
+        }
+    }
 
 }
 
@@ -264,9 +342,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let category = Category.home.name
+        self.homeViewModel.handlePushItemsViewController(list: category)
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let vw = self.homeTableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as! TableHeaderView
-        vw.configure(user: testUser)
+        vw.configure(user: self.homeViewModel.user!)
         return vw
     }
     
@@ -278,5 +361,4 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return self.view.frame.height / 4
     }
 
-    
 }

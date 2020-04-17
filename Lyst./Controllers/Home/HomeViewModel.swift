@@ -9,17 +9,22 @@
 import UIKit
 import Animo
 
-protocol PresentLoginViewControllerDelegate: class {
-    func presentLoginVC()
+protocol HomeVCActionsDelegate: class {
+    func presentLoginVC(animated: Bool)
+    func pushItemVC(list: String)
 }
 
 class HomeViewModel {
     
-    weak var loginDelegate: PresentLoginViewControllerDelegate!
+    weak var actionDelegate: HomeVCActionsDelegate!
     
     private(set) var user: User? = nil
     
     public var shouldHideTableView: Bool = false
+    
+    public var isUserAvailable: Bool {
+        return self.user != nil
+    }
     
     public func updateUser(withUser user: User) {
         self.user = user
@@ -39,14 +44,26 @@ class HomeViewModel {
         sender.tintColor = .charcoalBlack
     }
     
-    public func presentLoginController() -> Bool {
-        
-        guard self.user == nil else { return false }
-        
+    public func handleLogOutButtonTapped(_ sender: UIButton) {
+        self.actionDelegate.presentLoginVC(animated: true)
+        logSuccess("LOGGING OUT")
+    }
+    
+    public func handleSettingButtonTapped(_ sender: UIButton) {
+        logSuccess("SETTING BUTTON TAPPED")
+    }
+    
+    public func handleLinkAccountButtonTapped(_ sender: UIButton) {
+        logSuccess("LINKING ACCOUNTS...")
+    }
+    
+    public func handlePushItemsViewController(list: String) {
+        self.actionDelegate.pushItemVC(list: list)
+    }
+    
+    public func presentLoginController()  {
         logDebugMessage("Load Login Controller")
-        self.loginDelegate.presentLoginVC()
-        return true
-        
+        self.actionDelegate.presentLoginVC(animated: false)
     }
     
 }

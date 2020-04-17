@@ -7,11 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D09C70B2447F620005C5D3C /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09C70A2447F620005C5D3C /* SignUpViewModel.swift */; };
+		3D09C70D2447F6BF005C5D3C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */; };
+		3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1210722448FC6400C8107A /* ItemsViewModel.swift */; };
+		3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1210742448FCE200C8107A /* ItemsViewController.swift */; };
 		3D42A2FC2446A3D400415B50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42A2FB2446A3D400415B50 /* AppDelegate.swift */; };
 		3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42A2FD2446A3D400415B50 /* SceneDelegate.swift */; };
 		3D42A3032446A3D400415B50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D42A3012446A3D400415B50 /* Main.storyboard */; };
 		3D42A3052446A3D500415B50 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D42A3042446A3D500415B50 /* Assets.xcassets */; };
 		3D42A3082446A3D500415B50 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D42A3062446A3D500415B50 /* LaunchScreen.storyboard */; };
+		3D5F731E2447BBA2003BCF16 /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731D2447BBA2003BCF16 /* InputTextField.swift */; };
+		3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731F2447BD06003BCF16 /* UIView+ext.swift */; };
+		3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A776C2448DA53006CE57D /* UIViewController+ext.swift */; };
 		3DB753342446A47C00CC183C /* Animo in Frameworks */ = {isa = PBXBuildFile; productRef = 3DB753332446A47C00CC183C /* Animo */; };
 		3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753352446A49E00CC183C /* MainCoordinator.swift */; };
 		3DB7533A2446A4E100CC183C /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753392446A4E100CC183C /* HomeCoordinator.swift */; };
@@ -31,6 +38,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D09C70A2447F620005C5D3C /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		3D1210722448FC6400C8107A /* ItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewModel.swift; sourceTree = "<group>"; };
+		3D1210742448FCE200C8107A /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		3D42A2F82446A3D400415B50 /* Lyst..app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lyst..app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D42A2FB2446A3D400415B50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D42A2FD2446A3D400415B50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +49,9 @@
 		3D42A3042446A3D500415B50 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D42A3072446A3D500415B50 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D42A3092446A3D500415B50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D5F731D2447BBA2003BCF16 /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
+		3D5F731F2447BD06003BCF16 /* UIView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
+		3D9A776C2448DA53006CE57D /* UIViewController+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ext.swift"; sourceTree = "<group>"; };
 		3DB753352446A49E00CC183C /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		3DB753392446A4E100CC183C /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		3DB7533D2446B04900CC183C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +81,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D09C7092447F601005C5D3C /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				3D09C70A2447F620005C5D3C /* SignUpViewModel.swift */,
+				3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		3D1210712448FC2500C8107A /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				3D1210722448FC6400C8107A /* ItemsViewModel.swift */,
+				3D1210742448FCE200C8107A /* ItemsViewController.swift */,
+			);
+			path = Items;
+			sourceTree = "<group>";
+		};
+		3D1210762448FDDA00C8107A /* ListTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				3DB753462447478100CC183C /* ListTableViewCell.swift */,
+				3DB753472447478100CC183C /* ListTableViewCell.xib */,
+			);
+			path = ListTableViewCell;
+			sourceTree = "<group>";
+		};
 		3D42A2EF2446A3D400415B50 = {
 			isa = PBXGroup;
 			children = (
@@ -114,6 +155,8 @@
 			isa = PBXGroup;
 			children = (
 				3DC71365244760840062303C /* UIColor+ext.swift */,
+				3D5F731F2447BD06003BCF16 /* UIView+ext.swift */,
+				3D9A776C2448DA53006CE57D /* UIViewController+ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -133,7 +176,9 @@
 			children = (
 				3DB753352446A49E00CC183C /* MainCoordinator.swift */,
 				3DDB3C9B244790A000DB770E /* Login */,
+				3D09C7092447F601005C5D3C /* SignUp */,
 				3DB753382446A4CF00CC183C /* Home */,
+				3D1210712448FC2500C8107A /* Items */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -142,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				3DB753412447434A00CC183C /* TableHeaderView */,
+				3D5F731D2447BBA2003BCF16 /* InputTextField.swift */,
 			);
 			path = SubClasses;
 			sourceTree = "<group>";
@@ -159,8 +205,7 @@
 		3DB7533B2446A55300CC183C /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				3DB753462447478100CC183C /* ListTableViewCell.swift */,
-				3DB753472447478100CC183C /* ListTableViewCell.xib */,
+				3D1210762448FDDA00C8107A /* ListTableViewCell */,
 			);
 			path = Xibs;
 			sourceTree = "<group>";
@@ -274,16 +319,23 @@
 				3DB753482447478100CC183C /* ListTableViewCell.swift in Sources */,
 				3DC71366244760840062303C /* UIColor+ext.swift in Sources */,
 				3DDB3CA12447919B00DB770E /* LoginViewController.swift in Sources */,
+				3D09C70B2447F620005C5D3C /* SignUpViewModel.swift in Sources */,
 				3DDB3CA02447919900DB770E /* LoginViewModel.swift in Sources */,
 				3DB753402446B07300CC183C /* HomeViewModel.swift in Sources */,
+				3D09C70D2447F6BF005C5D3C /* SignUpViewController.swift in Sources */,
 				3DDB3C9F2447919700DB770E /* LoginCoordinator.swift in Sources */,
 				3D42A2FC2446A3D400415B50 /* AppDelegate.swift in Sources */,
+				3D5F731E2447BBA2003BCF16 /* InputTextField.swift in Sources */,
 				3DDB3C96244781DD00DB770E /* Constants.swift in Sources */,
+				3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */,
 				3DB7533A2446A4E100CC183C /* HomeCoordinator.swift in Sources */,
 				3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */,
 				3DDB3C9A244787F100DB770E /* User.swift in Sources */,
 				3DB753442447440000CC183C /* TableHeaderView.swift in Sources */,
+				3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */,
+				3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */,
 				3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */,
+				3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */,
 				3DDB3C98244787C100DB770E /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -431,6 +483,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QNK29NH27H;
 				INFOPLIST_FILE = Lyst./Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -449,6 +502,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QNK29NH27H;
 				INFOPLIST_FILE = Lyst./Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

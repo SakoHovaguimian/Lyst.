@@ -9,6 +9,7 @@
 import UIKit
 import Animo
 
+let backgroundGradient = [UIColor.background1!, UIColor.background2!]
 
 let graidentColors: [[UIColor]] = [
     [UIColor.pink1!, UIColor.pink2!],
@@ -21,3 +22,8 @@ let graidentColors: [[UIColor]] = [
 ]
 
 let testUser: User = User(name: "Mitch", email: "sako@sako.com", listId: "1234")
+
+let avenirNextBold = "AvenirNextCondensed-Bold"
+let avenirNextRegular = "AvenirNextCondensed-Regular"
+let avenirNextMedium = "AvenirNextCondensed-Medium"
+

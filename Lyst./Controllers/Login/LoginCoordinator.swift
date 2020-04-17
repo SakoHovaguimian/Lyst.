@@ -28,24 +28,57 @@ class LoginCoordinator: Coordinator {
     func start() {
         
         let viewModel = LoginViewModel()
-        viewModel.dismissLoginDelegate = self
+        viewModel.actionDelegate = self
         
         let loginVC = LoginViewController(viewModel: viewModel)
-            
+        
         self.navigationController.modalPresentationStyle = .fullScreen
         self.navigationController.navigationBar.isHidden = true
         self.navigationController.pushViewController(loginVC, animated: false)
         
     }
     
+    private func pushSignUpController() {
+        
+        let viewModel = SignUpViewModel()
+        viewModel.actionDelegate = self
+        
+        let signUpVC = SignUpViewController(viewModel: viewModel)
+        
+        self.navigationController.pushViewController(signUpVC, animated: true)
+        
+    }
+    
 }
 
-extension LoginCoordinator: DismissLoginViewControllerDelegate {
+extension LoginCoordinator: LoginActionDelegate {
+    
+    func pushSignUpVC() {
+        logSuccess("Coordinator is pushing")
+        self.pushSignUpController()
+    }
     
     func dismissLoginVC(user: User) {
         logDebugMessage("Coordinator is attemplting to close")
         self.userCreatedDelegate.userCreated(user: user)
         self.navigationController.dismiss(animated: true, completion: nil)
     }
+    
+}
+
+extension LoginCoordinator: SignUpActionDelegate {
+    func didCreateUser(user: User) {
+        logSuccess("did create user (COORDINATOR)")
+        self.userCreatedDelegate.userCreated(user: user)
+        self.navigationController.dismiss(animated: true, completion: nil)
+    }
+    
+    func popSignUpVC() {
+        logSuccess("popping VC from stack (COORDINATOR)")
+        self.navigationController.popViewController(animated: true)
+    }
+    
+    
+    
     
 }

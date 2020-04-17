@@ -36,6 +36,9 @@ extension UIColor {
     static let royalBlue1 = UIColor(hex: "#4568dc")
     static let royalBlue2 = UIColor(hex: "#b06ab3")
     
+    static let background1 = UIColor(hex: "#f3e7e9")
+    static let background2 = UIColor(hex: "#e3eeff")
+    
 
     
     

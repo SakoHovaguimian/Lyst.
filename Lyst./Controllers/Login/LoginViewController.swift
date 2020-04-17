@@ -11,22 +11,56 @@ import Animo
 
 class LoginViewController: UIViewController {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     //MARK:- Properties
     
-    private var loginViewModel: LoginViewModel!
+    private(set) var loginViewModel: LoginViewModel!
     
-    private lazy var closeButton: UIButton = {
-        let btn = UIButton(type: .custom)
-        btn.backgroundColor = .charcoalBlack
-        btn.clipsToBounds = true
-        btn.setImage(UIImage(systemName: "stop"), for: .normal)
+    private var textFields: [UITextField] = []
+    
+    //MARK:- Views
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = " LYST."
+        label.textAlignment = .center
+        label.textColor = .charcoalBlack
+        label.font = UIFont(name: avenirNextBold, size: 80.0)
+        return label
+    }()
+    
+    private let detailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "The last lyst you'll ever need"
+        label.textAlignment = .center
+        label.textColor = .charcoalBlack
+        label.font = UIFont(name: avenirNextMedium, size: 18.0)
+        return label
+    }()
+    
+    private lazy var submitButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Login", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: avenirNextBold, size: 20.0)
         btn.addTarget(self,
-                      action: #selector(self.closeButtonTapped(sender:)),
+                      action: #selector(self.submitButtonTapped(_:)),
                       for: .touchUpInside)
         return btn
     }()
     
-    //MARK:- Views
+    private lazy var dontHaveAccountButton: UIButton = {
+        return configureDontHaveAccountButton()
+    }()
+    
+    private let emailTextField = InputTextField(placeholder: "Email",
+                                                secureEntry: false, tag: 0)
+    
+    private let passwordTextField = InputTextField(placeholder: "Password",
+                                                   secureEntry: true, tag: 1)
     
     //MARK:- Life Cycle
     
@@ -41,31 +75,188 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.view.backgroundColor = .white
         
+        self.textFields = [self.emailTextField, self.passwordTextField]
+        
         self.configureViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setNeedsStatusBarAppearanceUpdate()
     }
     
     //MARK:- Helper Functions
     
     private func configureViews() {
         
-        //Close Button
-        self.view.addSubview(self.closeButton)
+        self.view.simpleGradient(colors: backgroundGradient)
         
-        self.closeButton.anchor(top: self.view.safeAreaLayoutGuide.topAnchor,
-                                right: self.view.rightAnchor,
-                                paddingTop: 8,
-                                paddingRight: 16,
-                                width: 32,
-                                height: 32)
+        //Title Label
+        self.view.addSubview(self.titleLabel)
+        
+        self.titleLabel.centerX(inView: self.view)
+        self.titleLabel.anchor(top: self.view.safeAreaLayoutGuide.topAnchor,
+                               left: self.view.leftAnchor,
+                               right: self.view.rightAnchor,
+                               paddingTop: 32,
+                               paddingLeft: 64,
+                               paddingRight: 64,
+                               height: 70)
+        
+        //Detail Label
+        self.view.addSubview(self.detailLabel)
+        
+        self.detailLabel.centerX(inView: self.view)
+        self.detailLabel.anchor(top: self.titleLabel.bottomAnchor,
+                               left: self.view.leftAnchor,
+                               right: self.view.rightAnchor,
+                               paddingTop: 8,
+                               paddingLeft: 64,
+                               paddingRight: 64,
+                               height: 20)
+        
+        
+        //Email TextField
+        self.view.addSubview(self.emailTextField)
+        
+        self.emailTextField.delegate = self
+        
+        self.emailTextField.centerY(inView: self.view, constant: -50)
+        self.emailTextField.anchor(left: self.view.leftAnchor,
+                                   right: self.view.rightAnchor,
+                                   paddingLeft: 32,
+                                   paddingRight: 32,
+                                   height: 50)
+        
+        //Password TextField
+        self.view.addSubview(self.passwordTextField)
+        
+        self.passwordTextField.delegate = self
+        
+        self.passwordTextField.anchor(top: self.emailTextField.bottomAnchor,
+                                   left: self.view.leftAnchor,
+                                   right: self.view.rightAnchor,
+                                   paddingTop: 16,
+                                   paddingLeft: 32,
+                                   paddingRight: 32,
+                                   height: 50)
+        
+        //Submit Button
+        self.view.addSubview(self.submitButton)
+        
+        self.submitButton.anchor(top: self.passwordTextField.bottomAnchor,
+                                 left: self.view.leftAnchor,
+                                 right: self.view.rightAnchor,
+                                 paddingTop: 64,
+                                 paddingLeft: 32,
+                                 paddingRight: 32,
+                                 height: 60)
+        
+        let frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 64, height: 60)
+        self.submitButton.applyGradient(colors: [.skyBlue, .systemBlue], frame: frame)
+        
+        self.submitButton.roundCorners(.allCorners, radius: 11)
+        
+        self.updateButtonState(self.textFields, self.submitButton)
+        
+        //DontHaveAccountButton
+        self.view.addSubview(self.dontHaveAccountButton)
+        
+        self.dontHaveAccountButton.anchor(left: self.view.leftAnchor,
+                                          bottom: self.view.safeAreaLayoutGuide.bottomAnchor,
+                                          right: self.view.rightAnchor,
+                                          paddingLeft: 32,
+                                          paddingBottom: 0,
+                                          paddingRight: 32,
+                                          height: 20)
         
     }
     
-    //MARK:- @BJC Functions
-    @objc private func closeButtonTapped(sender: UIButton) {
-        self.loginViewModel.handleCloseButtonTapped(sender)
+    private func configureDontHaveAccountButton() -> UIButton {
+        
+        let btn = UIButton(type: .system)
+        
+        let font1 = UIFont(name: avenirNextRegular, size: 15.0)
+        let font2 = UIFont(name: avenirNextMedium, size: 15.0)
+        let text1 = "Don't have an account? "
+        let text2 = " Sign Up!"
+        
+        let attributedString = String().customAttributedString(text1,
+                                                               text2,
+                                                               font1: font1,
+                                                               font2: font2,
+                                                               font1Size: 15.0,
+                                                               font2Size: 15.0,
+                                                               color1: .darkGray,
+                                                               color2: .systemBlue)
+        
+        btn.setAttributedTitle(attributedString, for: .normal)
+        
+        btn.addTarget(self,
+                      action: #selector(self.signUpButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+        
     }
     
- 
+    private func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
+        
+        var text = (textField.text ?? "")
+        
+        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
+        
+        if textField == self.emailTextField {
+            self.loginViewModel.email = text
+        } else {
+            self.loginViewModel.password = text
+        }
+        
+    }
+    
+    //MARK:- OBJC Functions
+    @objc private func submitButtonTapped(_ sender: UIButton) {
+        
+        if let error = self.loginViewModel.handleLoginButtonTapped(sender) {
+            self.showSimpleError(title: "Error", message: error)
+        }
+        
+    }
+    
+    @objc private func signUpButtonTapped(_ sender: UIButton) {
+        self.loginViewModel.handleSignUpButtonTapped(sender)
+    }
+    
+}
+
+//MARK:- Extensions
+
+//MARK:- Textfield Delegates
+extension LoginViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        self.updateTextFieldForViewModel(textField, string: string)
+        self.updateButtonState(self.textFields, self.submitButton)
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.updateButtonState(self.textFields, self.submitButton)
+        self.updateTextFieldForViewModel(textField, string: nil)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if textField == self.emailTextField {
+            self.passwordTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
+    
 }

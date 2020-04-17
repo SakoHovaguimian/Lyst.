@@ -22,6 +22,7 @@ class MainCoordinator: Coordinator {
     func start() {
         
         let nc = UINavigationController()
+        
         let homeCoord = HomeCoordinator(navigationController: nc)
         
         homeCoord.start()

@@ -46,6 +46,7 @@ class ListTableViewCell: UITableViewCell {
         self.gradientImageView.image = UIImage(named: category.imageName)?.withRenderingMode(.alwaysTemplate)
         
         self.listNameLabel.text = category.name
+        self.listNameLabel.textColor = .charcoalBlack
         
     }
     
