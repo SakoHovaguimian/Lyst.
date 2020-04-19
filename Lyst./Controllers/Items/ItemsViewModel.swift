@@ -17,9 +17,17 @@ class ItemsViewModel {
     
     weak var actionDelegate: ItemVCActionDelegate!
     
-    private(set) var list: String!
+    private(set) var list: List!
     
-    init(list: String) {
+    public var items: [Item] {
+        return self.list.items
+    }
+    
+    public var numberOfItems: Int {
+        return self.items.count
+    }
+    
+    init(list: List) {
         self.list = list
     }
     
@@ -28,7 +36,18 @@ class ItemsViewModel {
     }
     
     public func handleAddButtonTapped(_ sender: UIButton) {
+        self.addItems()
         logSuccess("Add Button Tapped in View Model")
+    }
+    
+    public func handleOptionsButtonTapped(_ sender: UIButton) {
+        logSuccess("Options Button Tapped: Loading....")
+    }
+    
+    public func addItems() {
+        let item = Item()
+        item.name = "Milk"
+        self.list.items.append(item)
     }
     
 }

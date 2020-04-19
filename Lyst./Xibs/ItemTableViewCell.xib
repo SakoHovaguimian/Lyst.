@@ -35,7 +35,7 @@
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Take  Out The Trash" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6e-oH-H76">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take  Out The Trash" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6e-oH-H76">
                                 <rect key="frame" x="43" y="29.5" width="153" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="6nq-A9-V2J"/>
@@ -53,6 +53,7 @@
                             <constraint firstAttribute="bottom" secondItem="q4c-gG-E0g" secondAttribute="bottom" id="XVc-VT-eoy"/>
                             <constraint firstItem="9W0-68-xcz" firstAttribute="centerY" secondItem="7gd-Qo-Nps" secondAttribute="centerY" id="bNX-Cd-AIB"/>
                             <constraint firstItem="9W0-68-xcz" firstAttribute="leading" secondItem="7gd-Qo-Nps" secondAttribute="leading" constant="8" id="gxs-59-cWh"/>
+                            <constraint firstItem="N6e-oH-H76" firstAttribute="centerY" secondItem="7gd-Qo-Nps" secondAttribute="centerY" id="rsE-ub-MDs"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -69,6 +70,7 @@
             <connections>
                 <outlet property="checkBoxButton" destination="9W0-68-xcz" id="jYA-QW-eYP"/>
                 <outlet property="containerView" destination="7gd-Qo-Nps" id="DRT-LO-hoa"/>
+                <outlet property="itemNameLabel" destination="N6e-oH-H76" id="hcm-Pp-hvS"/>
             </connections>
             <point key="canvasLocation" x="-114.49275362318842" y="66.294642857142861"/>
         </tableViewCell>

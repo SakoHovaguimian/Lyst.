@@ -37,13 +37,15 @@ class TableHeaderView: UITableViewHeaderFooterView {
         
     }
     
-    public func configure(list: String) {
+    public func configure(list: List) {
 
         
-        self.nameLabel.text = list
+        self.nameLabel.text = list.name
         self.nameLabel.textColor = .charcoalBlack
         
-        self.listCountLabel.text = "You have 10 items"
+        let itemCount = list.items.count
+        
+        self.listCountLabel.text = "You have \(itemCount) items"
         
     }
 

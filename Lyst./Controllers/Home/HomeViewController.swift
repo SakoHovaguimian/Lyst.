@@ -332,12 +332,14 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.homeViewModel.numberOfLists
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = self.homeTableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell {
+            let list = self.homeViewModel.lists[indexPath.row]
+            cell.configureList(list: list)
             return cell
         }
         
@@ -346,8 +348,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let category = Category.home.name
-        self.homeViewModel.handlePushItemsViewController(list: category)
+        let list = self.homeViewModel.lists[indexPath.row]
+        self.homeViewModel.handlePushItemsViewController(list: list)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

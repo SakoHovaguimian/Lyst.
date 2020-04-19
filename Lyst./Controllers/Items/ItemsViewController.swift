@@ -32,11 +32,22 @@ class ItemsViewController: UIViewController {
         return btn
     }()
     
-    private lazy var addButton: UIButton = {
+    private lazy var optionsButton: UIButton = {
         let btn = UIButton(type: .system)
-        let image = UIImage(named: "add2")?.withRenderingMode(.alwaysTemplate)
-        btn.setImage(image, for: .normal)
-        btn.tintColor = .charcoalBlack
+        btn.setTitle("...", for: .normal)
+        btn.setTitleColor(.charcoalBlack, for: .normal)
+        btn.titleLabel?.font = UIFont(name: avenirNextBold, size: 25.0)
+        btn.addTarget(self,
+                      action: #selector(self.optionsButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var floatingAddButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.backgroundColor = .charcoalBlack
+        btn.clipsToBounds = true
+        btn.setImage(UIImage(named: "add"), for: .normal)
         btn.addTarget(self,
                       action: #selector(self.addButtonTapped(_:)),
                       for: .touchUpInside)
@@ -53,7 +64,7 @@ class ItemsViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,7 +79,7 @@ class ItemsViewController: UIViewController {
         
         self.configureTableView()
         self.configureAlphaView()
-        self.configureBackButtonView()
+        self.configureButtons()
         
     }
     
@@ -91,10 +102,10 @@ class ItemsViewController: UIViewController {
                   left: self.view.leftAnchor,
                   right: self.view.rightAnchor,
                   height: self.view.frame.height / 8.6)
-    
+        
     }
     
-    private func configureBackButtonView() {
+    private func configureButtons() {
         
         //Back ImageView
         
@@ -123,13 +134,22 @@ class ItemsViewController: UIViewController {
                                paddingRight: -60)
         
         //Add Button
-        self.view.addSubview(self.addButton)
+        self.view.addSubview(self.optionsButton)
         
-        self.addButton.centerY(inView: backImageView, constant: 3)
-        self.addButton.anchor(right: self.view.rightAnchor,
+        self.optionsButton.centerY(inView: backImageView, constant: 3)
+        self.optionsButton.anchor(right: self.view.rightAnchor,
                               paddingRight: 16,
                               width: 32,
                               height: 32)
+        
+        //Floating Add Button
+        self.view.addSubview(self.floatingAddButton)
+        
+        self.floatingAddButton.setDimmensions(height: 75, width: 75)
+        self.floatingAddButton.centerX(inView: self.view)
+        self.floatingAddButton.anchor(bottom: self.view.bottomAnchor, paddingBottom: 32)
+        self.floatingAddButton.layer.cornerRadius = 35.5
+        self.floatingAddButton.addShadow(shadow: .black, opacity: 0.8, offSet: .zero, raidus: 1.0)
         
     }
     
@@ -160,6 +180,11 @@ class ItemsViewController: UIViewController {
     
     @objc private func addButtonTapped(_ sender: UIButton) {
         self.itemsViewModel.handleAddButtonTapped(sender)
+        self.itemsTableView.reloadData()
+    }
+    
+    @objc private func optionsButtonTapped(_ sender: UIButton) {
+        self.itemsViewModel.handleOptionsButtonTapped(sender)
     }
     
 }
@@ -170,14 +195,16 @@ class ItemsViewController: UIViewController {
 extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.itemsViewModel.items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = self.itemsTableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.identifier, for: indexPath) as? ItemTableViewCell {
+            let item = self.itemsViewModel.items[indexPath.row]
+            cell.configureItem(item: item)
             cell.isFirstCell = indexPath.row == 0
-            cell.isLastCell = indexPath.row == 9
+            cell.isLastCell = indexPath.row == self.itemsViewModel.numberOfItems - 1
             return cell
         }
         
@@ -187,7 +214,7 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let vw = self.itemsTableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as! TableHeaderView
-        vw.configure(list: self.itemsViewModel.list)
+        vw.configure(list: self.itemsViewModel!.list)
         return vw
     }
     
@@ -198,5 +225,5 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.view.frame.height / 4
     }
-
+    
 }

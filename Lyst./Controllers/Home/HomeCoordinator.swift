@@ -47,7 +47,7 @@ class HomeCoordinator: Coordinator {
         
     }
     
-    private func pushItemViewController(list: String) {
+    private func pushItemViewController(list: List) {
         
         let viewModel = ItemsViewModel(list: list)
         viewModel.actionDelegate = self
@@ -88,7 +88,7 @@ extension HomeCoordinator: UserCreatedDelegate {
 //MARK:- HOME VIEW MODEL DELEGATE
 extension HomeCoordinator: HomeVCActionsDelegate {
     
-    func pushItemVC(list: String) {
+    func pushItemVC(list: List) {
         self.pushItemViewController(list: list)
     }
     

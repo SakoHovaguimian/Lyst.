@@ -13,6 +13,8 @@ class ItemTableViewCell: UITableViewCell {
     
     static let identifier = "ItemTableViewCell"
     
+    private var item: Item!
+    
     var isFirstCell: Bool = false {
         didSet {
             self.configureViews()
@@ -27,10 +29,18 @@ class ItemTableViewCell: UITableViewCell {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var checkBoxButton: UIButton!
+    @IBOutlet weak var itemNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.configureCheckBoxButton()
+    }
+    
+    public func configureItem(item: Item) {
+        
+        self.item = item
+        self.configureViews()
+        
     }
     
     private func configureViews() {
@@ -40,6 +50,9 @@ class ItemTableViewCell: UITableViewCell {
         let radius: CGFloat = self.isFirstCell || self.isLastCell ? 11 : 0
         let corners = self.cornersToRound()
         self.containerView.roundCorners(corners, radius: radius)
+        self.addShadows()
+        
+        self.itemNameLabel.text = self.item.name
         
         
     }
@@ -49,6 +62,11 @@ class ItemTableViewCell: UITableViewCell {
         
         var corner: UIRectCorner = []
         
+        if self.isFirstCell && self.isLastCell {
+            corner = [.topLeft, .topRight, .bottomLeft, .bottomRight]
+            return corner
+        }
+        
         if self.isFirstCell {
             corner = [.topLeft, .topRight]
         } else if self.isLastCell {
@@ -57,6 +75,14 @@ class ItemTableViewCell: UITableViewCell {
         
         return corner
         
+        
+    }
+    
+    private func addShadows() {
+        
+        if self.isFirstCell || self.isLastCell {
+            self.contentView.addShadow(shadow: .black, opacity: 0.3, offSet: .zero, raidus: 1.0)
+        }
         
     }
     

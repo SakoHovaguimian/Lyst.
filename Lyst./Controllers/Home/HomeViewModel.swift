@@ -11,7 +11,7 @@ import Animo
 
 protocol HomeVCActionsDelegate: class {
     func presentLoginVC(animated: Bool)
-    func pushItemVC(list: String)
+    func pushItemVC(list: List)
 }
 
 class HomeViewModel {
@@ -19,6 +19,12 @@ class HomeViewModel {
     weak var actionDelegate: HomeVCActionsDelegate!
     
     private(set) var user: User? = nil
+     
+    private(set) var lists: [List] = List.generateList()
+    
+    public var numberOfLists: Int {
+        return self.lists.count
+    }
     
     public var shouldHideTableView: Bool = false
     
@@ -57,7 +63,7 @@ class HomeViewModel {
         logSuccess("LINKING ACCOUNTS...")
     }
     
-    public func handlePushItemsViewController(list: String) {
+    public func handlePushItemsViewController(list: List) {
         self.actionDelegate.pushItemVC(list: list)
     }
     
