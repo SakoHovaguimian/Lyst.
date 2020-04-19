@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Animo
 
 class SignUpViewController: UIViewController {
     
@@ -76,6 +77,7 @@ class SignUpViewController: UIViewController {
         
         self.configureBackButtonView()
         self.configureViews()
+        self.configureTextFieldsWithToolBar()
         
     }
     
@@ -186,6 +188,23 @@ class SignUpViewController: UIViewController {
         
     }
     
+    private func configureTextFieldsWithToolBar() {
+        
+        let toolbar1 = InputAccessoryView(items: [.flexibleSpace, .next], textField: self.fullNameTextField, delegate: self)
+        let toolbar2 = InputAccessoryView(items: [.flexibleSpace, .previous, .next], textField: self.emailTextField, delegate: self)
+        let toolbar3 = InputAccessoryView(items: [.flexibleSpace, .previous, .done], textField: self.passwordTextField, delegate: self)
+        
+        self.fullNameTextField.inputAccessoryView = toolbar1
+        self.fullNameTextField.returnKeyType = .next
+        
+        self.emailTextField.inputAccessoryView = toolbar2
+        self.emailTextField.returnKeyType = .next
+        
+        self.passwordTextField.inputAccessoryView = toolbar3
+        self.passwordTextField.returnKeyType = .done
+        
+    }
+    
     //MARK:- @OBJC Functions
     
     @objc private func signUpButtonTapped(_ sender: UIButton) {
@@ -217,6 +236,31 @@ class SignUpViewController: UIViewController {
 }
 
 //MARK:- Extensions
+
+//MARK:- TextField ToolBar Delegate
+extension SignUpViewController: InputAccessoryViewDelegate {
+    
+    func didTapNextButton(_ sender: UITextField) {
+        if sender == self.fullNameTextField {
+            self.emailTextField.becomeFirstResponder()
+        } else {
+            self.passwordTextField.becomeFirstResponder()
+        }
+    }
+    
+    func didTapPreviousButton(_ sender: UITextField) {
+        if sender == self.emailTextField {
+            self.fullNameTextField.becomeFirstResponder()
+        } else {
+            self.emailTextField.becomeFirstResponder()
+        }
+    }
+    
+    func didTapDoneButton(_ sender: UITextField) {
+        sender.resignFirstResponder()
+    }
+    
+}
 
 //MARK:- TextField Delegate
 
