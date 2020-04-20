@@ -220,8 +220,8 @@ class LoginViewController: UIViewController {
     
     private func configureTextFieldsWithToolBar() {
         
-        let toolbar1 = InputAccessoryView(items: [.flexibleSpace, .next], textField: self.emailTextField, delegate: self)
-        let toolbar2 = InputAccessoryView(items: [.flexibleSpace, .previous, .done], textField: self.passwordTextField, delegate: self)
+        let toolbar1 = InputAccessoryView(items: [.next], textField: self.emailTextField, delegate: self)
+        let toolbar2 = InputAccessoryView(items: [.previous, .flexibleSpace, .done], textField: self.passwordTextField, delegate: self)
         
         self.emailTextField.inputAccessoryView = toolbar1
         self.emailTextField.returnKeyType = .next

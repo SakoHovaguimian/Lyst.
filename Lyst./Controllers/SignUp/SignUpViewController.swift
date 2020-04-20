@@ -190,9 +190,9 @@ class SignUpViewController: UIViewController {
     
     private func configureTextFieldsWithToolBar() {
         
-        let toolbar1 = InputAccessoryView(items: [.flexibleSpace, .next], textField: self.fullNameTextField, delegate: self)
-        let toolbar2 = InputAccessoryView(items: [.flexibleSpace, .previous, .next], textField: self.emailTextField, delegate: self)
-        let toolbar3 = InputAccessoryView(items: [.flexibleSpace, .previous, .done], textField: self.passwordTextField, delegate: self)
+        let toolbar1 = InputAccessoryView(items: [.next], textField: self.fullNameTextField, delegate: self)
+        let toolbar2 = InputAccessoryView(items: [.previous, .next, .flexibleSpace], textField: self.emailTextField, delegate: self)
+        let toolbar3 = InputAccessoryView(items: [.previous, .flexibleSpace, .done], textField: self.passwordTextField, delegate: self)
         
         self.fullNameTextField.inputAccessoryView = toolbar1
         self.fullNameTextField.returnKeyType = .next
@@ -282,7 +282,7 @@ extension SignUpViewController: UITextFieldDelegate {
         let nextTag = textField.tag + 1
         
         if let nextTextField = textField.superview?.viewWithTag(nextTag) {
-            nextTextField.becomeFirstResponder()
+            nextTextField.becomeFirstResponder() 
         } else {
             textField.resignFirstResponder()
         }

@@ -168,6 +168,10 @@ class ItemsViewController: UIViewController {
         tv.register(UINib(nibName: TableHeaderView.identifier,
                           bundle: nil),
                     forHeaderFooterViewReuseIdentifier: TableHeaderView.identifier)
+        tv.register(UINib(nibName: CompletionTableHeaderView.identifier,
+                          bundle: nil),
+                    forHeaderFooterViewReuseIdentifier: CompletionTableHeaderView.identifier)
+        
         return tv
         
     }
@@ -194,28 +198,25 @@ class ItemsViewController: UIViewController {
     //MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.itemsViewModel.numberOfSections
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.itemsViewModel.items.count
+        return self.itemsViewModel.numberOfItemsInSection(section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let cell = self.itemsTableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.identifier, for: indexPath) as? ItemTableViewCell {
-            let item = self.itemsViewModel.items[indexPath.row]
-            cell.configureItem(item: item)
-            cell.isFirstCell = indexPath.row == 0
-            cell.isLastCell = indexPath.row == self.itemsViewModel.numberOfItems - 1
-            return cell
-        }
-        
-        return UITableViewCell()
+        let cell = self.itemsViewModel.configureCellForRowAt(indexPath: indexPath, tableView: self.itemsTableView)
+        cell.itemDelegate = self
+        return cell
         
     }
+        
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let vw = self.itemsTableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as! TableHeaderView
-        vw.configure(list: self.itemsViewModel!.list)
-        return vw
+        return self.itemsViewModel.tableViewSectionHeaderFor(section: section, tableView: self.itemsTableView)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -223,7 +224,18 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.view.frame.height / 4
+        guard section == 0 else { return 50 }
+        return self.view.frame.height / 4.2
+    }
+    
+}
+
+//MARK:- ITEM UPDATE DELEGATE DidFinishItemDelegate
+extension ItemsViewController: DidFinishItemDelegate {
+    
+    func didFinishItem(_ item: Item) {
+        self.itemsViewModel.updateItemFinishedState(item)
+        self.itemsTableView.reloadData()
     }
     
 }

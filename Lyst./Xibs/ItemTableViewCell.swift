@@ -9,23 +9,20 @@
 import UIKit
 import Animo
 
+protocol DidFinishItemDelegate: class {
+    func didFinishItem(_ item: Item)
+}
+
 class ItemTableViewCell: UITableViewCell {
     
     static let identifier = "ItemTableViewCell"
     
+    weak var itemDelegate: DidFinishItemDelegate!
+    
     private var item: Item!
     
-    var isFirstCell: Bool = false {
-        didSet {
-            self.configureViews()
-        }
-    }
-    
-    var isLastCell: Bool = false {
-        didSet {
-            self.configureViews()
-        }
-    }
+    var isFirstCell: Bool = false
+    var isLastCell: Bool = false
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var checkBoxButton: UIButton!
@@ -36,14 +33,11 @@ class ItemTableViewCell: UITableViewCell {
         self.configureCheckBoxButton()
     }
     
-    public func configureItem(item: Item) {
+    public func configureViews(item: Item, isFirstCell: Bool, isLastCell: Bool) {
         
         self.item = item
-        self.configureViews()
-        
-    }
-    
-    private func configureViews() {
+        self.isFirstCell = isFirstCell
+        self.isLastCell = isLastCell
         
         self.containerView.backgroundColor = .lighterGray
         
@@ -98,6 +92,7 @@ class ItemTableViewCell: UITableViewCell {
         self.checkBoxButton.isSelected = !self.checkBoxButton.isSelected
         let isSelected = self.checkBoxButton.isSelected
         self.checkBoxButton.backgroundColor = isSelected ? .lightSalmon : .white
+        self.itemDelegate.didFinishItem(self.item)
     }
     
     

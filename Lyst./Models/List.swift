@@ -15,6 +15,14 @@ class List {
     var category: Category = .misc
     var items: [Item] = []
     
+    public var completedItems: [Item] {
+        return self.items.filter({ $0.isCompleted == true })
+    }
+    
+    public var incompleteItems: [Item] {
+        return self.items.filter({ $0.isCompleted == false })
+    }
+    
     init(name: String, category: Category) {
         self.name = name
         self.category = category
@@ -56,7 +64,7 @@ class Item {
     var ownerId: String = ""
     
     var name: String = ""
-    var completed: Bool = false
+    var isCompleted: Bool = false
     var dateCompleted: String = ""
     
     var imageURL: String = ""

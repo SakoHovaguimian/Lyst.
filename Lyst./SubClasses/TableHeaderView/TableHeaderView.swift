@@ -43,7 +43,7 @@ class TableHeaderView: UITableViewHeaderFooterView {
         self.nameLabel.text = list.name
         self.nameLabel.textColor = .charcoalBlack
         
-        let itemCount = list.items.count
+        let itemCount = list.incompleteItems.count
         
         self.listCountLabel.text = "You have \(itemCount) items"
         
