@@ -28,6 +28,10 @@ class List {
         self.category = category
     }
     
+    public func removeItem(_ item: Item) {
+        self.items = self.items.filter({ $0.id != item.id })
+    }
+    
     static func generateList() -> [List] {
         
         return [
@@ -38,10 +42,6 @@ class List {
             List(name: "Anime List", category: .business)
         ]
         
-    }
-    
-    public func removeItem(_ item: Item) {
-        self.items = self.items.filter({ $0.id != item.id })
     }
     
     static func createListsWithItems() -> List{
@@ -61,19 +61,6 @@ class List {
         return list1
         
     }
-    
-}
-
-class Item {
-    
-    var id: String = ""
-    var ownerId: String = ""
-    
-    var name: String = ""
-    var isCompleted: Bool = false
-    var dateCompleted: String = ""
-    
-    var imageURL: String = ""
     
 }
 

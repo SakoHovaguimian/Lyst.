@@ -59,6 +59,29 @@ class HomeCoordinator: Coordinator {
         
     }
     
+    private func pushLinkAccountViewController(user: User) {
+        
+        let viewModel = LinkAccountViewModel(user: user)
+        viewModel.actionDelegate = self
+        
+        let itemVC = LinkAccountViewController(viewModel: viewModel)
+        itemVC.modalPresentationStyle = .fullScreen
+        
+        self.navigationController.present(itemVC, animated: true)
+        
+        
+    }
+    
+}
+
+//MARK:- LINK ACTION VIEW MODEL DELEGATE
+extension HomeCoordinator: LinkVCActionDelegate {
+    
+    func popLinkAccountViewController() {
+        self.navigationController.dismiss(animated: true, completion: nil)
+        logSuccess("POPPING LINK ACCOUNT VIEW CONTROLLER")
+    }
+    
 }
 
 //MARK:- ITEM VIEW MODEL DELEGATE
@@ -87,6 +110,10 @@ extension HomeCoordinator: UserCreatedDelegate {
 
 //MARK:- HOME VIEW MODEL DELEGATE
 extension HomeCoordinator: HomeVCActionsDelegate {
+    
+    func pushLinkAccountVC(user: User) {
+        self.pushLinkAccountViewController(user: user)
+    }
     
     func pushItemVC(list: List) {
         self.pushItemViewController(list: list)

@@ -12,6 +12,7 @@ import Animo
 protocol HomeVCActionsDelegate: class {
     func presentLoginVC(animated: Bool)
     func pushItemVC(list: List)
+    func pushLinkAccountVC(user: User)
 }
 
 class HomeViewModel {
@@ -20,7 +21,9 @@ class HomeViewModel {
     
     private(set) var user: User? = nil
      
-    private(set) var lists: [List] = List.generateList()
+    public var lists: [List] {
+        return self.user?.lists ?? []
+    }
     
     public var numberOfLists: Int {
         return self.lists.count
@@ -60,6 +63,7 @@ class HomeViewModel {
     }
     
     public func handleLinkAccountButtonTapped(_ sender: UIButton) {
+        self.actionDelegate.pushLinkAccountVC(user: self.user!)
         logSuccess("LINKING ACCOUNTS...")
     }
     
@@ -68,8 +72,8 @@ class HomeViewModel {
     }
     
     public func presentLoginController()  {
-        logDebugMessage("Load Login Controller")
         self.actionDelegate.presentLoginVC(animated: false)
+        logDebugMessage("Load Login Controller")
     }
     
 }

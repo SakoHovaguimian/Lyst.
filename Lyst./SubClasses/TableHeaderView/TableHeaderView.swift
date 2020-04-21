@@ -19,7 +19,7 @@ class TableHeaderView: UITableViewHeaderFooterView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        Bundle.main.loadNibNamed(TableHeaderView.identifier, owner: self, options: nil)
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -33,7 +33,7 @@ class TableHeaderView: UITableViewHeaderFooterView {
         self.nameLabel.text = "Hi, \(user.firstName)"
         self.nameLabel.textColor = .charcoalBlack
         
-        self.listCountLabel.text = "You have 4 lysts"
+        self.listCountLabel.text = "You have \(user.lists.count) lysts"
         
     }
     

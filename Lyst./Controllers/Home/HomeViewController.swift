@@ -124,6 +124,8 @@ class HomeViewController: UIViewController {
         
         setNeedsStatusBarAppearanceUpdate()
         
+        self.toggleSettingMenu(hide: true)
+        
         guard self.homeViewModel.user != nil else { return }
         guard self.view.subviews.isEmpty else { return }
         

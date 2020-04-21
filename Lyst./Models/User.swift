@@ -15,6 +15,7 @@ class User {
     var listId: String
     var pin: Int = 0000
     var hasBothMembers: Bool = false
+    var lists: [List] = List.generateList()
     
     var firstName: String {
         return self.fetchFirstName()

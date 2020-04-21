@@ -13,6 +13,9 @@
 		3D09C70D2447F6BF005C5D3C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */; };
 		3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1210722448FC6400C8107A /* ItemsViewModel.swift */; };
 		3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1210742448FCE200C8107A /* ItemsViewController.swift */; };
+		3D1A75D3244F5226008A73FE /* LinkAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1A75D2244F5117008A73FE /* LinkAccountViewModel.swift */; };
+		3D1A75D4244F5229008A73FE /* LinkAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1A75D1244F5117008A73FE /* LinkAccountViewController.swift */; };
+		3D1A75D6244F5D45008A73FE /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1A75D5244F5D45008A73FE /* Item.swift */; };
 		3D42A2FC2446A3D400415B50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42A2FB2446A3D400415B50 /* AppDelegate.swift */; };
 		3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D42A2FD2446A3D400415B50 /* SceneDelegate.swift */; };
 		3D42A3032446A3D400415B50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D42A3012446A3D400415B50 /* Main.storyboard */; };
@@ -50,6 +53,9 @@
 		3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3D1210722448FC6400C8107A /* ItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewModel.swift; sourceTree = "<group>"; };
 		3D1210742448FCE200C8107A /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
+		3D1A75D1244F5117008A73FE /* LinkAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAccountViewController.swift; sourceTree = "<group>"; };
+		3D1A75D2244F5117008A73FE /* LinkAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkAccountViewModel.swift; sourceTree = "<group>"; };
+		3D1A75D5244F5D45008A73FE /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		3D42A2F82446A3D400415B50 /* Lyst..app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lyst..app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D42A2FB2446A3D400415B50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D42A2FD2446A3D400415B50 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +135,15 @@
 			path = ListTableViewCell;
 			sourceTree = "<group>";
 		};
+		3D1A75D0244F50C8008A73FE /* LinkAccount */ = {
+			isa = PBXGroup;
+			children = (
+				3D1A75D2244F5117008A73FE /* LinkAccountViewModel.swift */,
+				3D1A75D1244F5117008A73FE /* LinkAccountViewController.swift */,
+			);
+			path = LinkAccount;
+			sourceTree = "<group>";
+		};
 		3D42A2EF2446A3D400415B50 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +184,7 @@
 				3DDB3C97244787C100DB770E /* Category.swift */,
 				3DDB3C99244787F100DB770E /* User.swift */,
 				3DACFBA5244A6F4C00A08BBD /* List.swift */,
+				3D1A75D5244F5D45008A73FE /* Item.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -201,6 +217,7 @@
 				3D09C7092447F601005C5D3C /* SignUp */,
 				3DB753382446A4CF00CC183C /* Home */,
 				3D1210712448FC2500C8107A /* Items */,
+				3D1A75D0244F50C8008A73FE /* LinkAccount */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -366,10 +383,12 @@
 				3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */,
 				3DB7533A2446A4E100CC183C /* HomeCoordinator.swift in Sources */,
 				3DDAA254244E7EA10004206C /* ImageWithOutRender.swift in Sources */,
+				3D1A75D3244F5226008A73FE /* LinkAccountViewModel.swift in Sources */,
 				3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */,
 				3DDB3C9A244787F100DB770E /* User.swift in Sources */,
 				3DB753442447440000CC183C /* TableHeaderView.swift in Sources */,
 				3DACFBA6244A6F4C00A08BBD /* List.swift in Sources */,
+				3D1A75D4244F5229008A73FE /* LinkAccountViewController.swift in Sources */,
 				3D00763D244A11DF0016E5CA /* ItemTableViewCell.swift in Sources */,
 				3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */,
 				3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */,
@@ -377,6 +396,7 @@
 				3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */,
 				3DDB3C98244787C100DB770E /* Category.swift in Sources */,
 				3D51AB85244E5D6600E7D794 /* CompletionTableHeaderView.swift in Sources */,
+				3D1A75D6244F5D45008A73FE /* Item.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
