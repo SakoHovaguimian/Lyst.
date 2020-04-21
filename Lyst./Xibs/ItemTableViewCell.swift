@@ -36,6 +36,7 @@ class ItemTableViewCell: UITableViewCell {
     public func configureViews(item: Item, isFirstCell: Bool, isLastCell: Bool) {
         
         self.item = item
+        
         self.isFirstCell = isFirstCell
         self.isLastCell = isLastCell
         
@@ -47,6 +48,9 @@ class ItemTableViewCell: UITableViewCell {
         self.addShadows()
         
         self.itemNameLabel.text = self.item.name
+        
+        self.checkBoxButton.backgroundColor =  self.item.isCompleted ? .imgurGreen : .white
+        self.checkBoxButton.isSelected = self.item.isCompleted ? true : false
         
         
     }
@@ -73,11 +77,8 @@ class ItemTableViewCell: UITableViewCell {
     }
     
     private func addShadows() {
-        
-        if self.isFirstCell || self.isLastCell {
-            self.contentView.addShadow(shadow: .black, opacity: 0.3, offSet: .zero, raidus: 1.0)
-        }
-        
+
+        self.contentView.addShadow(shadow: .black, opacity: 0.3, offSet: .zero, raidus: 0.5)
     }
     
     private func configureCheckBoxButton() {
@@ -89,9 +90,6 @@ class ItemTableViewCell: UITableViewCell {
     }
     
     @objc private func toggleCheckboxSelection() {
-        self.checkBoxButton.isSelected = !self.checkBoxButton.isSelected
-        let isSelected = self.checkBoxButton.isSelected
-        self.checkBoxButton.backgroundColor = isSelected ? .lightSalmon : .white
         self.itemDelegate.didFinishItem(self.item)
     }
     

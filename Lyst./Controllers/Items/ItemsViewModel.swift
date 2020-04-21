@@ -49,6 +49,7 @@ class ItemsViewModel {
     public func addItems() {
         let item = Item()
         item.name = "Milk"
+        item.id = "\(self.list.items.count + 1)"
         self.list.items.append(item)
     }
     
@@ -62,6 +63,18 @@ class ItemsViewModel {
         let itemCount = indexPath.section == 1 ? self.list.incompleteItems.count : self.list.completedItems.count
         return indexPath.row == itemCount - 1
        
+    }
+    
+    public func removeItemAt(indexPath: IndexPath) {
+        
+        if indexPath.section == 1 {
+            let item = self.list.items[indexPath.row]
+            self.list.removeItem(item)
+        } else {
+            let item = self.list.items[indexPath.row]
+            self.list.removeItem(item)
+        }
+        
     }
     
     public func updateItemFinishedState(_ item: Item) {
@@ -92,7 +105,7 @@ class ItemsViewModel {
         } else {
             
             let vw = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CompletionTableHeaderView") as! CompletionTableHeaderView
-            vw.configure(text: section == 1 ? "TO DO" : "COMPLETED")
+            vw.configure(text: section == 1 ? "ITEMS" : "COMPLETED")
             return vw
             
         }

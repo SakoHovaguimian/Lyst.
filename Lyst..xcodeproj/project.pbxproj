@@ -34,6 +34,7 @@
 		3DB753482447478100CC183C /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753462447478100CC183C /* ListTableViewCell.swift */; };
 		3DB753492447478100CC183C /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DB753472447478100CC183C /* ListTableViewCell.xib */; };
 		3DC71366244760840062303C /* UIColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC71365244760840062303C /* UIColor+ext.swift */; };
+		3DDAA254244E7EA10004206C /* ImageWithOutRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDAA253244E7EA10004206C /* ImageWithOutRender.swift */; };
 		3DDB3C96244781DD00DB770E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDB3C95244781DD00DB770E /* Constants.swift */; };
 		3DDB3C98244787C100DB770E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDB3C97244787C100DB770E /* Category.swift */; };
 		3DDB3C9A244787F100DB770E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDB3C99244787F100DB770E /* User.swift */; };
@@ -71,6 +72,7 @@
 		3DB753462447478100CC183C /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		3DB753472447478100CC183C /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
 		3DC71365244760840062303C /* UIColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ext.swift"; sourceTree = "<group>"; };
+		3DDAA253244E7EA10004206C /* ImageWithOutRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageWithOutRender.swift; sourceTree = "<group>"; };
 		3DDB3C95244781DD00DB770E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3DDB3C97244787C100DB770E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		3DDB3C99244787F100DB770E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				3D51AB83244E5D2900E7D794 /* CompletionTableHeaderView */,
 				3DB753412447434A00CC183C /* TableHeaderView */,
 				3D5F731D2447BBA2003BCF16 /* InputTextField.swift */,
+				3DDAA253244E7EA10004206C /* ImageWithOutRender.swift */,
 			);
 			path = SubClasses;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				3DDB3C96244781DD00DB770E /* Constants.swift in Sources */,
 				3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */,
 				3DB7533A2446A4E100CC183C /* HomeCoordinator.swift in Sources */,
+				3DDAA254244E7EA10004206C /* ImageWithOutRender.swift in Sources */,
 				3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */,
 				3DDB3C9A244787F100DB770E /* User.swift in Sources */,
 				3DB753442447440000CC183C /* TableHeaderView.swift in Sources */,

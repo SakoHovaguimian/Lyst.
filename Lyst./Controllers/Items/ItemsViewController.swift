@@ -213,7 +213,6 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
         
     }
-        
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return self.itemsViewModel.tableViewSectionHeaderFor(section: section, tableView: self.itemsTableView)
@@ -226,6 +225,26 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard section == 0 else { return 50 }
         return self.view.frame.height / 4.2
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: nil) { action, view, completion in
+            print("DELETED ITEM")
+            self.itemsViewModel.removeItemAt(indexPath: indexPath)
+            self.itemsTableView.reloadData()
+            completion(true)
+        }
+        
+        if let cgImage =  UIImage(named: "delete_trash")?.cgImage {
+             action.image = ImageWithoutRender(cgImage: cgImage, scale: UIScreen.main.nativeScale, orientation: .up)
+        }
+        action.backgroundColor = UIColor.init(displayP3Red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
+
+        return UISwipeActionsConfiguration(actions: [action])
     }
     
 }

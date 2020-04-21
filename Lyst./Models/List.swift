@@ -40,14 +40,20 @@ class List {
         
     }
     
+    public func removeItem(_ item: Item) {
+        self.items = self.items.filter({ $0.id != item.id })
+    }
+    
     static func createListsWithItems() -> List{
         
         let list1 = List(name: "Items Test List", category: .business)
         
         let item1 = Item()
+        item1.id = "1"
         item1.name = "Carrots"
         
         let item2 = Item()
+        item1.id = "2"
         item2.name = "Brocolli"
         
         list1.items.append(contentsOf: [item1, item2])
