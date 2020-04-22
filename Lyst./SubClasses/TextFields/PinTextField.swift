@@ -28,10 +28,12 @@ class PinTextField: UITextField {
         self.textColor = .charcoalBlack
         self.font = UIFont(name: avenirNextBold, size: 30.0)
         self.textAlignment = .center
-        self.addShadow(shadow: .black,
-                       opacity: 0.7, offSet: .zero, raidus: 1.0)
         self.attributedPlaceholder = NSAttributedString(string: "0",
                                                         attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        
+        self.addShadow(shadow: .black,
+                       opacity: 0.7, offSet: .zero, raidus: 1.0)
+        
         
     }
     

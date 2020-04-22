@@ -88,9 +88,11 @@ class LinkAccountViewController: UIViewController {
     //MARK:- Helper Functions
     private func configureViews() {
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .clear
+        
+        self.view.simpleGradient(colors: backgroundGradient)
 
-        self.configureAlphaView()
+//        self.configureAlphaView()
         self.configureButtons()
         self.configureLabels()
         self.configureTextFields()

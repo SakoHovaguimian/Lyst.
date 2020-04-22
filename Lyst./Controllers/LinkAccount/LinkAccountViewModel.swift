@@ -23,17 +23,9 @@ class LinkAccountViewModel {
         return "\(user.pin)"
     }
     
-    public var enteredPin: String = "0000" {
-        didSet {
-            logSuccess(enteredPin)
-        }
-    }
+    public var enteredPin: String = "0000"
+    public var enteredEmail: String = ""
     
-    public var enteredEmail: String = "" {
-        didSet {
-            logSuccess(enteredEmail)
-        }
-    }
     
     init(user: User) {
         self.user = user
@@ -64,9 +56,21 @@ class LinkAccountViewModel {
             
             return false
             
-        }
+        } else if textField.text?.count == 1 && string.count > 0 {
             
-        else if string.count == 0 {
+            let nextTag = textField.tag + 1
+
+            if let nextResponder = textField.superview?.viewWithTag(nextTag) as? PinTextField {
+                nextResponder.text = string
+                
+                nextResponder.becomeFirstResponder()
+            } else {
+                textField.resignFirstResponder()
+            }
+
+            return false
+            
+        } else if string.count == 0 {
 
             let previousTag = textField.tag - 1
 
