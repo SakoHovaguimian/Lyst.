@@ -35,6 +35,24 @@ class LinkAccountViewController: UIViewController {
         return label
     }()
     
+    private let partnerEmailDescLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Partner Email"
+        label.textAlignment = .left
+        label.textColor = .lightGray
+        label.font = UIFont(name: avenirNextMedium, size: 12.0)
+        return label
+    }()
+    
+    private let partnerPinDescLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Partner Pin Code"
+        label.textAlignment = .left
+        label.textColor = .lightGray
+        label.font = UIFont(name: avenirNextMedium, size: 12.0)
+        return label
+    }()
+    
     private lazy var closeButton: UIButton = {
         let btn = UIButton(type: .system)
         let image = UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate)
@@ -54,11 +72,23 @@ class LinkAccountViewController: UIViewController {
         return stack
     }()
     
+    private lazy var submitButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Link", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = UIFont(name: avenirNextBold, size: 20.0)
+        btn.addTarget(self,
+                      action: #selector(self.submitButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
     private lazy var emailTextField: InputTextField = {
         let textField = InputTextField(placeholder: "Email",
                                        secureEntry: false,
                                        tag: 0)
         textField.delegate = self
+        textField.font = UIFont(name: avenirNextBold, size: 20.0)
         return textField
     }()
     
@@ -98,6 +128,7 @@ class LinkAccountViewController: UIViewController {
         self.configureTextFields()
         
         self.configurePinTextFields()
+        self.configureSubmitButton()
         
     }
     
@@ -124,7 +155,7 @@ class LinkAccountViewController: UIViewController {
         self.titleLabel.anchor(top: self.closeButton.bottomAnchor,
                                left: self.view.leftAnchor,
                                right: self.view.rightAnchor,
-                               paddingTop: 22,
+                               paddingTop: 16,
                                paddingLeft: 64,
                                paddingRight: 64,
                                height: 50)
@@ -139,7 +170,7 @@ class LinkAccountViewController: UIViewController {
                                 paddingLeft: 16,
                                 paddingRight: 16,
                                 height: 30)
-        
+
     }
     
     private func configureButtons() {
@@ -155,16 +186,28 @@ class LinkAccountViewController: UIViewController {
                                height: 40)
         
     }
+        
     
     private func configureTextFields() {
+        
+        //Partner Email Description
+        self.view.addSubview(self.partnerEmailDescLabel)
+        
+        self.partnerEmailDescLabel.anchor(top: self.detailLabel.topAnchor,
+                                          left: self.view.leftAnchor,
+                                          right: self.view.rightAnchor,
+                                          paddingTop: 45,
+                                          paddingLeft: 32,
+                                          paddingRight: 32,
+                                          height: 20)
         
         //Email TextField
         self.view.addSubview(self.emailTextField)
         
-        self.emailTextField.anchor(top: self.detailLabel.bottomAnchor,
+        self.emailTextField.anchor(top: self.partnerEmailDescLabel.bottomAnchor,
                                    left: self.view.leftAnchor,
                                    right: self.view.rightAnchor,
-                                   paddingTop: 40,
+                                   paddingTop: 0,
                                    paddingLeft: 32,
                                    paddingRight: 32,
                                    height: 50)
@@ -172,6 +215,17 @@ class LinkAccountViewController: UIViewController {
     }
     
     private func configurePinTextFields() {
+        
+        //Partner Email Description
+        self.view.addSubview(self.partnerPinDescLabel)
+        
+        self.partnerPinDescLabel.anchor(top: self.emailTextField.bottomAnchor,
+                                          left: self.view.leftAnchor,
+                                          right: self.view.rightAnchor,
+                                          paddingTop: 16,
+                                          paddingLeft: 32,
+                                          paddingRight: 32,
+                                          height: 20)
 
         //Stack View
         self.view.addSubview(self.pinStackView)
@@ -186,15 +240,34 @@ class LinkAccountViewController: UIViewController {
         self.pinStackView.addArrangedSubview(self.pinTextField3)
         self.pinStackView.addArrangedSubview(self.pinTextField4)
         
-        self.pinStackView.anchor(top: self.emailTextField.bottomAnchor,
+        self.pinStackView.anchor(top: self.partnerPinDescLabel.bottomAnchor,
                                  left: self.view.leftAnchor,
                                  right: self.view.rightAnchor,
-                                 paddingTop: 16,
+                                 paddingTop: 0,
                                  paddingLeft: 32,
                                  paddingRight: 32,
                                  height: 60)
         
+    }
+    
+    private func configureSubmitButton() {
         
+        //Submit Button
+        self.view.addSubview(self.submitButton)
+        
+        self.submitButton.anchor(top: self.pinStackView.bottomAnchor,
+                                 left: self.view.leftAnchor,
+                                 right: self.view.rightAnchor,
+                                 paddingTop: 32,
+                                 paddingLeft: 32,
+                                 paddingRight: 32,
+                                 height: 50)
+        
+        
+        let frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 64, height: 60)
+        self.submitButton.applyGradient(colors: [.skyBlue, .systemBlue], frame: frame)
+        
+        self.submitButton.roundCorners(.allCorners, radius: 11)
         
     }
     
@@ -222,6 +295,17 @@ class LinkAccountViewController: UIViewController {
     //MARK:- @OBJC Functions
     @objc private func backButtonTapped(_ sender: UIButton) {
         self.linkAccountViewModel.handleBackButtonTapped(sender)
+    }
+    
+    @objc private func submitButtonTapped(_ sender: UIButton) {
+        
+        if let error = self.linkAccountViewModel.handleShareButtonTapped(sender) {
+            self.showSimpleError(title: "Error", message: error)
+            return
+        }
+        
+        logSuccess("SHARING ACCOUNT WITH...")
+        
     }
     
 }

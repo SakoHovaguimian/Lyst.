@@ -30,9 +30,30 @@ class LinkAccountViewModel {
     init(user: User) {
         self.user = user
     }
+
+    public func validateLinkAccounts() -> String? {
+        
+        guard enteredEmail.isValidEmail() else { return ValidationError.invalidEmail.error }
+        guard enteredPin.count == 4 else { return ValidationError.invalidPin.error }
+        
+        return nil
+        
+    }
     
     public func handleBackButtonTapped(_ sender: UIButton) {
         self.actionDelegate.popLinkAccountViewController()
+    }
+    
+    public func handleShareButtonTapped(_ sender: UIButton) -> String? {
+        
+        if let error = self.validateLinkAccounts() {
+            return error
+        }
+        
+        logSuccess("Email: \(self.enteredEmail), Pin: \(self.enteredPin)")
+        
+        return nil
+        
     }
     
     public func createPin(textFields: [UITextField]) {

@@ -14,6 +14,7 @@ enum ValidationError: String {
     case invalidEmail
     case invalidPassword
     case invalidName
+    case invalidPin
     
     var error: String {
         
@@ -21,6 +22,7 @@ enum ValidationError: String {
             case .invalidEmail: return "The email you entered is invalid or missing"
             case .invalidPassword: return "The password you used is too short or missing"
             case .invalidName: return "The name you entered is too short or missing"
+            case .invalidPin: return "The pin you entered is invalid. Please try again."
         }
         
     }
