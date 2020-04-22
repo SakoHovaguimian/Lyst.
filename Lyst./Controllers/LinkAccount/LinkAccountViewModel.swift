@@ -42,7 +42,7 @@ class LinkAccountViewModel {
     
     public func handlePinTextFieldEntries(_ textField: UITextField, string: String) -> Bool {
         
-        if textField.text!.count < 1  && string.count > 0 {
+        if string.count > 0 {
             let nextTag = textField.tag + 1
 
             let nextResponder = textField.superview?.viewWithTag(nextTag)
@@ -54,20 +54,6 @@ class LinkAccountViewModel {
                 textField.resignFirstResponder()
             }
             
-            return false
-            
-        } else if textField.text?.count == 1 && string.count > 0 {
-            
-            let nextTag = textField.tag + 1
-
-            if let nextResponder = textField.superview?.viewWithTag(nextTag) as? PinTextField {
-                nextResponder.text = string
-                
-                nextResponder.becomeFirstResponder()
-            } else {
-                textField.resignFirstResponder()
-            }
-
             return false
             
         } else if string.count == 0 {
