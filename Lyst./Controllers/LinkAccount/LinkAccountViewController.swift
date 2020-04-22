@@ -53,6 +53,15 @@ class LinkAccountViewController: UIViewController {
         return label
     }()
     
+    private let sharedUsersDescLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Sharing With"
+        label.textAlignment = .left
+        label.textColor = .lightGray
+        label.font = UIFont(name: avenirNextMedium, size: 16.0)
+        return label
+    }()
+    
     private lazy var closeButton: UIButton = {
         let btn = UIButton(type: .system)
         let image = UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate)
@@ -90,6 +99,18 @@ class LinkAccountViewController: UIViewController {
         textField.delegate = self
         textField.font = UIFont(name: avenirNextBold, size: 20.0)
         return textField
+    }()
+    
+    private lazy var linkedAccountsCollectionView: UICollectionView = {
+        let layout = self.linkAccountViewModel.customCollectionLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.delegate = self
+        cv.backgroundColor = .clear
+        cv.dataSource = self
+        cv.register(UINib(nibName: LinkedAccountsCollectionViewCell.identifier,
+                          bundle: nil),
+                    forCellWithReuseIdentifier: LinkedAccountsCollectionViewCell.identifier)
+        return cv
     }()
     
     let pinTextField1 = PinTextField(tag: 1)
@@ -130,6 +151,7 @@ class LinkAccountViewController: UIViewController {
         self.configurePinTextFields()
         self.configureSubmitButton()
         
+        self.configureCollectionView()
     }
     
     private func configureAlphaView() {
@@ -271,6 +293,29 @@ class LinkAccountViewController: UIViewController {
         
     }
     
+    private func configureCollectionView() {
+        
+        //Shared User Desc Label
+        self.view.addSubview(self.sharedUsersDescLabel)
+        
+        self.sharedUsersDescLabel.anchor(top: self.submitButton.bottomAnchor,
+                                         left: self.submitButton.leftAnchor,
+                                         right: self.submitButton.rightAnchor,
+                                         paddingTop: 30,
+                                         height: 20)
+        
+        //Collection View
+        self.view.addSubview(self.linkedAccountsCollectionView)
+        
+        self.linkedAccountsCollectionView.anchor(top: self.sharedUsersDescLabel.bottomAnchor,
+                                                 left: self.submitButton.leftAnchor,
+                                                 bottom: self.view.bottomAnchor,
+                                                 right: self.submitButton.rightAnchor,
+                                                 paddingTop: 5,
+                                                 paddingBottom: 16)
+        
+    }
+    
     private func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
         
         var text = (textField.text ?? "")
@@ -310,8 +355,9 @@ class LinkAccountViewController: UIViewController {
     
 }
 
-    //MARK:- Extensions
+    //MARK:- Extension
 
+    //MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension LinkAccountViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -339,4 +385,35 @@ extension LinkAccountViewController: UITextFieldDelegate {
         return true
     }
     
+}
+
+    //MARK:- COLLECTION VIEW DELEGATE & DATASOURCE
+
+extension LinkAccountViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.linkAccountViewModel.sharedUsers.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = self.linkedAccountsCollectionView.dequeueReusableCell(withReuseIdentifier: LinkedAccountsCollectionViewCell.identifier, for: indexPath) as? LinkedAccountsCollectionViewCell {
+            let name = self.linkAccountViewModel.sharedUsers[indexPath.row]
+            cell.name = name
+            return cell
+        }
+        return UICollectionViewCell()
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return self.linkAccountViewModel.sizeForCollectionViewCell(self.linkedAccountsCollectionView, indexPath: indexPath)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        self.linkAccountViewModel.deleteSharedUserAlert(vc: self, indexPath: indexPath, completion: {
+            self.linkedAccountsCollectionView.reloadData()
+        })
+        
+    }
 }

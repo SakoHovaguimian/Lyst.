@@ -19,6 +19,13 @@ class LinkAccountViewModel {
     
     private(set) var user: User!
     
+    private(set) var sharedUsers = [
+        "Sako Hovaguimian",
+        "Mithc Treece",
+        "Libby Bibona",
+        "Christopher Carl Bibona"
+    ].sorted(by: { $0.count < $1.count })
+    
     public var pin: String {
         return "\(user.pin)"
     }
@@ -96,6 +103,51 @@ class LinkAccountViewModel {
         textField.resignFirstResponder()
         return false
 
+    }
+    
+    public func customCollectionLayout() -> UICollectionViewLayout {
+        
+        let layout = TokenCollViewFlowLayout.init()
+        layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        layout.minimumLineSpacing = 15
+        layout.minimumInteritemSpacing = 15
+        layout.scrollDirection = .vertical
+        
+        return layout
+    }
+    
+    public func sizeForCollectionViewCell(_ collectionView: UICollectionView, indexPath: IndexPath) -> CGSize {
+        
+        let text = self.sharedUsers[indexPath.row]
+        
+        let textWidth = (text as NSString).boundingRect(
+            with: CGSize(width: collectionView.bounds.width, height: .greatestFiniteMagnitude),
+            options: [],
+            attributes: [.font: UIFont(name: avenirNextBold, size: 18.0) ?? ""],
+            context: nil
+        ).size.width
+        
+        return CGSize(width: ceil(textWidth + 34), height: 35)
+        
+    }
+    
+    public func deleteSharedUserAlert(vc: LinkAccountViewController, indexPath: IndexPath, completion: @escaping () -> ()) {
+        
+        let alert = UIAlertController(title: "Remove Linked Account",
+                                      message: "All data will not be removed from linked account.",
+                                      preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            self.sharedUsers.remove(at: indexPath.row)
+            completion()
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+              logError("Canceled Deleting User")
+        }))
+
+        vc.present(alert, animated: true, completion: nil)
+        
     }
     
 }
