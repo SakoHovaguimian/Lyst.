@@ -85,6 +85,19 @@ class HomeCoordinator: Coordinator {
         
     }
     
+    private func presentAddItemViewController(list: List) {
+        
+        let viewModel = AddItemViewModel(list: list)
+        viewModel.actionDelegate = self
+        
+        let addListVC = AddItemViewController(viewModel: viewModel)
+        addListVC.modalPresentationStyle = .overCurrentContext
+        
+        self.navigationController.present(addListVC, animated: true)
+        
+        
+    }
+    
 }
 
 //MARK:- LINK ACTION VIEW MODEL DELEGATE
@@ -107,6 +120,10 @@ extension HomeCoordinator: ItemVCActionDelegate {
     func popItemViewController() {
         self.navigationController.popViewController(animated: true)
         logSuccess("POPPING ITEM VIEW CONTROLLER")
+    }
+    
+    func presentAddItemVC(list: List) {
+        self.presentAddItemViewController(list: list)
     }
     
 }
@@ -149,6 +166,7 @@ extension HomeCoordinator: HomeVCActionsDelegate {
     
 }
 
+//MARK:- ADD LIST VIEW MODEL DELEGATE
 extension HomeCoordinator: AddListVCActionDelegate {
     
     func popAddListViewController() {
@@ -161,6 +179,26 @@ extension HomeCoordinator: AddListVCActionDelegate {
         if let homeVC = self.navigationController.viewControllers.first as? HomeViewController {
             homeVC.homeViewModel.addList(list)
             homeVC.homeTableView.reloadData()
+        }
+        
+        self.navigationController.dismiss(animated: true, completion: nil)
+        
+    }
+    
+}
+
+//MARK:- ADD LIST VIEW MODEL DELEGATE
+extension HomeCoordinator: AddItemVCActionDelegate {
+    
+    func popAddItemViewController() {
+        self.navigationController.dismiss(animated: true, completion: nil)
+        logSuccess("POPPING ADD LIST VIEW CONTROLLER")
+    }
+    
+    func addCreatedItem(_ item: Item) {
+        
+        if let itemVC = self.navigationController.viewControllers.last as? ItemsViewController {
+            itemVC.itemsTableView.reloadData()
         }
         
         self.navigationController.dismiss(animated: true, completion: nil)

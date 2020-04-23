@@ -12,6 +12,7 @@ import Animo
 protocol ItemVCActionDelegate: class {
     func popItemViewController()
     func openLinkAccountVC(list: List)
+    func presentAddItemVC(list: List)
 }
 
 class ItemsViewModel {
@@ -36,7 +37,7 @@ class ItemsViewModel {
     }
     
     public func handleAddButtonTapped(_ sender: UIButton) {
-        self.addItems()
+        self.actionDelegate.presentAddItemVC(list: self.list)
         logSuccess("Add Button Tapped in View Model")
     }
     
@@ -72,10 +73,10 @@ class ItemsViewModel {
     public func removeItemAt(indexPath: IndexPath) {
         
         if indexPath.section == 1 {
-            let item = self.list.items[indexPath.row]
+            let item = self.list.incompleteItems[indexPath.row]
             self.list.removeItem(item)
         } else {
-            let item = self.list.items[indexPath.row]
+            let item = self.list.completedItems[indexPath.row]
             self.list.removeItem(item)
         }
         

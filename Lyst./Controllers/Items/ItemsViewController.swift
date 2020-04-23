@@ -16,7 +16,7 @@ class ItemsViewController: UIViewController {
     private var itemsViewModel: ItemsViewModel!
     
     //MARK:- Views
-    private lazy var itemsTableView: UITableView = {
+    private(set) lazy var itemsTableView: UITableView = {
         return self.setupTableView()
     }()
     

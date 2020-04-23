@@ -36,6 +36,8 @@
 		3DB753452447440400CC183C /* TableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DB753422447434A00CC183C /* TableHeaderView.xib */; };
 		3DB753482447478100CC183C /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753462447478100CC183C /* ListTableViewCell.swift */; };
 		3DB753492447478100CC183C /* ListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DB753472447478100CC183C /* ListTableViewCell.xib */; };
+		3DBCE42224524F7500CA157E /* AddItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBCE42024524F4700CA157E /* AddItemViewModel.swift */; };
+		3DBCE4232452506400CA157E /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBCE42124524F4700CA157E /* AddItemViewController.swift */; };
 		3DC71366244760840062303C /* UIColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC71365244760840062303C /* UIColor+ext.swift */; };
 		3DD0E05F244F9DAC00EA7941 /* PinTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD0E05E244F9DAC00EA7941 /* PinTextField.swift */; };
 		3DD825602450E296004FD9FE /* TokenCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD8255F2450E296004FD9FE /* TokenCollectionViewFlowLayout.swift */; };
@@ -85,6 +87,8 @@
 		3DB753432447434A00CC183C /* TableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableHeaderView.swift; sourceTree = "<group>"; };
 		3DB753462447478100CC183C /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		3DB753472447478100CC183C /* ListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListTableViewCell.xib; sourceTree = "<group>"; };
+		3DBCE42024524F4700CA157E /* AddItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemViewModel.swift; sourceTree = "<group>"; };
+		3DBCE42124524F4700CA157E /* AddItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
 		3DC71365244760840062303C /* UIColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ext.swift"; sourceTree = "<group>"; };
 		3DD0E05E244F9DAC00EA7941 /* PinTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinTextField.swift; sourceTree = "<group>"; };
 		3DD8255F2450E296004FD9FE /* TokenCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -156,13 +160,13 @@
 			path = LinkAccount;
 			sourceTree = "<group>";
 		};
-		3D2D25DD245203340026D488 /* AddListViewController */ = {
+		3D2D25DD245203340026D488 /* AddList */ = {
 			isa = PBXGroup;
 			children = (
 				3D2D25DE2452036D0026D488 /* AddListViewModel.swift */,
 				3D2D25DF2452036D0026D488 /* AddListViewController.swift */,
 			);
-			path = AddListViewController;
+			path = AddList;
 			sourceTree = "<group>";
 		};
 		3D42A2EF2446A3D400415B50 = {
@@ -239,7 +243,8 @@
 				3DB753382446A4CF00CC183C /* Home */,
 				3D1210712448FC2500C8107A /* Items */,
 				3D1A75D0244F50C8008A73FE /* LinkAccount */,
-				3D2D25DD245203340026D488 /* AddListViewController */,
+				3D2D25DD245203340026D488 /* AddList */,
+				3DBCE41F24524F3500CA157E /* AddItem */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -298,6 +303,15 @@
 				3DB753432447434A00CC183C /* TableHeaderView.swift */,
 			);
 			path = TableHeaderView;
+			sourceTree = "<group>";
+		};
+		3DBCE41F24524F3500CA157E /* AddItem */ = {
+			isa = PBXGroup;
+			children = (
+				3DBCE42024524F4700CA157E /* AddItemViewModel.swift */,
+				3DBCE42124524F4700CA157E /* AddItemViewController.swift */,
+			);
+			path = AddItem;
 			sourceTree = "<group>";
 		};
 		3DD0E060244F9E7700EA7941 /* TextFields */ = {
@@ -424,6 +438,7 @@
 				3DC71366244760840062303C /* UIColor+ext.swift in Sources */,
 				3DDB3CA12447919B00DB770E /* LoginViewController.swift in Sources */,
 				3D09C70B2447F620005C5D3C /* SignUpViewModel.swift in Sources */,
+				3DBCE4232452506400CA157E /* AddItemViewController.swift in Sources */,
 				3DDB3CA02447919900DB770E /* LoginViewModel.swift in Sources */,
 				3DEF040C2452047600651B82 /* AddListViewController.swift in Sources */,
 				3DB753402446B07300CC183C /* HomeViewModel.swift in Sources */,
@@ -444,6 +459,7 @@
 				3DB753442447440000CC183C /* TableHeaderView.swift in Sources */,
 				3DACFBA6244A6F4C00A08BBD /* List.swift in Sources */,
 				3D1A75D4244F5229008A73FE /* LinkAccountViewController.swift in Sources */,
+				3DBCE42224524F7500CA157E /* AddItemViewModel.swift in Sources */,
 				3D00763D244A11DF0016E5CA /* ItemTableViewCell.swift in Sources */,
 				3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */,
 				3DD825642450E334004FD9FE /* LinkedAccountsCollectionViewCell.swift in Sources */,
