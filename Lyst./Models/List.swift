@@ -12,6 +12,7 @@ class List {
     
     var id: String = ""
     var name: String = ""
+    var author: String = ""
     var category: Category = .misc
     var items: [Item] = []
     

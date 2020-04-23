@@ -14,8 +14,8 @@ class User {
     var email: String
     var listId: String
     var pin: Int = 0000
-    var hasBothMembers: Bool = false
     var lists: [List] = List.generateList()
+    var sharedLists: [List] = List.generateList().reversed()
     
     var firstName: String {
         return self.fetchFirstName()

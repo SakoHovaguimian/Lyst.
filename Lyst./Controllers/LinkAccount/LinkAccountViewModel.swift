@@ -19,35 +19,33 @@ class LinkAccountViewModel {
     
     private(set) var user: User!
     
-    private(set) var sharedUsers = [
+    private(set) var recentlyShared = [
         "Sako Hovaguimian",
+        "Chelsea Eichler",
+        "KC Gunderson",
+        "Steven Xenos Bibona",
         "Mithc Treece",
         "Libby Bibona",
         "Christopher Carl Bibona"
-    ].sorted(by: { $0.count < $1.count })
+    ].shuffled()
     
-    public var pin: String {
-        return "\(user.pin)"
-    }
-    
-    public var enteredPin: String = "0000"
     public var enteredEmail: String = ""
-    
     
     init(user: User) {
         self.user = user
     }
 
     public func validateLinkAccounts() -> String? {
-        
         guard enteredEmail.isValidEmail() else { return ValidationError.invalidEmail.error }
-        guard enteredPin.count == 4 else { return ValidationError.invalidPin.error }
-        
         return nil
-        
     }
     
     public func handleBackButtonTapped(_ sender: UIButton) {
+        self.actionDelegate.popLinkAccountViewController()
+    }
+    
+    public func handleRecentlySelectedUser(user: String) {
+        logSuccess("Email: \(user)")
         self.actionDelegate.popLinkAccountViewController()
     }
     
@@ -57,15 +55,10 @@ class LinkAccountViewModel {
             return error
         }
         
-        logSuccess("Email: \(self.enteredEmail), Pin: \(self.enteredPin)")
+        logSuccess("Email: \(self.enteredEmail)")
         
         return nil
         
-    }
-    
-    public func createPin(textFields: [UITextField]) {
-        let pin = textFields.map({($0.text ?? "0")}).joined(separator: "")
-        self.enteredPin = pin
     }
     
     public func handlePinTextFieldEntries(_ textField: UITextField, string: String) -> Bool {
@@ -109,8 +102,8 @@ class LinkAccountViewModel {
         
         let layout = TokenCollViewFlowLayout.init()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        layout.minimumLineSpacing = 15
-        layout.minimumInteritemSpacing = 15
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
         
         return layout
@@ -118,7 +111,7 @@ class LinkAccountViewModel {
     
     public func sizeForCollectionViewCell(_ collectionView: UICollectionView, indexPath: IndexPath) -> CGSize {
         
-        let text = self.sharedUsers[indexPath.row]
+        let text = self.recentlyShared[indexPath.row]
         
         let textWidth = (text as NSString).boundingRect(
             with: CGSize(width: collectionView.bounds.width, height: .greatestFiniteMagnitude),
@@ -128,25 +121,6 @@ class LinkAccountViewModel {
         ).size.width
         
         return CGSize(width: ceil(textWidth + 34), height: 35)
-        
-    }
-    
-    public func deleteSharedUserAlert(vc: LinkAccountViewController, indexPath: IndexPath, completion: @escaping () -> ()) {
-        
-        let alert = UIAlertController(title: "Remove Linked Account",
-                                      message: "All data will not be removed from linked account.",
-                                      preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-            self.sharedUsers.remove(at: indexPath.row)
-            completion()
-        }))
-
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-              logError("Canceled Deleting User")
-        }))
-
-        vc.present(alert, animated: true, completion: nil)
         
     }
     

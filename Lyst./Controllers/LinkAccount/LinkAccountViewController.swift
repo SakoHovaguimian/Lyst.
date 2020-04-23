@@ -15,6 +15,8 @@ class LinkAccountViewController: UIViewController {
     
     private var linkAccountViewModel: LinkAccountViewModel!
     
+    private var textFields: [UITextField] = []
+    
     //MARK:- Views
     
     private let titleLabel: UILabel = {
@@ -55,7 +57,7 @@ class LinkAccountViewController: UIViewController {
     
     private let sharedUsersDescLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sharing With"
+        label.text = "Recently Shared With"
         label.textAlignment = .left
         label.textColor = .lightGray
         label.font = UIFont(name: avenirNextMedium, size: 16.0)
@@ -113,13 +115,7 @@ class LinkAccountViewController: UIViewController {
         return cv
     }()
     
-    let pinTextField1 = PinTextField(tag: 1)
-    let pinTextField2 = PinTextField(tag: 2)
-    let pinTextField3 = PinTextField(tag: 3)
-    let pinTextField4 = PinTextField(tag: 4)
-    
     //MARK:- Life Cycle
-    
     init(viewModel: LinkAccountViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.linkAccountViewModel = viewModel
@@ -133,6 +129,7 @@ class LinkAccountViewController: UIViewController {
         super.viewDidLoad()
         
         self.configureViews()
+        self.updateButtonState(self.textFields, self.submitButton)
         
     }
     
@@ -148,10 +145,14 @@ class LinkAccountViewController: UIViewController {
         self.configureLabels()
         self.configureTextFields()
         
-        self.configurePinTextFields()
         self.configureSubmitButton()
         
         self.configureCollectionView()
+        
+        self.textFields = [
+            self.emailTextField
+        ]
+        
     }
     
     private func configureAlphaView() {
@@ -236,48 +237,12 @@ class LinkAccountViewController: UIViewController {
         
     }
     
-    private func configurePinTextFields() {
-        
-        //Partner Email Description
-        self.view.addSubview(self.partnerPinDescLabel)
-        
-        self.partnerPinDescLabel.anchor(top: self.emailTextField.bottomAnchor,
-                                          left: self.view.leftAnchor,
-                                          right: self.view.rightAnchor,
-                                          paddingTop: 16,
-                                          paddingLeft: 32,
-                                          paddingRight: 32,
-                                          height: 20)
-
-        //Stack View
-        self.view.addSubview(self.pinStackView)
-        
-        self.pinTextField1.delegate = self
-        self.pinTextField2.delegate = self
-        self.pinTextField3.delegate = self
-        self.pinTextField4.delegate = self
-        
-        self.pinStackView.addArrangedSubview(self.pinTextField1)
-        self.pinStackView.addArrangedSubview(self.pinTextField2)
-        self.pinStackView.addArrangedSubview(self.pinTextField3)
-        self.pinStackView.addArrangedSubview(self.pinTextField4)
-        
-        self.pinStackView.anchor(top: self.partnerPinDescLabel.bottomAnchor,
-                                 left: self.view.leftAnchor,
-                                 right: self.view.rightAnchor,
-                                 paddingTop: 0,
-                                 paddingLeft: 32,
-                                 paddingRight: 32,
-                                 height: 60)
-        
-    }
-    
     private func configureSubmitButton() {
         
         //Submit Button
         self.view.addSubview(self.submitButton)
         
-        self.submitButton.anchor(top: self.pinStackView.bottomAnchor,
+        self.submitButton.anchor(top: self.emailTextField.bottomAnchor,
                                  left: self.view.leftAnchor,
                                  right: self.view.rightAnchor,
                                  paddingTop: 32,
@@ -294,6 +259,8 @@ class LinkAccountViewController: UIViewController {
     }
     
     private func configureCollectionView() {
+        
+        guard !self.linkAccountViewModel.recentlyShared.isEmpty else { return }
         
         //Shared User Desc Label
         self.view.addSubview(self.sharedUsersDescLabel)
@@ -326,17 +293,6 @@ class LinkAccountViewController: UIViewController {
         
     }
     
-    private func updatePin() {
-        
-        self.linkAccountViewModel.createPin(textFields: [
-            self.pinTextField1,
-            self.pinTextField2,
-            self.pinTextField3,
-            self.pinTextField4
-        ])
-        
-    }
-    
     //MARK:- @OBJC Functions
     @objc private func backButtonTapped(_ sender: UIButton) {
         self.linkAccountViewModel.handleBackButtonTapped(sender)
@@ -362,27 +318,25 @@ extension LinkAccountViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        if textField == self.emailTextField {
-            self.updateTextFieldForViewModel(emailTextField, string: string)
-            return true
-        }
+        self.updateTextFieldForViewModel(self.emailTextField, string: string)
+        self.updateButtonState(self.textFields, self.submitButton)
+        return true
         
-        return self.linkAccountViewModel.handlePinTextFieldEntries(textField, string: string)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        if textField == self.emailTextField {
-            self.updateTextFieldForViewModel(self.emailTextField, string: nil)
-        } else {
-            self.updatePin()
-        }
-        
+    
+        self.updateTextFieldForViewModel(self.emailTextField, string: nil)
+        self.updateButtonState(self.textFields, self.submitButton)
+
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         textField.resignFirstResponder()
+        self.updateButtonState(self.textFields, self.submitButton)
         return true
+        
     }
     
 }
@@ -392,12 +346,12 @@ extension LinkAccountViewController: UITextFieldDelegate {
 extension LinkAccountViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.linkAccountViewModel.sharedUsers.count
+        return self.linkAccountViewModel.recentlyShared.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = self.linkedAccountsCollectionView.dequeueReusableCell(withReuseIdentifier: LinkedAccountsCollectionViewCell.identifier, for: indexPath) as? LinkedAccountsCollectionViewCell {
-            let name = self.linkAccountViewModel.sharedUsers[indexPath.row]
+            let name = self.linkAccountViewModel.recentlyShared[indexPath.row]
             cell.name = name
             return cell
         }
@@ -411,9 +365,9 @@ extension LinkAccountViewController: UICollectionViewDelegate, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        self.linkAccountViewModel.deleteSharedUserAlert(vc: self, indexPath: indexPath, completion: {
-            self.linkedAccountsCollectionView.reloadData()
-        })
+        let user = self.linkAccountViewModel.recentlyShared[indexPath.row]
+        self.linkAccountViewModel.handleRecentlySelectedUser(user: user)
         
     }
+    
 }

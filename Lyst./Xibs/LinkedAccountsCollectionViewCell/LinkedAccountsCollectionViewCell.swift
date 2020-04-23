@@ -34,6 +34,7 @@ class LinkedAccountsCollectionViewCell: UICollectionViewCell {
         
         self.layer.cornerRadius = 17.5
         self.addShadow(shadow: .black, opacity: 0.3, offSet: .zero, raidus: 1.0)
+        
     }
 
 }
