@@ -206,12 +206,17 @@ class HomeViewController: UIViewController {
         tv.separatorStyle = .none
         tv.backgroundColor = .white
         tv.contentInsetAdjustmentBehavior = .never
+        let frame = self.view.frame.height / 10.0
+        tv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame, right: 0)
         tv.register(UINib(nibName: ListTableViewCell.identifier,
                           bundle: nil),
                     forCellReuseIdentifier: ListTableViewCell.identifier)
         tv.register(UINib(nibName: TableHeaderView.identifier,
                           bundle: nil),
                     forHeaderFooterViewReuseIdentifier: TableHeaderView.identifier)
+        tv.register(UINib(nibName: CompletionTableHeaderView.identifier,
+                          bundle: nil),
+                    forHeaderFooterViewReuseIdentifier: CompletionTableHeaderView.identifier)
         return tv
         
     }
@@ -333,14 +338,18 @@ class HomeViewController: UIViewController {
     //MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.homeViewModel.numberOfSections
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.homeViewModel.numberOfLists
+        return self.homeViewModel.numberOfItemsInSection(section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = self.homeTableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell {
-            let list = self.homeViewModel.lists[indexPath.row]
+            let list = self.homeViewModel.listFor(indexPath: indexPath)
             cell.configureList(list: list)
             return cell
         }
@@ -355,9 +364,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let vw = self.homeTableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as! TableHeaderView
-        vw.configure(user: self.homeViewModel.user!)
-        return vw
+        return self.homeViewModel.tableViewSectionHeaderFor(section: section, tableView: self.homeTableView)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -365,7 +372,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.view.frame.height / 4
+        guard section == 0 else { return 50 }
+        return self.view.frame.height / 4.0
     }
 
 }

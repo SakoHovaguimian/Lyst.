@@ -14,7 +14,7 @@ extension UIViewController {
         
         for textField in textFields {
             if let text = textField.text {
-                if text.isEmpty { return false }
+                if text.count < 2 { return false }
             } else {
                 return false
             }

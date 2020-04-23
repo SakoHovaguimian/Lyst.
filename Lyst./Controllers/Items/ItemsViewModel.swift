@@ -94,7 +94,7 @@ class ItemsViewModel {
         
     }
     
-    public func tableViewSectionHeaderFor(section: Int, tableView: UITableView) -> UITableViewHeaderFooterView {
+    public func tableViewSectionHeaderFor(section: Int, tableView: UITableView) -> UITableViewHeaderFooterView? {
         
         if section == 0 {
             
@@ -103,6 +103,9 @@ class ItemsViewModel {
             return vw
             
         } else {
+            
+            
+            guard !self.list.items.isEmpty else { return nil }
             
             let vw = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CompletionTableHeaderView") as! CompletionTableHeaderView
             vw.configure(text: section == 1 ? "ITEMS" : "COMPLETED")

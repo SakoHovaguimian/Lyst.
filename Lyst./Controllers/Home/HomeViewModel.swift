@@ -25,8 +25,8 @@ class HomeViewModel {
         return self.user?.lists ?? []
     }
     
-    public var numberOfLists: Int {
-        return self.lists.count
+    public var sharedLists: [List] {
+        return self.user?.sharedLists ?? []
     }
     
     public var shouldHideTableView: Bool = false
@@ -74,6 +74,48 @@ class HomeViewModel {
     public func presentLoginController()  {
         self.actionDelegate.presentLoginVC(animated: false)
         logDebugMessage("Load Login Controller")
+    }
+    
+    //MARK:- Table View Data
+    
+    //0 for profile header 1 and 2 for completed and incomplted tasks
+    public var numberOfSections: Int {
+        return 3
+    }
+    
+    public func numberOfItemsInSection(_ section: Int) -> Int {
+        guard section != 0 else { return 0 }
+        return section == 1 ? self.lists.count : self.sharedLists.count
+    }
+    
+    public func listFor(indexPath: IndexPath) -> List {
+        
+        let list = indexPath.section == 1 ? self.lists[indexPath.row] :self.sharedLists[indexPath.row]
+        return list
+        
+    }
+    
+    public func tableViewSectionHeaderFor(section: Int, tableView: UITableView) -> UITableViewHeaderFooterView? {
+        
+        if section == 0 {
+            
+            let vw = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as! TableHeaderView
+            vw.configure(user: self.user!)
+            return vw
+            
+        } else {
+    
+            if section == 2 && self.sharedLists.isEmpty {
+                return nil
+            }
+            
+            let vw = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CompletionTableHeaderView") as! CompletionTableHeaderView
+            let title = section == 1 ? "My Lysts" : "Shared Lysts"
+            vw.configure(text: title)
+            return vw
+            
+        }
+        
     }
     
 }
