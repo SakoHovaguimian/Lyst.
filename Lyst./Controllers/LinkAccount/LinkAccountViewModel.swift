@@ -18,6 +18,7 @@ class LinkAccountViewModel {
     weak var actionDelegate: LinkVCActionDelegate!
     
     private(set) var user: User!
+    private(set) var list: List!
     
     private(set) var recentlyShared = [
         "Sako Hovaguimian",
@@ -31,8 +32,9 @@ class LinkAccountViewModel {
     
     public var enteredEmail: String = ""
     
-    init(user: User) {
-        self.user = user
+    init(list: List) {
+        self.list = list
+        self.user = testUser
     }
 
     public func validateLinkAccounts() -> String? {

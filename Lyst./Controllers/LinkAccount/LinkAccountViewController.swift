@@ -131,6 +131,8 @@ class LinkAccountViewController: UIViewController {
         self.configureViews()
         self.updateButtonState(self.textFields, self.submitButton)
         
+        logSuccess(self.linkAccountViewModel.list.name)
+        
     }
     
     //MARK:- Helper Functions

@@ -59,9 +59,9 @@ class HomeCoordinator: Coordinator {
         
     }
     
-    private func pushLinkAccountViewController(user: User) {
+    private func presentLinkAccountViewController(list: List) {
         
-        let viewModel = LinkAccountViewModel(user: user)
+        let viewModel = LinkAccountViewModel(list: list)
         viewModel.actionDelegate = self
         
         let itemVC = LinkAccountViewController(viewModel: viewModel)
@@ -87,6 +87,10 @@ extension HomeCoordinator: LinkVCActionDelegate {
 //MARK:- ITEM VIEW MODEL DELEGATE
 extension HomeCoordinator: ItemVCActionDelegate {
     
+    func openLinkAccountVC(list: List) {
+        self.presentLinkAccountViewController(list: list)
+    }
+    
     func popItemViewController() {
         self.navigationController.popViewController(animated: true)
         logSuccess("POPPING ITEM VIEW CONTROLLER")
@@ -101,6 +105,7 @@ extension HomeCoordinator: UserCreatedDelegate {
         
         if let homeVC = self.navigationController.viewControllers.first as? HomeViewController {
             homeVC.homeViewModel.updateUser(withUser: user)
+            testUser = user
             self.childCoordinators.removeLast()
         }
         
@@ -111,9 +116,9 @@ extension HomeCoordinator: UserCreatedDelegate {
 //MARK:- HOME VIEW MODEL DELEGATE
 extension HomeCoordinator: HomeVCActionsDelegate {
     
-    func pushLinkAccountVC(user: User) {
-        self.pushLinkAccountViewController(user: user)
-    }
+//    func pushLinkAccountVC(user: User) {
+//        self.presentLinkAccountViewController(user: user)
+//    }
     
     func pushItemVC(list: List) {
         self.pushItemViewController(list: list)

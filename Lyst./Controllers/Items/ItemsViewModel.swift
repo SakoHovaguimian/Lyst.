@@ -11,6 +11,7 @@ import Animo
 
 protocol ItemVCActionDelegate: class {
     func popItemViewController()
+    func openLinkAccountVC(list: List)
 }
 
 class ItemsViewModel {
@@ -18,6 +19,7 @@ class ItemsViewModel {
     weak var actionDelegate: ItemVCActionDelegate!
     
     private(set) var list: List!
+    private(set) var user: User!
     
     //0 for profile header 1 and 2 for completed and incomplted tasks
     public var numberOfSections: Int {
@@ -26,6 +28,7 @@ class ItemsViewModel {
     
     init(list: List) {
         self.list = list
+        self.user = testUser
     }
     
     public func handleBackButtonTapped(_ sender: UIButton) {
@@ -39,6 +42,7 @@ class ItemsViewModel {
     
     public func handleOptionsButtonTapped(_ sender: UIButton) {
         logSuccess("Options Button Tapped: Loading....")
+        self.actionDelegate.openLinkAccountVC(list: self.list)
     }
     
     public func numberOfItemsInSection(_ section: Int) -> Int {

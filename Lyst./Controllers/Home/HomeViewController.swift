@@ -261,7 +261,7 @@ class HomeViewController: UIViewController {
         
             
         self.menuStackView.addArrangedSubview(self.settingsButton)
-        self.menuStackView.addArrangedSubview(self.linkAccountButton)
+//        self.menuStackView.addArrangedSubview(self.linkAccountButton)
         self.menuStackView.addArrangedSubview(self.logoutButton)
         
         self.menuStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
