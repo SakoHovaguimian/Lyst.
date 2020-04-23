@@ -11,6 +11,7 @@ import Animo
 
 protocol HomeVCActionsDelegate: class {
     func presentLoginVC(animated: Bool)
+    func presentAddListVC()
     func pushItemVC(list: List)
 //    func pushLinkAccountVC(user: User)
 }
@@ -39,8 +40,13 @@ class HomeViewModel {
         self.user = user
     }
     
+    public func addList(_ list: List) {
+        self.user?.lists.append(list)
+    }
+    
     public func handleAddButtonTapped(_ sender: UIButton) {
-        //Delegate to present modally Coordinator
+        self.actionDelegate.presentAddListVC()
+        logSuccess("PRESENTING ADD LIST VC")
     }
     
     public func handleListsButtonTapped(_ sender: UIButton) {

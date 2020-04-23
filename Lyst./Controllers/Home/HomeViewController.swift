@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
     
     //MARK:- Views
     
-    private lazy var homeTableView: UITableView = {
+    private(set) lazy var homeTableView: UITableView = {
         return self.setupTableView()
     }()
     

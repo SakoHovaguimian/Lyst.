@@ -58,8 +58,7 @@ class SignUpViewModel {
         }
         
         let user = User(name: self.fullName,
-                        email: self.email,
-                        listId: "234")
+                        email: self.email)
         
         self.actionDelegate.didCreateUser(user: user)
         

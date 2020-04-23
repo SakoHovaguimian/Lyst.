@@ -10,10 +10,9 @@ import Foundation
 
 class User {
     
+    var id: String = ""
     var name: String
     var email: String
-    var listId: String
-    var pin: Int = 0000
     var lists: [List] = List.generateList()
     var sharedLists: [List] = List.generateList().reversed()
     
@@ -21,10 +20,9 @@ class User {
         return self.fetchFirstName()
     }
     
-    init(name: String, email: String, listId: String) {
+    init(name: String, email: String) {
         self.name = name
         self.email = email
-        self.listId = listId
     }
     
     //Create Another init for JSON Parsing

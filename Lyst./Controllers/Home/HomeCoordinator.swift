@@ -72,6 +72,19 @@ class HomeCoordinator: Coordinator {
         
     }
     
+    private func presentAddListViewController() {
+        
+        let viewModel = AddListViewModel()
+        viewModel.actionDelegate = self
+        
+        let addListVC = AddListViewController(viewModel: viewModel)
+        addListVC.modalPresentationStyle = .overCurrentContext
+        
+        self.navigationController.present(addListVC, animated: true)
+        
+        
+    }
+    
 }
 
 //MARK:- LINK ACTION VIEW MODEL DELEGATE
@@ -124,11 +137,34 @@ extension HomeCoordinator: HomeVCActionsDelegate {
         self.pushItemViewController(list: list)
     }
     
+    func presentAddListVC() {
+        self.presentAddListViewController()
+    }
     
     func presentLoginVC(animated: Bool) {
         logDebugMessage("Coordinator is attemplting to log")
         self.presentLoginCoordinator(animated: animated)
     }
 
+    
+}
+
+extension HomeCoordinator: AddListVCActionDelegate {
+    
+    func popAddListViewController() {
+        self.navigationController.dismiss(animated: true, completion: nil)
+        logSuccess("POPPING ADD LIST VIEW CONTROLLER")
+    }
+    
+    func addCreatedList(_ list: List) {
+        
+        if let homeVC = self.navigationController.viewControllers.first as? HomeViewController {
+            homeVC.homeViewModel.addList(list)
+            homeVC.homeTableView.reloadData()
+        }
+        
+        self.navigationController.dismiss(animated: true, completion: nil)
+        
+    }
     
 }

@@ -55,6 +55,9 @@ class ListTableViewCell: UITableViewCell {
         self.listNameLabel.text = list.name
         self.listNameLabel.textColor = .charcoalBlack
         
+        let numberOfItems = self.list.incompleteItems.count
+        self.numberOfItemsLabel.text = "There are \(numberOfItems) items"
+        
         
     }
     
