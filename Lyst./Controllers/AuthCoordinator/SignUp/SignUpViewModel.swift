@@ -78,4 +78,20 @@ class SignUpViewModel {
         
     }
     
+    public func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
+        
+        var text = (textField.text ?? "")
+        
+        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
+        
+        if textField.tag == 0 {
+            self.fullName = text
+        } else if textField.tag == 1 {
+            self.email = text
+        } else {
+            self.password = text
+        }
+        
+    }
+    
 }

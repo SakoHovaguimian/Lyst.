@@ -217,22 +217,6 @@ class SignUpViewController: UIViewController {
         self.signUpViewModel.handleBackButtonTapped(sender)
     }
     
-    private func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
-        
-        var text = (textField.text ?? "")
-        
-        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
-        
-        if textField == self.emailTextField {
-            self.signUpViewModel.email = text
-        } else if textField == self.fullNameTextField {
-            self.signUpViewModel.fullName = text
-        } else {
-            self.signUpViewModel.password = text
-        }
-        
-    }
-    
 }
 
 //MARK:- Extensions
@@ -267,14 +251,14 @@ extension SignUpViewController: InputAccessoryViewDelegate {
 extension SignUpViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        self.updateTextFieldForViewModel(textField, string: string)
+        self.signUpViewModel.updateTextFieldForViewModel(textField, string: string)
         self.updateButtonState(self.textFields, self.submitButton)
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.updateButtonState(self.textFields, self.submitButton)
-        self.updateTextFieldForViewModel(textField, string: nil)
+        self.signUpViewModel.updateTextFieldForViewModel(textField, string: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

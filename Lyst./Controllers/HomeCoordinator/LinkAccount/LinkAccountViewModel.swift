@@ -100,6 +100,16 @@ class LinkAccountViewModel {
 
     }
     
+    public func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
+        
+        var text = (textField.text ?? "")
+        
+        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
+        
+        self.enteredEmail = text
+        
+    }
+    
     public func customCollectionLayout() -> UICollectionViewLayout {
         
         let layout = TokenCollViewFlowLayout.init()

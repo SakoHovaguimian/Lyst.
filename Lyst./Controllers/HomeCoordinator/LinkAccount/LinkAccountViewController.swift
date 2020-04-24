@@ -285,16 +285,6 @@ class LinkAccountViewController: UIViewController {
         
     }
     
-    private func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
-        
-        var text = (textField.text ?? "")
-        
-        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
-        
-        self.linkAccountViewModel.enteredEmail = text
-        
-    }
-    
     //MARK:- @OBJC Functions
     @objc private func backButtonTapped(_ sender: UIButton) {
         self.linkAccountViewModel.handleBackButtonTapped(sender)
@@ -320,7 +310,7 @@ extension LinkAccountViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        self.updateTextFieldForViewModel(self.emailTextField, string: string)
+        self.linkAccountViewModel.updateTextFieldForViewModel(self.emailTextField, string: string)
         self.updateButtonState(self.textFields, self.submitButton)
         return true
         
@@ -328,7 +318,7 @@ extension LinkAccountViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
     
-        self.updateTextFieldForViewModel(self.emailTextField, string: nil)
+        self.linkAccountViewModel.updateTextFieldForViewModel(self.emailTextField, string: nil)
         self.updateButtonState(self.textFields, self.submitButton)
 
     }

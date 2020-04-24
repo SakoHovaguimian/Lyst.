@@ -238,13 +238,8 @@
 			isa = PBXGroup;
 			children = (
 				3DB753352446A49E00CC183C /* MainCoordinator.swift */,
-				3DDB3C9B244790A000DB770E /* Login */,
-				3D09C7092447F601005C5D3C /* SignUp */,
-				3DB753382446A4CF00CC183C /* Home */,
-				3D1210712448FC2500C8107A /* Items */,
-				3D1A75D0244F50C8008A73FE /* LinkAccount */,
-				3D2D25DD245203340026D488 /* AddList */,
-				3DBCE41F24524F3500CA157E /* AddItem */,
+				3D66C30E2453697F00BAB04B /* AuthCoordinator */,
+				3D66C30D2453697300BAB04B /* HomeCoordinator */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -267,6 +262,27 @@
 				3D51AB86244E5D6E00E7D794 /* CompletionTableHeaderView.xib */,
 			);
 			path = CompletionTableHeaderView;
+			sourceTree = "<group>";
+		};
+		3D66C30D2453697300BAB04B /* HomeCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				3DB753382446A4CF00CC183C /* Home */,
+				3D1210712448FC2500C8107A /* Items */,
+				3D1A75D0244F50C8008A73FE /* LinkAccount */,
+				3D2D25DD245203340026D488 /* AddList */,
+				3DBCE41F24524F3500CA157E /* AddItem */,
+			);
+			path = HomeCoordinator;
+			sourceTree = "<group>";
+		};
+		3D66C30E2453697F00BAB04B /* AuthCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				3DDB3C9B244790A000DB770E /* Login */,
+				3D09C7092447F601005C5D3C /* SignUp */,
+			);
+			path = AuthCoordinator;
 			sourceTree = "<group>";
 		};
 		3DB753382446A4CF00CC183C /* Home */ = {

@@ -55,22 +55,21 @@ class AddItemViewController: UIViewController {
         return btn
     }()
     
+    //MARK:- TEXTFIELDS
     private lazy var itemNameTextField: InputTextField = {
-        let textField = InputTextField(placeholder: "Item Name",
-                                       secureEntry: false,
-                                       tag: 0)
-        textField.delegate = self
-        textField.font = UIFont(name: avenirNextBold, size: 20.0)
-        return textField
+        return self.addItemViewModel.createInputTextField(placeholder: "Item Name", tag: 0, vc: self)
     }()
     
-    private let itemNameDescLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Item Name"
-        label.textAlignment = .left
-        label.textColor = .lightGray
-        label.font = UIFont(name: avenirNextMedium, size: 14.0)
-        return label
+    private lazy var itemNameDescLabel: UILabel = {
+        return self.addItemViewModel.createDescLabel(text: "Item Name")
+    }()
+    
+    private lazy var itemLinkTextField: InputTextField = {
+        return self.addItemViewModel.createInputTextField(placeholder: "Item Link(Optional)", tag: 1, vc: self)
+    }()
+    
+    private lazy var itemLinkDescLabel: UILabel = {
+        return self.addItemViewModel.createDescLabel(text: "Item Link")
     }()
     
     var textFields: [UITextField] = []
@@ -96,7 +95,7 @@ class AddItemViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.animateAlphaView(value: 0.5)
+        self.addItemViewModel.animateAlphaFor(self.alphaView, value: 0.5)
 
     }
     
@@ -128,11 +127,11 @@ class AddItemViewController: UIViewController {
                              bottom: self.view.bottomAnchor,
                              right: self.view.rightAnchor,
                              paddingBottom: -5,
-                             height: self.view.frame.height / 1.8)
+                             height: self.view.frame.height / 1.5)
         
         self.cardView.backgroundColor = .white
         
-        let frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height / 1.8)
+        let frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height / 1.5)
         self.cardView.applyGradient(colors: backgroundGradient, frame: frame)
         
         self.cardView.layer.cornerRadius = 23
@@ -182,6 +181,28 @@ class AddItemViewController: UIViewController {
                                       paddingLeft: 32,
                                       paddingRight: 32,
                                       height: 50)
+        
+        //Item Link Description
+        self.cardView.addSubview(self.itemLinkDescLabel)
+        
+        self.itemLinkDescLabel.anchor(top: self.itemNameTextField.bottomAnchor,
+                                      left: self.view.leftAnchor,
+                                      right: self.view.rightAnchor,
+                                      paddingTop: 16,
+                                      paddingLeft: 32,
+                                      paddingRight: 32,
+                                      height: 20)
+        
+        //Item Link
+        self.cardView.addSubview(self.itemLinkTextField)
+
+        self.itemLinkTextField.anchor(top: self.itemLinkDescLabel.bottomAnchor,
+                                      left: self.view.leftAnchor,
+                                      right: self.view.rightAnchor,
+                                      paddingTop: 0,
+                                      paddingLeft: 32,
+                                      paddingRight: 32,
+                                      height: 50)
 
     }
     
@@ -190,7 +211,7 @@ class AddItemViewController: UIViewController {
         //Submit Button
         self.cardView.addSubview(self.submitButton)
         
-        self.submitButton.anchor(top: self.itemNameTextField.bottomAnchor,
+        self.submitButton.anchor(top: self.itemLinkTextField.bottomAnchor,
                                  left: self.view.leftAnchor,
                                  right: self.view.rightAnchor,
                                  paddingTop: 32,
@@ -206,16 +227,6 @@ class AddItemViewController: UIViewController {
         
     }
     
-    private func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
-        
-        var text = (textField.text ?? "")
-        
-        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
-        
-        self.addItemViewModel.item.name = text
-        
-    }
-    
     private func addDismissGestureRecognizer() {
         
         let tap = UITapGestureRecognizer()
@@ -225,22 +236,9 @@ class AddItemViewController: UIViewController {
         
     }
     
-    private func animateAlphaView(value: CGFloat, instant: Bool = false) {
-        
-        guard instant == false else {
-            self.alphaView.alpha = 0.0
-            return
-        }
-        
-        UIView.animate(withDuration: 0.5, delay: 0.2, animations: {
-            self.alphaView.alpha = value
-        })
-        
-    }
-    
     //MARK:- @OBJC Functions
     @objc private func closeButtonTapped(_ sender: UIButton) {
-        self.animateAlphaView(value: 0.0, instant: true)
+        self.addItemViewModel.animateAlphaFor(self.alphaView, value: 0.0, instant: true)
         self.addItemViewModel.handleCloseButtonTapped(sender)
     }
     
@@ -251,7 +249,7 @@ class AddItemViewController: UIViewController {
     }
     
     @objc private func alphaViewTapped() {
-        self.animateAlphaView(value: 0.0, instant: true)
+        self.addItemViewModel.animateAlphaFor(self.alphaView, value: 0.0, instant: true)
         self.addItemViewModel.handleOutsideCardViewTapped()
     }
     
@@ -264,7 +262,7 @@ extension AddItemViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        self.updateTextFieldForViewModel(self.itemNameTextField, string: string)
+        self.addItemViewModel.updateTextFieldForViewModel(textField, string: string)
         self.updateButtonState(self.textFields, self.submitButton)
         return true
         
@@ -272,7 +270,7 @@ extension AddItemViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
-        self.updateTextFieldForViewModel(self.itemNameTextField, string: nil)
+        self.addItemViewModel.updateTextFieldForViewModel(textField, string: nil)
         self.updateButtonState(self.textFields, self.submitButton)
 
     }

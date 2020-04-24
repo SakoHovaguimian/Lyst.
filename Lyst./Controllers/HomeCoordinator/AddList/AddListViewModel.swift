@@ -37,5 +37,28 @@ class AddListViewModel {
     public func handleOutsideCardViewTapped() {
         self.handlePopViewController()
     }
-
+    
+    public func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
+        
+        var text = (textField.text ?? "")
+        
+        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
+        
+        self.list.name = text
+        
+    }
+    
+    public func animateAlphaFor(_ view: UIView, value: CGFloat, instant: Bool = false) {
+        
+        guard instant == false else {
+            view.alpha = 0.0
+            return
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 0.2, animations: {
+            view.alpha = value
+        })
+        
+    }
+    
 }

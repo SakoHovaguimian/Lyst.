@@ -116,7 +116,7 @@ class AddListViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.animateAlphaView(value: 0.5)
+        self.addListViewModel.animateAlphaFor(self.alphaView,value: 0.5)
 
     }
     
@@ -267,16 +267,6 @@ class AddListViewController: UIViewController {
         
     }
     
-    private func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
-        
-        var text = (textField.text ?? "")
-        
-        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
-        
-        self.addListViewModel.list.name = text
-        
-    }
-    
     private func addDismissGestureRecognizer() {
         
         let tap = UITapGestureRecognizer()
@@ -286,22 +276,9 @@ class AddListViewController: UIViewController {
         
     }
     
-    private func animateAlphaView(value: CGFloat, instant: Bool = false) {
-        
-        guard instant == false else {
-            self.alphaView.alpha = 0.0
-            return
-        }
-        
-        UIView.animate(withDuration: 0.5, delay: 0.2, animations: {
-            self.alphaView.alpha = value
-        })
-        
-    }
-    
     //MARK:- @OBJC Functions
     @objc private func closeButtonTapped(_ sender: UIButton) {
-        self.animateAlphaView(value: 0.0, instant: true)
+        self.addListViewModel.animateAlphaFor(self.alphaView,value: 0.0, instant: true)
         self.addListViewModel.handleCloseButtonTapped(sender)
     }
     
@@ -312,7 +289,7 @@ class AddListViewController: UIViewController {
     }
     
     @objc private func alphaViewTapped() {
-        self.animateAlphaView(value: 0.0, instant: true)
+        self.addListViewModel.animateAlphaFor(self.alphaView,value: 0.0, instant: true)
         self.addListViewModel.handleOutsideCardViewTapped()
         logSuccess("SHARING ACCOUNT WITH...")
         
@@ -331,7 +308,7 @@ extension AddListViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        self.updateTextFieldForViewModel(self.listNameTextField, string: string)
+        self.addListViewModel.updateTextFieldForViewModel(self.listNameTextField, string: string)
         self.updateButtonState(self.textFields, self.submitButton)
         return true
         
@@ -339,7 +316,7 @@ extension AddListViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         
-        self.updateTextFieldForViewModel(self.listNameTextField, string: nil)
+        self.addListViewModel.updateTextFieldForViewModel(self.listNameTextField, string: nil)
         self.updateButtonState(self.textFields, self.submitButton)
 
     }
