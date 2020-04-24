@@ -23,6 +23,7 @@ class InputTextField: UITextField {
         
         if placeholder == "Email" { self.keyboardType = .emailAddress }
     
+        self.placeholder = placeholder
         self.autocapitalizationType = .none
         self.borderStyle = .roundedRect
         self.tag = tag
@@ -33,10 +34,15 @@ class InputTextField: UITextField {
         self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: 50))
         self.leftViewMode = .always
         self.addShadow(shadow: .black,
-                     opacity: 0.5, offSet: .zero, raidus: 1.0)
-        self.attributedPlaceholder = NSAttributedString(string: placeholder,
-        attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+                       opacity: 0.7, offSet: .zero, raidus: 1.0)
+        self.updatePlaceholderColor(color: .lightGray)
         
+    }
+    
+    public func updatePlaceholderColor(color: UIColor) {
+        self.attributedPlaceholder = NSAttributedString(string: self.placeholder ?? "",
+        attributes: [NSAttributedString.Key.foregroundColor: color])
     }
 
 }
+

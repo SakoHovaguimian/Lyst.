@@ -16,7 +16,7 @@ class ItemsViewController: UIViewController {
     private var itemsViewModel: ItemsViewModel!
     
     //MARK:- Views
-    private lazy var itemsTableView: UITableView = {
+    private(set) lazy var itemsTableView: UITableView = {
         return self.setupTableView()
     }()
     
@@ -32,6 +32,28 @@ class ItemsViewController: UIViewController {
         return btn
     }()
     
+    private lazy var optionsButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("...", for: .normal)
+        btn.setTitleColor(.charcoalBlack, for: .normal)
+        btn.titleLabel?.font = UIFont(name: avenirNextBold, size: 25.0)
+        btn.addTarget(self,
+                      action: #selector(self.optionsButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var floatingAddButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.backgroundColor = .charcoalBlack
+        btn.clipsToBounds = true
+        btn.setImage(UIImage(named: "add"), for: .normal)
+        btn.addTarget(self,
+                      action: #selector(self.addButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
     //MARK:- Life Cycle
     
     init(viewModel: ItemsViewModel) {
@@ -42,7 +64,7 @@ class ItemsViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,7 +79,7 @@ class ItemsViewController: UIViewController {
         
         self.configureTableView()
         self.configureAlphaView()
-        self.configureBackButtonView()
+        self.configureButtons()
         
     }
     
@@ -80,10 +102,10 @@ class ItemsViewController: UIViewController {
                   left: self.view.leftAnchor,
                   right: self.view.rightAnchor,
                   height: self.view.frame.height / 8.6)
-    
+        
     }
     
-    private func configureBackButtonView() {
+    private func configureButtons() {
         
         //Back ImageView
         
@@ -111,6 +133,23 @@ class ItemsViewController: UIViewController {
                                right: backImageView.rightAnchor,
                                paddingRight: -60)
         
+        //Add Button
+        self.view.addSubview(self.optionsButton)
+        
+        self.optionsButton.centerY(inView: backImageView, constant: 3)
+        self.optionsButton.anchor(right: self.view.rightAnchor,
+                              paddingRight: 16,
+                              width: 32,
+                              height: 32)
+        
+        //Floating Add Button
+        self.view.addSubview(self.floatingAddButton)
+        
+        self.floatingAddButton.setDimmensions(height: 75, width: 75)
+        self.floatingAddButton.centerX(inView: self.view)
+        self.floatingAddButton.anchor(bottom: self.view.bottomAnchor, paddingBottom: 32)
+        self.floatingAddButton.layer.cornerRadius = 35.5
+        self.floatingAddButton.addShadow(shadow: .black, opacity: 0.8, offSet: .zero, raidus: 1.0)
         
     }
     
@@ -123,12 +162,16 @@ class ItemsViewController: UIViewController {
         tv.separatorStyle = .none
         tv.backgroundColor = .white
         tv.contentInsetAdjustmentBehavior = .never
-        tv.register(UINib(nibName: ListTableViewCell.identifier,
+        tv.register(UINib(nibName: ItemTableViewCell.identifier,
                           bundle: nil),
-                    forCellReuseIdentifier: ListTableViewCell.identifier)
+                    forCellReuseIdentifier: ItemTableViewCell.identifier)
         tv.register(UINib(nibName: TableHeaderView.identifier,
                           bundle: nil),
                     forHeaderFooterViewReuseIdentifier: TableHeaderView.identifier)
+        tv.register(UINib(nibName: CompletionTableHeaderView.identifier,
+                          bundle: nil),
+                    forHeaderFooterViewReuseIdentifier: CompletionTableHeaderView.identifier)
+        
         return tv
         
     }
@@ -139,6 +182,15 @@ class ItemsViewController: UIViewController {
         self.itemsViewModel.handleBackButtonTapped(sender)
     }
     
+    @objc private func addButtonTapped(_ sender: UIButton) {
+        self.itemsViewModel.handleAddButtonTapped(sender)
+        self.itemsTableView.reloadData()
+    }
+    
+    @objc private func optionsButtonTapped(_ sender: UIButton) {
+        self.itemsViewModel.handleOptionsButtonTapped(sender)
+    }
+    
 }
 
     //MARK:- Extensions
@@ -146,24 +198,24 @@ class ItemsViewController: UIViewController {
     //MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.itemsViewModel.numberOfSections
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.itemsViewModel.numberOfItemsInSection(section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if let cell = self.itemsTableView.dequeueReusableCell(withIdentifier: ListTableViewCell.identifier, for: indexPath) as? ListTableViewCell {
-            return cell
-        }
-        
-        return UITableViewCell()
+        let cell = self.itemsViewModel.configureCellForRowAt(indexPath: indexPath, tableView: self.itemsTableView)
+        cell.itemDelegate = self
+        return cell
         
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let vw = self.itemsTableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as! TableHeaderView
-        vw.configure(list: self.itemsViewModel.list)
-        return vw
+        return self.itemsViewModel.tableViewSectionHeaderFor(section: section, tableView: self.itemsTableView)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -171,7 +223,38 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return self.view.frame.height / 4
+        guard section == 0 else { return 50 }
+        return self.view.frame.height / 4.2
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .destructive, title: nil) { action, view, completion in
+            print("DELETED ITEM")
+            self.itemsViewModel.removeItemAt(indexPath: indexPath)
+            self.itemsTableView.reloadData()
+            completion(true)
+        }
+        
+        if let cgImage =  UIImage(named: "delete_trash")?.cgImage {
+             action.image = ImageWithoutRender(cgImage: cgImage, scale: UIScreen.main.nativeScale, orientation: .up)
+        }
+        action.backgroundColor = UIColor.init(displayP3Red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
 
+        return UISwipeActionsConfiguration(actions: [action])
+    }
+    
+}
+
+//MARK:- ITEM UPDATE DELEGATE DidFinishItemDelegate
+extension ItemsViewController: DidFinishItemDelegate {
+    
+    func didFinishItem(_ item: Item) {
+        self.itemsViewModel.updateItemFinishedState(item)
+        self.itemsTableView.reloadData()
+    }
+    
 }

@@ -32,8 +32,7 @@ class LoginViewModel {
        }
         
         let user = User(name: "Sako Hovaguimian",
-                        email: self.email,
-                        listId: "234")
+                        email: self.email)
         
         self.actionDelegate.dismissLoginVC(user: user)
         

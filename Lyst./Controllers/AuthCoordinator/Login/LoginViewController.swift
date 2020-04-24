@@ -81,6 +81,7 @@ class LoginViewController: UIViewController {
         self.textFields = [self.emailTextField, self.passwordTextField]
         
         self.configureViews()
+        self.configureTextFieldsWithToolBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -217,6 +218,19 @@ class LoginViewController: UIViewController {
         
     }
     
+    private func configureTextFieldsWithToolBar() {
+        
+        let toolbar1 = InputAccessoryView(items: [.next], textField: self.emailTextField, delegate: self)
+        let toolbar2 = InputAccessoryView(items: [.previous, .flexibleSpace, .done], textField: self.passwordTextField, delegate: self)
+        
+        self.emailTextField.inputAccessoryView = toolbar1
+        self.emailTextField.returnKeyType = .next
+        
+        self.passwordTextField.inputAccessoryView = toolbar2
+        self.passwordTextField.returnKeyType = .done
+        
+    }
+    
     //MARK:- OBJC Functions
     @objc private func submitButtonTapped(_ sender: UIButton) {
         
@@ -233,6 +247,23 @@ class LoginViewController: UIViewController {
 }
 
 //MARK:- Extensions
+
+//MARK:- TextField ToolBar Delegate
+extension LoginViewController: InputAccessoryViewDelegate {
+    
+    func didTapNextButton(_ sender: UITextField) {
+        self.passwordTextField.becomeFirstResponder()
+    }
+    
+    func didTapPreviousButton(_ sender: UITextField) {
+        self.emailTextField.becomeFirstResponder()
+    }
+    
+    func didTapDoneButton(_ sender: UITextField) {
+        sender.resignFirstResponder()
+    }
+    
+}
 
 //MARK:- Textfield Delegates
 extension LoginViewController: UITextFieldDelegate {

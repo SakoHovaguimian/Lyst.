@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Category: String {
+enum Category: String, CaseIterable {
     
     case shopping
     case home

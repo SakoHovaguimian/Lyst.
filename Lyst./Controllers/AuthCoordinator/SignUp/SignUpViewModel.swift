@@ -14,6 +14,7 @@ enum ValidationError: String {
     case invalidEmail
     case invalidPassword
     case invalidName
+    case invalidPin
     
     var error: String {
         
@@ -21,6 +22,7 @@ enum ValidationError: String {
             case .invalidEmail: return "The email you entered is invalid or missing"
             case .invalidPassword: return "The password you used is too short or missing"
             case .invalidName: return "The name you entered is too short or missing"
+            case .invalidPin: return "The pin you entered is invalid. Please try again."
         }
         
     }
@@ -56,8 +58,7 @@ class SignUpViewModel {
         }
         
         let user = User(name: self.fullName,
-                        email: self.email,
-                        listId: "234")
+                        email: self.email)
         
         self.actionDelegate.didCreateUser(user: user)
         
@@ -74,6 +75,22 @@ class SignUpViewModel {
         guard password.count > 2 else { return ValidationError.invalidPassword.error }
         
         return nil
+        
+    }
+    
+    public func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
+        
+        var text = (textField.text ?? "")
+        
+        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
+        
+        if textField.tag == 0 {
+            self.fullName = text
+        } else if textField.tag == 1 {
+            self.email = text
+        } else {
+            self.password = text
+        }
         
     }
     

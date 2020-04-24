@@ -1,0 +1,123 @@
+//
+//  ItemViewModel.swift
+//  Lyst.
+//
+//  Created by Sako Hovaguimian on 4/16/20.
+//  Copyright © 2020 Sako Hovaguimian. All rights reserved.
+//
+
+import UIKit
+import Animo
+
+protocol ItemVCActionDelegate: class {
+    func popItemViewController()
+    func openLinkAccountVC(list: List)
+    func presentAddItemVC(list: List)
+}
+
+class ItemsViewModel {
+    
+    weak var actionDelegate: ItemVCActionDelegate!
+    
+    private(set) var list: List!
+    private(set) var user: User!
+    
+    //0 for profile header 1 and 2 for completed and incomplted tasks
+    public var numberOfSections: Int {
+        return 3
+    }
+    
+    init(list: List) {
+        self.list = list
+        self.user = testUser
+    }
+    
+    public func handleBackButtonTapped(_ sender: UIButton) {
+        self.actionDelegate.popItemViewController()
+    }
+    
+    public func handleAddButtonTapped(_ sender: UIButton) {
+        self.actionDelegate.presentAddItemVC(list: self.list)
+        logSuccess("Add Button Tapped in View Model")
+    }
+    
+    public func handleOptionsButtonTapped(_ sender: UIButton) {
+        logSuccess("Options Button Tapped: Loading....")
+        self.actionDelegate.openLinkAccountVC(list: self.list)
+    }
+    
+    public func numberOfItemsInSection(_ section: Int) -> Int {
+        guard section != 0 else { return 0 }
+        return section == 1 ? self.list.incompleteItems.count : self.list.completedItems.count
+    }
+
+    public func addItems() {
+        let item = Item()
+        item.name = "Milk"
+        item.id = "\(self.list.items.count + 1)"
+        self.list.items.append(item)
+    }
+    
+    public func isFirstCell(_ indexPath: IndexPath) -> Bool {
+        guard indexPath.section != 0 else { return false }
+        return indexPath.row == 0
+    }
+    
+    public func isLastCell(_ indexPath: IndexPath) -> Bool {
+        guard indexPath.section != 0 else { return false }
+        let itemCount = indexPath.section == 1 ? self.list.incompleteItems.count : self.list.completedItems.count
+        return indexPath.row == itemCount - 1
+       
+    }
+    
+    public func removeItemAt(indexPath: IndexPath) {
+        
+        if indexPath.section == 1 {
+            let item = self.list.incompleteItems[indexPath.row]
+            self.list.removeItem(item)
+        } else {
+            let item = self.list.completedItems[indexPath.row]
+            self.list.removeItem(item)
+        }
+        
+    }
+    
+    public func updateItemFinishedState(_ item: Item) {
+        item.isCompleted.toggle()
+    }
+    
+    public func configureCellForRowAt(indexPath: IndexPath, tableView: UITableView) -> ItemTableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.identifier, for: indexPath) as! ItemTableViewCell
+        guard indexPath.section != 0 else { return cell }
+        let sectionItems = indexPath.section == 1 ? self.list.incompleteItems : self.list.completedItems
+        let item = sectionItems[indexPath.row]
+        let isFirstCell = self.isFirstCell(indexPath)
+        let isLastCell = self.isLastCell(indexPath)
+        cell.configureViews(item: item, isFirstCell: isFirstCell, isLastCell: isLastCell)
+        return cell
+        
+    }
+    
+    public func tableViewSectionHeaderFor(section: Int, tableView: UITableView) -> UITableViewHeaderFooterView? {
+        
+        if section == 0 {
+            
+            let vw = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.identifier) as! TableHeaderView
+            vw.configure(list: self.list)
+            return vw
+            
+        } else {
+            
+            
+            guard !self.list.items.isEmpty else { return nil }
+            
+            let vw = tableView.dequeueReusableHeaderFooterView(withIdentifier: "CompletionTableHeaderView") as! CompletionTableHeaderView
+            vw.configure(text: section == 1 ? "ITEMS" : "COMPLETED")
+            return vw
+            
+        }
+        
+    }
+    
+}

@@ -21,7 +21,7 @@ let graidentColors: [[UIColor]] = [
     [UIColor.royalBlue1!, UIColor.royalBlue2!],
 ]
 
-let testUser: User = User(name: "Mitch", email: "sako@sako.com", listId: "1234")
+var testUser: User = User(name: "Test User", email: "sako@sako.com")
 
 let avenirNextBold = "AvenirNextCondensed-Bold"
 let avenirNextRegular = "AvenirNextCondensed-Regular"

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Animo
 
 class SignUpViewController: UIViewController {
     
@@ -76,6 +77,7 @@ class SignUpViewController: UIViewController {
         
         self.configureBackButtonView()
         self.configureViews()
+        self.configureTextFieldsWithToolBar()
         
     }
     
@@ -186,6 +188,23 @@ class SignUpViewController: UIViewController {
         
     }
     
+    private func configureTextFieldsWithToolBar() {
+        
+        let toolbar1 = InputAccessoryView(items: [.next], textField: self.fullNameTextField, delegate: self)
+        let toolbar2 = InputAccessoryView(items: [.previous, .next, .flexibleSpace], textField: self.emailTextField, delegate: self)
+        let toolbar3 = InputAccessoryView(items: [.previous, .flexibleSpace, .done], textField: self.passwordTextField, delegate: self)
+        
+        self.fullNameTextField.inputAccessoryView = toolbar1
+        self.fullNameTextField.returnKeyType = .next
+        
+        self.emailTextField.inputAccessoryView = toolbar2
+        self.emailTextField.returnKeyType = .next
+        
+        self.passwordTextField.inputAccessoryView = toolbar3
+        self.passwordTextField.returnKeyType = .done
+        
+    }
+    
     //MARK:- @OBJC Functions
     
     @objc private func signUpButtonTapped(_ sender: UIButton) {
@@ -198,39 +217,48 @@ class SignUpViewController: UIViewController {
         self.signUpViewModel.handleBackButtonTapped(sender)
     }
     
-    private func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
-        
-        var text = (textField.text ?? "")
-        
-        text = string == "" ? String(text.dropLast()) : text + (string ?? "")
-        
-        if textField == self.emailTextField {
-            self.signUpViewModel.email = text
-        } else if textField == self.fullNameTextField {
-            self.signUpViewModel.fullName = text
-        } else {
-            self.signUpViewModel.password = text
-        }
-        
-    }
-    
 }
 
 //MARK:- Extensions
+
+//MARK:- TextField ToolBar Delegate
+extension SignUpViewController: InputAccessoryViewDelegate {
+    
+    func didTapNextButton(_ sender: UITextField) {
+        if sender == self.fullNameTextField {
+            self.emailTextField.becomeFirstResponder()
+        } else {
+            self.passwordTextField.becomeFirstResponder()
+        }
+    }
+    
+    func didTapPreviousButton(_ sender: UITextField) {
+        if sender == self.emailTextField {
+            self.fullNameTextField.becomeFirstResponder()
+        } else {
+            self.emailTextField.becomeFirstResponder()
+        }
+    }
+    
+    func didTapDoneButton(_ sender: UITextField) {
+        sender.resignFirstResponder()
+    }
+    
+}
 
 //MARK:- TextField Delegate
 
 extension SignUpViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        self.updateTextFieldForViewModel(textField, string: string)
+        self.signUpViewModel.updateTextFieldForViewModel(textField, string: string)
         self.updateButtonState(self.textFields, self.submitButton)
         return true
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.updateButtonState(self.textFields, self.submitButton)
-        self.updateTextFieldForViewModel(textField, string: nil)
+        self.signUpViewModel.updateTextFieldForViewModel(textField, string: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -238,7 +266,7 @@ extension SignUpViewController: UITextFieldDelegate {
         let nextTag = textField.tag + 1
         
         if let nextTextField = textField.superview?.viewWithTag(nextTag) {
-            nextTextField.becomeFirstResponder()
+            nextTextField.becomeFirstResponder() 
         } else {
             textField.resignFirstResponder()
         }
