@@ -122,6 +122,8 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.homeTableView.reloadData()
+        
         setNeedsStatusBarAppearanceUpdate()
         
         self.toggleSettingMenu(hide: true)

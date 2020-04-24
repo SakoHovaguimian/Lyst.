@@ -11,7 +11,7 @@ import Animo
 
 protocol AddItemVCActionDelegate: class {
     func popAddItemViewController()
-    func addCreatedItem(_ item: Item)
+    func updateListItems(_ list: List)
 }
 
 class AddItemViewModel {
@@ -38,7 +38,7 @@ class AddItemViewModel {
     public func handleCreateItemButtonTapped(_ sender: UIButton) {
         self.item.id = "\(self.list.items.count + 1)"
         self.list.items.append(self.item)
-        self.actionDelegate.addCreatedItem(self.item)
+        self.actionDelegate.updateListItems(self.list)
     }
     
     public func handleOutsideCardViewTapped() {

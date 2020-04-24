@@ -195,7 +195,19 @@ extension HomeCoordinator: AddItemVCActionDelegate {
         logSuccess("POPPING ADD LIST VIEW CONTROLLER")
     }
     
-    func addCreatedItem(_ item: Item) {
+    func updateListItems(_ list: List) {
+    
+        if let homeVC = self.navigationController.viewControllers.first as? HomeViewController {
+            
+            var listToUpdate = homeVC.homeViewModel.user?.lists
+            
+            if let row = listToUpdate?.firstIndex(where: {$0.id == list.id}) {
+                listToUpdate?[row] = list
+            }
+            
+            homeVC.homeTableView.reloadData()
+            
+        }
         
         if let itemVC = self.navigationController.viewControllers.last as? ItemsViewController {
             itemVC.itemsTableView.reloadData()
