@@ -6,7 +6,7 @@
 //  Copyright © 2020 Sako Hovaguimian. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum Category: String, CaseIterable {
     
@@ -43,6 +43,21 @@ enum Category: String, CaseIterable {
         case .business: return "work"
             
         }
+    }
+    
+    var gradient: [UIColor] {
+        
+         switch self {
+        
+         case .shopping: return [UIColor.royalBlue1!, UIColor.royalBlue2!]
+         case .home: return [UIColor.teal1!, UIColor.teal2!]
+         case .work: return [UIColor.orange1!, UIColor.orange2!]
+         case .misc: return [UIColor.whitePink1!, UIColor.whitePink2!]
+         case .personal: return [UIColor.pink1!, UIColor.pink2!]
+         case .business: return [UIColor.green1!, UIColor.green2!]
+             
+         }
+        
     }
     
 }

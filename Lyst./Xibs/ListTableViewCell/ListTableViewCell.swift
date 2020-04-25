@@ -44,11 +44,11 @@ class ListTableViewCell: UITableViewCell {
         self.gradientView.clipsToBounds = true
         self.gradientView.layer.cornerRadius = 23
         
-        self.gradientView.simpleGradient(colors: graidentColors.randomElement()!)
-        
         self.gradientImageView.tintColor = .white
         
         let category = list.category
+        
+        self.gradientView.simpleGradient(colors: category.gradient)
         
         self.gradientImageView.image = UIImage(named: category.imageName)?.withRenderingMode(.alwaysTemplate)
         

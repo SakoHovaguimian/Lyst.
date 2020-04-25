@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3D00763D244A11DF0016E5CA /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D00763B244A11DF0016E5CA /* ItemTableViewCell.swift */; };
 		3D00763E244A11DF0016E5CA /* ItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D00763C244A11DF0016E5CA /* ItemTableViewCell.xib */; };
+		3D0828EB2453FB6A002763CC /* Animo in Frameworks */ = {isa = PBXBuildFile; productRef = 3D0828EA2453FB6A002763CC /* Animo */; };
 		3D09C70B2447F620005C5D3C /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09C70A2447F620005C5D3C /* SignUpViewModel.swift */; };
 		3D09C70D2447F6BF005C5D3C /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D09C70C2447F6BF005C5D3C /* SignUpViewController.swift */; };
 		3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1210722448FC6400C8107A /* ItemsViewModel.swift */; };
@@ -27,7 +28,6 @@
 		3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731F2447BD06003BCF16 /* UIView+ext.swift */; };
 		3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A776C2448DA53006CE57D /* UIViewController+ext.swift */; };
 		3DACFBA6244A6F4C00A08BBD /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DACFBA5244A6F4C00A08BBD /* List.swift */; };
-		3DB753342446A47C00CC183C /* Animo in Frameworks */ = {isa = PBXBuildFile; productRef = 3DB753332446A47C00CC183C /* Animo */; };
 		3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753352446A49E00CC183C /* MainCoordinator.swift */; };
 		3DB7533A2446A4E100CC183C /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753392446A4E100CC183C /* HomeCoordinator.swift */; };
 		3DB7533E2446B04900CC183C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB7533D2446B04900CC183C /* HomeViewController.swift */; };
@@ -108,7 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DB753342446A47C00CC183C /* Animo in Frameworks */,
+				3D0828EB2453FB6A002763CC /* Animo in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,7 +384,7 @@
 			);
 			name = Lyst.;
 			packageProductDependencies = (
-				3DB753332446A47C00CC183C /* Animo */,
+				3D0828EA2453FB6A002763CC /* Animo */,
 			);
 			productName = Lyst.;
 			productReference = 3D42A2F82446A3D400415B50 /* Lyst..app */;
@@ -415,7 +415,7 @@
 			);
 			mainGroup = 3D42A2EF2446A3D400415B50;
 			packageReferences = (
-				3DB753322446A47C00CC183C /* XCRemoteSwiftPackageReference "Animo" */,
+				3D0828E92453FB6A002763CC /* XCRemoteSwiftPackageReference "Animo" */,
 			);
 			productRefGroup = 3D42A2F92446A3D400415B50 /* Products */;
 			projectDirPath = "";
@@ -686,20 +686,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3DB753322446A47C00CC183C /* XCRemoteSwiftPackageReference "Animo" */ = {
+		3D0828E92453FB6A002763CC /* XCRemoteSwiftPackageReference "Animo" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SakoHovaguimian/Animo.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.46;
+				minimumVersion = 1.0.49;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3DB753332446A47C00CC183C /* Animo */ = {
+		3D0828EA2453FB6A002763CC /* Animo */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3DB753322446A47C00CC183C /* XCRemoteSwiftPackageReference "Animo" */;
+			package = 3D0828E92453FB6A002763CC /* XCRemoteSwiftPackageReference "Animo" */;
 			productName = Animo;
 		};
 /* End XCSwiftPackageProductDependency section */
