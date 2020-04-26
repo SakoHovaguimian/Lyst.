@@ -50,13 +50,6 @@ class ItemsViewModel {
         guard section != 0 else { return 0 }
         return section == 1 ? self.list.incompleteItems.count : self.list.completedItems.count
     }
-
-    public func addItems() {
-        let item = Item()
-        item.name = "Milk"
-        item.id = "\(self.list.items.count + 1)"
-        self.list.items.append(item)
-    }
     
     public func isFirstCell(_ indexPath: IndexPath) -> Bool {
         guard indexPath.section != 0 else { return false }

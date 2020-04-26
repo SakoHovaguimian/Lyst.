@@ -44,7 +44,6 @@ class AddItemViewModel {
     public func handleOutsideCardViewTapped() {
         self.handlePopViewController()
     }
-
     
     public func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
         

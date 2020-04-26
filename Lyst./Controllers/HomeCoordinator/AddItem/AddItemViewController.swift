@@ -14,6 +14,7 @@ class AddItemViewController: UIViewController {
     //MARK:- Properties
     
     private var addItemViewModel: AddItemViewModel!
+    private var mediaDaddy: MediaDaddy!
     
     //MARK:- VIEWS
     
@@ -55,6 +56,20 @@ class AddItemViewController: UIViewController {
         return btn
     }()
     
+    private lazy var addImageButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.imageView?.contentMode = .scaleAspectFill
+        btn.clipsToBounds = true
+        btn.backgroundColor = .white
+        btn.setImage(UIImage(named: "placeholder")?.withRenderingMode(.alwaysTemplate),
+                     for: .normal)
+        btn.tintColor = .lightGray
+        btn.addTarget(self,
+                      action: #selector(self.addImageButtonTapped(_:)),
+                      for: .touchUpInside)
+        return btn
+    }()
+    
     //MARK:- TEXTFIELDS
     private lazy var itemNameTextField: InputTextField = {
         return self.addItemViewModel.createInputTextField(placeholder: "Item Name", tag: 0, vc: self)
@@ -78,6 +93,7 @@ class AddItemViewController: UIViewController {
     init(viewModel: AddItemViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.addItemViewModel = viewModel
+        self.mediaDaddy = MediaDaddy(presentationController: self, delegate: self, mediaType: .pics)
     }
     
     required init?(coder: NSCoder) {
@@ -136,14 +152,15 @@ class AddItemViewController: UIViewController {
         
         self.cardView.layer.cornerRadius = 23
         
-        self.configureButtons()
+        self.configureCloseButton()
         self.configureTextFields()
+        self.configureAddImageButton()
         self.configureSubmitButton()
         
     }
     
     
-    private func configureButtons() {
+    private func configureCloseButton() {
         
         //Close Button
         self.cardView.addSubview(self.closeButton)
@@ -211,7 +228,7 @@ class AddItemViewController: UIViewController {
         //Submit Button
         self.cardView.addSubview(self.submitButton)
         
-        self.submitButton.anchor(top: self.itemLinkTextField.bottomAnchor,
+        self.submitButton.anchor(top: self.addImageButton.bottomAnchor,
                                  left: self.view.leftAnchor,
                                  right: self.view.rightAnchor,
                                  paddingTop: 32,
@@ -224,6 +241,25 @@ class AddItemViewController: UIViewController {
         self.submitButton.applyGradient(colors: [.skyBlue, .systemBlue], frame: frame)
         
         self.submitButton.roundCorners(.allCorners, radius: 11)
+        
+    }
+    
+    private func configureAddImageButton() {
+        
+        //Add Image Button
+        self.view.addSubview(self.addImageButton)
+        
+        self.addImageButton.anchor(top: self.itemLinkTextField.bottomAnchor,
+                                   left: self.view.leftAnchor,
+                                   right: self.view.rightAnchor,
+                                   paddingTop: 32,
+                                   paddingLeft: self.view.frame.width / 2.8,
+                                   paddingRight: self.view.frame.width / 2.8,
+                                   height: self.view.frame.height / 6)
+        
+        self.addImageButton.layer.borderColor = UIColor.lightGray.cgColor
+        self.addImageButton.layer.borderWidth = 1.2
+        self.addImageButton.layer.cornerRadius = 11
         
     }
     
@@ -246,6 +282,10 @@ class AddItemViewController: UIViewController {
         self.addItemViewModel.handleCreateItemButtonTapped(sender)
         logSuccess("CREATED Item Item: \(self.addItemViewModel.item.name)")
         
+    }
+    
+    @objc private func addImageButtonTapped(_ sender: UIButton) {
+        self.mediaDaddy.present(from: self.view)
     }
     
     @objc private func alphaViewTapped() {
@@ -282,5 +322,21 @@ extension AddItemViewController: UITextFieldDelegate {
         return true
         
     }
+    
+}
+
+//MARK:- IMAGE PICKER MEDIA DADDY DELEGATE
+extension AddItemViewController: MediaPickerDelegate {
+    func didSelect(image: UIImage?) {
+        if let image = image {
+            self.addItemViewModel.item.image = image
+            self.addImageButton.setImage(image, for: .normal)
+        }
+    }
+    
+    func didSelect(meida: URL?) {
+        
+    }
+    
     
 }
