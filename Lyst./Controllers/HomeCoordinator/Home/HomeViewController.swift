@@ -109,13 +109,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.homeViewModel.updateUser(withUser: testUser)
-
-        if self.homeViewModel.isUserAvailable {
-            self.configureViews()
-        } else {
-            self.homeViewModel.presentLoginController()
-        }
+        self.fetchUserData()
         
     }
     
@@ -292,6 +286,25 @@ class HomeViewController: UIViewController {
         
     }
     
+    private func fetchUserData() {
+        
+        if self.homeViewModel.checkIfUserIsLoggedIn() {
+        
+            self.homeViewModel.fetchUser {
+                
+                self.configureViews()
+                
+            }
+            
+            
+        } else {
+            
+            self.homeViewModel.presentLoginController()
+            
+        }
+        
+    }
+    
     //MARK:- @OBJC Functions
 
     @objc private func addButtonTapped(_ sender: UIButton) {
@@ -361,7 +374,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let list = self.homeViewModel.lists[indexPath.row]
+        let list = self.homeViewModel.listFor(indexPath: indexPath)
         self.homeViewModel.handlePushItemsViewController(list: list)
     }
     

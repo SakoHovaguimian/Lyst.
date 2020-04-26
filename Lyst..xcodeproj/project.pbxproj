@@ -26,6 +26,9 @@
 		3D51AB87244E5D6E00E7D794 /* CompletionTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D51AB86244E5D6E00E7D794 /* CompletionTableHeaderView.xib */; };
 		3D5F731E2447BBA2003BCF16 /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731D2447BBA2003BCF16 /* InputTextField.swift */; };
 		3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731F2447BD06003BCF16 /* UIView+ext.swift */; };
+		3D75E05A2455556000ACC28E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D75E0592455556000ACC28E /* GoogleService-Info.plist */; };
+		3D75E05C245555C300ACC28E /* LystService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D75E05B245555C300ACC28E /* LystService.swift */; };
+		3D75E05E24563F1000ACC28E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D75E05D24563F1000ACC28E /* UserService.swift */; };
 		3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A776C2448DA53006CE57D /* UIViewController+ext.swift */; };
 		3DACFBA6244A6F4C00A08BBD /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DACFBA5244A6F4C00A08BBD /* List.swift */; };
 		3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753352446A49E00CC183C /* MainCoordinator.swift */; };
@@ -52,6 +55,7 @@
 		3DDB3CA12447919B00DB770E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDB3C9D244790BE00DB770E /* LoginViewController.swift */; };
 		3DEF040B2452046000651B82 /* AddListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2D25DE2452036D0026D488 /* AddListViewModel.swift */; };
 		3DEF040C2452047600651B82 /* AddListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2D25DF2452036D0026D488 /* AddListViewController.swift */; };
+		9558A6536FCC8DC16B1CF1C3 /* Pods_Lyst_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F20C789AF77A3D4C5928B63 /* Pods_Lyst_.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +81,9 @@
 		3D51AB86244E5D6E00E7D794 /* CompletionTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompletionTableHeaderView.xib; sourceTree = "<group>"; };
 		3D5F731D2447BBA2003BCF16 /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
 		3D5F731F2447BD06003BCF16 /* UIView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
+		3D75E0592455556000ACC28E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3D75E05B245555C300ACC28E /* LystService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LystService.swift; sourceTree = "<group>"; };
+		3D75E05D24563F1000ACC28E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		3D9A776C2448DA53006CE57D /* UIViewController+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ext.swift"; sourceTree = "<group>"; };
 		3DACFBA5244A6F4C00A08BBD /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		3DB753352446A49E00CC183C /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -101,6 +108,9 @@
 		3DDB3C9C244790BE00DB770E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "\U0010LoginViewModel.swift"; sourceTree = "<group>"; };
 		3DDB3C9D244790BE00DB770E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3DDB3C9E244790BE00DB770E /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		4F20C789AF77A3D4C5928B63 /* Pods_Lyst_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lyst_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F267B64255E2C68AF669D92 /* Pods-Lyst..release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyst..release.xcconfig"; path = "Target Support Files/Pods-Lyst./Pods-Lyst..release.xcconfig"; sourceTree = "<group>"; };
+		D184D3A97FCA85A21A6479F7 /* Pods-Lyst..debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lyst..debug.xcconfig"; path = "Target Support Files/Pods-Lyst./Pods-Lyst..debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,12 +119,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D0828EB2453FB6A002763CC /* Animo in Frameworks */,
+				9558A6536FCC8DC16B1CF1C3 /* Pods_Lyst_.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1BD0937CE4A660A293E745C6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D184D3A97FCA85A21A6479F7 /* Pods-Lyst..debug.xcconfig */,
+				9F267B64255E2C68AF669D92 /* Pods-Lyst..release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		3D00763F244A11E20016E5CA /* ItemTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +194,8 @@
 			children = (
 				3D42A2FA2446A3D400415B50 /* Lyst. */,
 				3D42A2F92446A3D400415B50 /* Products */,
+				1BD0937CE4A660A293E745C6 /* Pods */,
+				C92615B7457E6B4EC451FA53 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -188,9 +210,10 @@
 		3D42A2FA2446A3D400415B50 /* Lyst. */ = {
 			isa = PBXGroup;
 			children = (
+				3D42A3092446A3D500415B50 /* Info.plist */,
+				3D75E0592455556000ACC28E /* GoogleService-Info.plist */,
 				3D42A2FB2446A3D400415B50 /* AppDelegate.swift */,
 				3D42A2FD2446A3D400415B50 /* SceneDelegate.swift */,
-				3D42A3092446A3D500415B50 /* Info.plist */,
 				3DDB3C95244781DD00DB770E /* Constants.swift */,
 				3D42A3112446A3F700415B50 /* Resources */,
 				3D42A3132446A40800415B50 /* SubClasses */,
@@ -308,6 +331,8 @@
 		3DB7533C2446A55C00CC183C /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				3D75E05B245555C300ACC28E /* LystService.swift */,
+				3D75E05D24563F1000ACC28E /* UserService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -367,6 +392,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		C92615B7457E6B4EC451FA53 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4F20C789AF77A3D4C5928B63 /* Pods_Lyst_.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -374,9 +407,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3D42A30C2446A3D500415B50 /* Build configuration list for PBXNativeTarget "Lyst." */;
 			buildPhases = (
+				8A4D1F2149B5BA49EA56E73B /* [CP] Check Pods Manifest.lock */,
 				3D42A2F42446A3D400415B50 /* Sources */,
 				3D42A2F52446A3D400415B50 /* Frameworks */,
 				3D42A2F62446A3D400415B50 /* Resources */,
+				D8E2FF51FE0C2791DC41B2C4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -433,6 +468,7 @@
 			files = (
 				3D51AB87244E5D6E00E7D794 /* CompletionTableHeaderView.xib in Resources */,
 				3DB753452447440400CC183C /* TableHeaderView.xib in Resources */,
+				3D75E05A2455556000ACC28E /* GoogleService-Info.plist in Resources */,
 				3D42A3082446A3D500415B50 /* LaunchScreen.storyboard in Resources */,
 				3DD825652450E647004FD9FE /* LinkedAccountsCollectionViewCell.xib in Resources */,
 				3D42A3052446A3D500415B50 /* Assets.xcassets in Resources */,
@@ -443,6 +479,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8A4D1F2149B5BA49EA56E73B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Lyst.-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D8E2FF51FE0C2791DC41B2C4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Lyst./Pods-Lyst.-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Lyst./Pods-Lyst.-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Lyst./Pods-Lyst.-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3D42A2F42446A3D400415B50 /* Sources */ = {
@@ -463,6 +541,7 @@
 				3DEF040B2452046000651B82 /* AddListViewModel.swift in Sources */,
 				3D42A2FC2446A3D400415B50 /* AppDelegate.swift in Sources */,
 				3D5F731E2447BBA2003BCF16 /* InputTextField.swift in Sources */,
+				3D75E05C245555C300ACC28E /* LystService.swift in Sources */,
 				3DDB3C96244781DD00DB770E /* Constants.swift in Sources */,
 				3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */,
 				3DD0E05F244F9DAC00EA7941 /* PinTextField.swift in Sources */,
@@ -480,6 +559,7 @@
 				3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */,
 				3DD825642450E334004FD9FE /* LinkedAccountsCollectionViewCell.swift in Sources */,
 				3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */,
+				3D75E05E24563F1000ACC28E /* UserService.swift in Sources */,
 				3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */,
 				3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */,
 				3DDB3C98244787C100DB770E /* Category.swift in Sources */,
@@ -626,6 +706,7 @@
 		};
 		3D42A30D2446A3D500415B50 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D184D3A97FCA85A21A6479F7 /* Pods-Lyst..debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -636,7 +717,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sakohovaguimian.Lyst-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hovaguimian.lists;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -645,6 +726,7 @@
 		};
 		3D42A30E2446A3D500415B50 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F267B64255E2C68AF669D92 /* Pods-Lyst..release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -655,7 +737,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.sakohovaguimian.Lyst-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hovaguimian.lists;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

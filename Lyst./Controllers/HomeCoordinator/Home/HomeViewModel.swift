@@ -8,6 +8,8 @@
 
 import UIKit
 import Animo
+import Firebase
+import FirebaseAuth
 
 protocol HomeVCActionsDelegate: class {
     func presentLoginVC(animated: Bool)
@@ -80,6 +82,25 @@ class HomeViewModel {
     public func presentLoginController()  {
         self.actionDelegate.presentLoginVC(animated: false)
         logDebugMessage("Load Login Controller")
+    }
+    
+    //MARK:- Services
+    
+    public func checkIfUserIsLoggedIn() -> Bool {
+        return Auth.auth().currentUser != nil
+    }
+    
+    public func fetchUser(completion: @escaping() -> ()) {
+        
+        guard let user = Auth.auth().currentUser else { completion(); return }
+        
+        UserService.fetchUser(uid: user.uid) { (user) in
+            
+            self.user = user
+            completion()
+            
+        }
+        
     }
     
     //MARK:- Table View Data

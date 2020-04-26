@@ -31,12 +31,27 @@ class LoginViewModel {
            return error
        }
         
-        let user = User(name: "Sako Hovaguimian",
-                        email: self.email)
-        
-        self.actionDelegate.dismissLoginVC(user: user)
+        self.login { (user) in
+            
+            if let user = user {
+                
+                self.actionDelegate.dismissLoginVC(user: user)
+                
+            }
+            
+        }
         
         return nil
+        
+    }
+    
+    private func login(completion: @escaping (User?) -> ()) {
+        
+        UserService.login(email: self.email, password: self.password) { (user) in
+            
+            completion(user)
+            
+        }
         
     }
     

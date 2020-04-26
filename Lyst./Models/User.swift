@@ -36,4 +36,29 @@ class User {
         return self.name
     }
     
+    public func userDict() -> [String : Any] {
+        
+        let dict: [String : Any] = [
+            "id": id,
+            "name": name,
+            "email": email
+        ]
+        
+        return dict
+        
+    }
+    
+    static public func parseUser(json: [String : Any]) -> User {
+        
+        let id = json["id"] as! String
+        let name = json["name"] as! String
+        let email = json["email"] as! String
+
+        let user = User(name: name, email: email)
+        user.id = id
+        
+        return user
+        
+    }
+    
 }

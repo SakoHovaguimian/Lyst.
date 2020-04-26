@@ -39,7 +39,6 @@ class Item {
         
         return dict
         
-        
     }
     
     static func parseItem(json: [String : Any]) -> Item {

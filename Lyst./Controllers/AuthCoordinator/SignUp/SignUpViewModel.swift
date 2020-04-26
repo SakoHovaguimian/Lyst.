@@ -57,10 +57,12 @@ class SignUpViewModel {
             return error
         }
         
-        let user = User(name: self.fullName,
-                        email: self.email)
+        self.createUser { user in
+            
+            self.actionDelegate.didCreateUser(user: user)
+            
+        }
         
-        self.actionDelegate.didCreateUser(user: user)
         
         return nil
         
@@ -75,6 +77,18 @@ class SignUpViewModel {
         guard password.count > 2 else { return ValidationError.invalidPassword.error }
         
         return nil
+        
+    }
+    
+    private func createUser(completion: @escaping(User) -> ()) {
+        
+        UserService.createUser(email: self.email, password: self.password, fullNmae: self.fullName) { user in
+            
+            if let user = user {
+                completion(user)
+            }
+            
+        }
         
     }
     
