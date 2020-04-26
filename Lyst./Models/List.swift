@@ -33,6 +33,26 @@ class List {
         self.items = self.items.filter({ $0.id != item.id })
     }
     
+    public func listDict() -> [String : Any] {
+        
+        let dict: [String : Any] = [
+        
+            "id": self.id,
+            "name" : self.name,
+            "author" : self.author,
+            "category": self.category.rawValue,
+            "items": self.itemsDict()
+            
+        ]
+        
+        return dict
+        
+    }
+    
+    public func itemsDict() -> [[String : Any]] {
+        return items.map({$0.itemDict() })
+    }
+    
     static func generateList() -> [List] {
         
         return [

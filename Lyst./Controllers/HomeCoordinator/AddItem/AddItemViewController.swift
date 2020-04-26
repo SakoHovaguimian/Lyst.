@@ -60,6 +60,10 @@ class AddItemViewController: UIViewController {
         let btn = UIButton(type: .custom)
         btn.imageView?.contentMode = .scaleAspectFill
         btn.clipsToBounds = true
+        btn.backgroundColor = .white
+        btn.setImage(UIImage(named: "placeholder")?.withRenderingMode(.alwaysTemplate),
+                     for: .normal)
+        btn.tintColor = .lightGray
         btn.addTarget(self,
                       action: #selector(self.addImageButtonTapped(_:)),
                       for: .touchUpInside)
@@ -253,15 +257,9 @@ class AddItemViewController: UIViewController {
                                    paddingRight: self.view.frame.width / 2.8,
                                    height: self.view.frame.height / 6)
         
-        self.addImageButton.layer.borderColor = UIColor.lighterGray?.cgColor
-        self.addImageButton.layer.borderWidth = 1
+        self.addImageButton.layer.borderColor = UIColor.lightGray.cgColor
+        self.addImageButton.layer.borderWidth = 1.2
         self.addImageButton.layer.cornerRadius = 11
-        
-        let frame = CGRect(x: 0, y: 0,
-                           width: self.view.frame.width / 2.8,
-                           height: self.view.frame.height / 6)
-        
-        self.addImageButton.applyGradient(colors: graidentColors.randomElement()!, frame: frame)
         
     }
     
@@ -330,8 +328,10 @@ extension AddItemViewController: UITextFieldDelegate {
 //MARK:- IMAGE PICKER MEDIA DADDY DELEGATE
 extension AddItemViewController: MediaPickerDelegate {
     func didSelect(image: UIImage?) {
-        self.addItemViewModel.item.image = image
-        self.addImageButton.setImage(image, for: .normal)
+        if let image = image {
+            self.addItemViewModel.item.image = image
+            self.addImageButton.setImage(image, for: .normal)
+        }
     }
     
     func didSelect(meida: URL?) {

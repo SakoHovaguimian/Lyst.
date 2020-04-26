@@ -24,5 +24,40 @@ class Item {
         return URL(string: self.link ?? "")!
     }
     
+    public func itemDict() -> [String : Any] {
+        
+        var dict: [String : Any] = [
+            "id" : self.id,
+            "name" : self.name,
+            "isCompleted" : self.isCompleted,
+            "dateCompleted" : self.dateCompleted,
+        ]
+        
+        if let link = self.link {
+            dict.updateValue(link, forKey: "link")
+        }
+        
+        return dict
+        
+        
+    }
+    
+    static func parseItem(json: [String : Any]) -> Item {
+        
+        let item = Item()
+        
+        item.id = json["id"] as! String
+        item.name = json["name"] as! String
+        item.isCompleted = json["isCompleted"] as! Bool
+        item.dateCompleted = json["dateCompleted"] as! String
+        
+        if let link = json["link"] as? String {
+            item.link = link
+        }
+        
+        return item
+        
+    }
+    
     
 }
