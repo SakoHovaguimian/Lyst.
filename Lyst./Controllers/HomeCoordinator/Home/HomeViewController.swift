@@ -108,7 +108,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view.backgroundColor = .white
         self.fetchUserData()
         
@@ -180,10 +180,10 @@ class HomeViewController: UIViewController {
         self.view.addSubview(self.menuButton)
         
         self.menuButton.anchor(bottom: self.view.bottomAnchor,
-                                   right: self.view.rightAnchor,
-                                   paddingBottom: 45,
-                                   paddingRight: self.view.frame.width / 3 - 75,
-                                   width: 32, height: 32)
+                               right: self.view.rightAnchor,
+                               paddingBottom: 45,
+                               paddingRight: self.view.frame.width / 3 - 75,
+                               width: 32, height: 32)
         
         //List Button
         self.view.addSubview(self.listsButton)
@@ -236,7 +236,7 @@ class HomeViewController: UIViewController {
     private func shouldShowMenuAnimation() {
         
         let shouldHide = self.homeViewModel.shouldHideTableView
-
+        
         UIView.animate(withDuration: 0.3) {
             self.menuStackView.alpha = shouldHide ? 1.0 : 0.0
             self.menuStackView.transform = shouldHide ? .identity : CGAffineTransform(translationX: 0, y: self.view.frame.height)
@@ -252,15 +252,15 @@ class HomeViewController: UIViewController {
         self.view.addSubview(self.menuStackView)
         
         self.menuStackView.anchor(left: self.view.leftAnchor,
-                                      bottom: self.addButton.topAnchor,
-                                      right: self.view.rightAnchor,
-                                      paddingLeft: 64,
-                                      paddingBottom: 80,
-                                      paddingRight: 64)
+                                  bottom: self.addButton.topAnchor,
+                                  right: self.view.rightAnchor,
+                                  paddingLeft: 64,
+                                  paddingBottom: 80,
+                                  paddingRight: 64)
         
-            
+        
         self.menuStackView.addArrangedSubview(self.settingsButton)
-//        self.menuStackView.addArrangedSubview(self.linkAccountButton)
+        //        self.menuStackView.addArrangedSubview(self.linkAccountButton)
         self.menuStackView.addArrangedSubview(self.logoutButton)
         
         self.menuStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)
@@ -294,9 +294,9 @@ class HomeViewController: UIViewController {
         self.shouldPresentLoadingView(true)
         
         if self.homeViewModel.checkIfUserIsLoggedIn() {
-        
-            self.homeViewModel.fetchUser {
             
+            self.homeViewModel.fetchUser {
+                
                 self.configureViews()
                 self.fetchLists()
                 
@@ -326,7 +326,7 @@ class HomeViewController: UIViewController {
     }
     
     //MARK:- @OBJC Functions
-
+    
     @objc private func addButtonTapped(_ sender: UIButton) {
         self.homeViewModel.handleAddButtonTapped(sender)
     }
@@ -359,18 +359,18 @@ class HomeViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard self.homeViewModel.shouldHideTableView == true else { return }
-         let touch = touches.first
-         if touch?.view != self.menuStackView {
+        let touch = touches.first
+        if touch?.view != self.menuStackView {
             self.toggleSettingMenu(hide: true)
             print("TAPPED REGION")
         }
     }
-
+    
 }
 
-    //MARK:- Extensions
+//MARK:- Extensions
 
-    //MARK:- TABLE VIEW DELEGATE & DATASOURCE
+//MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -410,5 +410,5 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         guard section == 0 else { return 50 }
         return self.view.frame.height / 4.0
     }
-
+    
 }

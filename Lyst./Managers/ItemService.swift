@@ -64,13 +64,13 @@ class ItemService {
         let storageRef = Storage.storage().reference().child(item.id)
         
         storageRef.putData(imageData!, metadata: meta) { (download, error) in
-        
+            
             storageRef.downloadURL { (url, error) in
                 
                 completion(url?.absoluteString ?? "")
                 
             }
-    
+            
         }
         
     }
@@ -80,7 +80,7 @@ class ItemService {
         let storageRef = Storage.storage().reference().child(item.id)
         
         storageRef.delete { (error) in
-
+            
             
         }
         

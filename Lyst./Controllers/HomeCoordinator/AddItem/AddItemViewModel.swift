@@ -38,8 +38,8 @@ class AddItemViewModel {
     }
     
     public func handleCreateItemButtonTapped(_ sender: UIButton) {
-//        self.item.id = "\(self.list.items.count + 1)"
-//        self.list.items.append(self.item)
+        //        self.item.id = "\(self.list.items.count + 1)"
+        //        self.list.items.append(self.item)
         self.createItem { _ in
             self.actionDelegate.updateListItems(self.list)
         }
@@ -57,9 +57,9 @@ class AddItemViewModel {
         
         switch textField.tag {
             
-            case 0: self.item.name = text
-            case 1: self.item.link = text
-            default: logError("Something went wrong")
+        case 0: self.item.name = text
+        case 1: self.item.link = text
+        default: logError("Something went wrong")
             
         }
         
@@ -101,11 +101,11 @@ class AddItemViewModel {
     private func createItem(completion: @escaping (String) -> ()) {
         
         ItemService.createItem(forList: self.list, item: self.item) { item in
-        
+            
             if let image = self.selectedImage, let item = item {
                 
                 ItemService.saveImage(item: item, image: image) { url in
-                   
+                    
                     item.imageURL = url
                     
                     ItemService.updateItem(forList: self.list, item: item) { _ in
@@ -121,5 +121,5 @@ class AddItemViewModel {
         }
         
     }
-
+    
 }

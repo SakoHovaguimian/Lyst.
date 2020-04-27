@@ -139,9 +139,9 @@ class ItemsViewController: UIViewController {
         
         self.optionsButton.centerY(inView: backImageView, constant: 3)
         self.optionsButton.anchor(right: self.view.rightAnchor,
-                              paddingRight: 16,
-                              width: 32,
-                              height: 32)
+                                  paddingRight: 16,
+                                  width: 32,
+                                  height: 32)
         
         //Floating Add Button
         self.view.addSubview(self.floatingAddButton)
@@ -211,13 +211,13 @@ class ItemsViewController: UIViewController {
     
 }
 
-    //MARK:- Extensions
+//MARK:- Extensions
 
-    //MARK:- TABLE VIEW DELEGATE & DATASOURCE
+//MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.updateList()
+        //        self.updateList()
         guard let item = self.itemsViewModel.getItemAt(indexPath: indexPath) else { return }
         self.itemsViewModel.handleLinkButtonTapped(item: item)
     }
@@ -264,10 +264,10 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if let cgImage =  UIImage(named: "delete_trash")?.cgImage {
-             action.image = ImageWithoutRender(cgImage: cgImage, scale: UIScreen.main.nativeScale, orientation: .up)
+            action.image = ImageWithoutRender(cgImage: cgImage, scale: UIScreen.main.nativeScale, orientation: .up)
         }
         action.backgroundColor = UIColor.init(displayP3Red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
-
+        
         return UISwipeActionsConfiguration(actions: [action])
     }
     

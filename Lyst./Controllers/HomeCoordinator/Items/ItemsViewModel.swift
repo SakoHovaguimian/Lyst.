@@ -66,11 +66,11 @@ class ItemsViewModel {
         guard indexPath.section != 0 else { return false }
         let itemCount = indexPath.section == 1 ? self.list.incompleteItems.count : self.list.completedItems.count
         return indexPath.row == itemCount - 1
-       
+        
     }
     
     public func removeItemAt(indexPath: IndexPath) {
-
+        
         let item: Item?
         
         if indexPath.section == 1 {
@@ -86,7 +86,7 @@ class ItemsViewModel {
     }
     
     public func getItemAt(indexPath: IndexPath) -> Item? {
-
+        
         let item: Item?
         
         if indexPath.section == 1 {
@@ -95,7 +95,7 @@ class ItemsViewModel {
             item = self.list.completedItems[indexPath.row]
         }
         
-       return item
+        return item
         
     }
     

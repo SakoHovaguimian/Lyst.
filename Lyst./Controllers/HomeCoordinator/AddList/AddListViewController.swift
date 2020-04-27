@@ -117,7 +117,7 @@ class AddListViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         self.addListViewModel.animateAlphaFor(self.alphaView,value: 0.5)
-
+        
     }
     
     //MARK:- Helper Functions
@@ -195,7 +195,7 @@ class AddListViewController: UIViewController {
         
         //List Name
         self.cardView.addSubview(self.listNameTextField)
-
+        
         self.listNameTextField.anchor(top: self.listNameDescLabel.bottomAnchor,
                                       left: self.view.leftAnchor,
                                       right: self.view.rightAnchor,
@@ -203,29 +203,29 @@ class AddListViewController: UIViewController {
                                       paddingLeft: 32,
                                       paddingRight: 32,
                                       height: 50)
-
+        
         //List Category Description
         self.cardView.addSubview(self.listCategoryDescLabel)
-
+        
         self.listCategoryDescLabel.anchor(top: self.listNameTextField.bottomAnchor,
-                                      left: self.view.leftAnchor,
-                                      right: self.view.rightAnchor,
-                                      paddingTop: 16,
-                                      paddingLeft: 32,
-                                      paddingRight: 32,
-                                      height: 20)
+                                          left: self.view.leftAnchor,
+                                          right: self.view.rightAnchor,
+                                          paddingTop: 16,
+                                          paddingLeft: 32,
+                                          paddingRight: 32,
+                                          height: 20)
         
         //List Category
         self.cardView.addSubview(self.listCategoryTextField)
-
+        
         self.listCategoryTextField.anchor(top: self.listCategoryDescLabel.bottomAnchor,
-                                      left: self.view.leftAnchor,
-                                      right: self.view.rightAnchor,
-                                      paddingTop: 0,
-                                      paddingLeft: 32,
-                                      paddingRight: 32,
-                                      height: 50)
-
+                                          left: self.view.leftAnchor,
+                                          right: self.view.rightAnchor,
+                                          paddingTop: 0,
+                                          paddingLeft: 32,
+                                          paddingRight: 32,
+                                          height: 50)
+        
         
     }
     
@@ -256,7 +256,7 @@ class AddListViewController: UIViewController {
         self.categoryPickerView.dataSource = self
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.pickerViewDoneButtonTapped))
-
+        
         let barAccessory = UIToolbar(frame: CGRect(x: 0, y: -10, width: self.view.frame.width, height: 44))
         barAccessory.barStyle = .default
         barAccessory.isTranslucent = false
@@ -318,7 +318,7 @@ extension AddListViewController: UITextFieldDelegate {
         
         self.addListViewModel.updateTextFieldForViewModel(self.listNameTextField, string: nil)
         self.updateButtonState(self.textFields, self.submitButton)
-
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -333,19 +333,19 @@ extension AddListViewController: UITextFieldDelegate {
 
 //MARK:- PICKER VIEW DELEGATE & DATASOURCE
 extension AddListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return Category.allCases.count
     }
-
+    
     func pickerView( _ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return Category.allCases[row].name
     }
-
+    
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         self.addListViewModel.categorySelectedRow = row

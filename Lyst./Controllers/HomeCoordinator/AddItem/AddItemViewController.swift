@@ -112,7 +112,7 @@ class AddItemViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         self.addItemViewModel.animateAlphaFor(self.alphaView, value: 0.5)
-
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -195,7 +195,7 @@ class AddItemViewController: UIViewController {
         
         //Item Name
         self.cardView.addSubview(self.itemNameTextField)
-
+        
         self.itemNameTextField.anchor(top: self.itemNameDescLabel.bottomAnchor,
                                       left: self.view.leftAnchor,
                                       right: self.view.rightAnchor,
@@ -217,7 +217,7 @@ class AddItemViewController: UIViewController {
         
         //Item Link
         self.cardView.addSubview(self.itemLinkTextField)
-
+        
         self.itemLinkTextField.anchor(top: self.itemLinkDescLabel.bottomAnchor,
                                       left: self.view.leftAnchor,
                                       right: self.view.rightAnchor,
@@ -225,7 +225,7 @@ class AddItemViewController: UIViewController {
                                       paddingLeft: 32,
                                       paddingRight: 32,
                                       height: 50)
-
+        
     }
     
     private func configureSubmitButton() {
@@ -318,7 +318,7 @@ extension AddItemViewController: UITextFieldDelegate {
         
         self.addItemViewModel.updateTextFieldForViewModel(textField, string: nil)
         self.updateButtonState(self.textFields, self.submitButton)
-
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

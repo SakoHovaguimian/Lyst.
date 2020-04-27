@@ -15,7 +15,7 @@ protocol HomeVCActionsDelegate: class {
     func presentLoginVC(animated: Bool)
     func presentAddListVC()
     func pushItemVC(list: List)
-//    func pushLinkAccountVC(user: User)
+    //    func pushLinkAccountVC(user: User)
 }
 
 class HomeViewModel {
@@ -23,7 +23,7 @@ class HomeViewModel {
     weak var actionDelegate: HomeVCActionsDelegate!
     
     private(set) var user: User? = nil
-     
+    
     public var lists: [List] {
         return self.user?.lists ?? []
     }
@@ -72,7 +72,7 @@ class HomeViewModel {
     }
     
     public func handleLinkAccountButtonTapped(_ sender: UIButton) {
-//        self.actionDelegate.pushLinkAccountVC(user: self.user!)
+        //        self.actionDelegate.pushLinkAccountVC(user: self.user!)
         logSuccess("LINKING ACCOUNTS...")
     }
     
@@ -147,7 +147,7 @@ class HomeViewModel {
             return vw
             
         } else {
-    
+            
             if section == 2 && self.sharedLists.isEmpty {
                 return nil
             }

@@ -39,7 +39,7 @@ class LystService {
         guard let currentUser = currentUser else {completion(nil); return }
         
         var lists: [List] = []
-
+        
         let id = currentUser.uid
         let ref = listRef.child(id)
         
@@ -94,8 +94,8 @@ class LystService {
         let userId = currentUser.uid
         let values: [String : Any] = list.listItemDict()
         listRef.child(userId).child(list.id).child("items").updateChildValues(values)
-
+        
     }
-
+    
     
 }

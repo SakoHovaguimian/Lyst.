@@ -24,7 +24,7 @@ class UserService {
             let id = result?.user.uid
             
             currentUser = result?.user
-
+            
             let user = User(name: fullNmae, email: email)
             user.id = id ?? ""
             
@@ -35,6 +35,25 @@ class UserService {
                     completion(user)
                     
                 }
+                
+            }
+            
+        }
+        
+    }
+    
+    
+    static func fetchUser(uid: String, completion: @escaping(User) -> ()) {
+        
+        let dbRef = userRef.child(uid)
+        
+        dbRef.observeSingleEvent(of: .value) { (snapshot) in
+            
+            if let dict = snapshot.value as? [String : Any] {
+                
+                let user = User.parseUser(json: dict)
+                
+                completion(user)
                 
             }
             
@@ -67,24 +86,6 @@ class UserService {
             guard let uid = result?.user.uid else { completion(nil); return }
             
             self.fetchUser(uid: uid) { (user) in
-                
-                completion(user)
-                
-            }
-            
-        }
-        
-    }
-    
-    static func fetchUser(uid: String, completion: @escaping(User) -> ()) {
-        
-        let dbRef = userRef.child(uid)
-        
-        dbRef.observeSingleEvent(of: .value) { (snapshot) in
-            
-            if let dict = snapshot.value as? [String : Any] {
-                
-                let user = User.parseUser(json: dict)
                 
                 completion(user)
                 

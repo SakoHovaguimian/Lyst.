@@ -53,7 +53,7 @@ class User {
         let id = json["id"] as! String
         let name = json["name"] as! String
         let email = json["email"] as! String
-
+        
         let user = User(name: name, email: email)
         user.id = id
         
