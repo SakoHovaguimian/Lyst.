@@ -90,6 +90,12 @@ class LoginViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.shouldPresentLoadingView(false)
+    }
+    
     //MARK:- Helper Functions
     
     private func configureViews() {
@@ -234,9 +240,18 @@ class LoginViewController: UIViewController {
     //MARK:- OBJC Functions
     @objc private func submitButtonTapped(_ sender: UIButton) {
         
-        if let error = self.loginViewModel.handleLoginButtonTapped(sender) {
-            self.showSimpleError(title: "Error", message: error)
-        }
+        self.shouldPresentLoadingView(true)
+        
+        self.loginViewModel.handleLoginButtonTapped(completion: { error in
+            
+            if let error = error {
+                
+                self.shouldPresentLoadingView(false)
+                self.showSimpleError(title: "Error", message: error)
+                
+            }
+            
+        })
         
     }
     

@@ -64,20 +64,59 @@ class ItemsViewModel {
     }
     
     public func removeItemAt(indexPath: IndexPath) {
+
+        let item: Item?
         
         if indexPath.section == 1 {
-            let item = self.list.incompleteItems[indexPath.row]
-            self.list.removeItem(item)
+            item = self.list.incompleteItems[indexPath.row]
         } else {
-            let item = self.list.completedItems[indexPath.row]
-            self.list.removeItem(item)
+            item = self.list.completedItems[indexPath.row]
+        }
+        
+        self.removeItem(item: item!) {
+            
         }
         
     }
     
     public func updateItemFinishedState(_ item: Item) {
-        item.isCompleted.toggle()
+        self.updateItem(item: item) {
+            
+        }
     }
+    
+    //MARK:- SERVICES
+    
+    public func fetchList(completion: @escaping () -> ()) {
+        
+        LystService.fetchList(id: self.list.id) { list in
+            self.list = list
+            completion()
+        }
+        
+    }
+    
+    public func updateItem(item: Item, completion: @escaping () -> ()) {
+        item.isCompleted.toggle()
+        LystService.updateItem(forList: self.list, item: item) { list in
+            completion()
+        }
+        
+    }
+    
+    public func removeItem(item: Item, completion: @escaping () -> ()) {
+        LystService.updateItem(forList: self.list, item: item, shouldRemove: true) { list in
+            completion()
+        }
+        
+    }
+    
+    public func uncheckAllItems() {
+        self.list.items.forEach({ $0.isCompleted = true })
+        LystService.updateList(list: self.list)
+    }
+    
+    //MARK:- TABLE VIEW LOGIC
     
     public func configureCellForRowAt(indexPath: IndexPath, tableView: UITableView) -> ItemTableViewCell {
         

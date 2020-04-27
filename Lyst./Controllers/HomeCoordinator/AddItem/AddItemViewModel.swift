@@ -36,9 +36,11 @@ class AddItemViewModel {
     }
     
     public func handleCreateItemButtonTapped(_ sender: UIButton) {
-        self.item.id = "\(self.list.items.count + 1)"
-        self.list.items.append(self.item)
-        self.actionDelegate.updateListItems(self.list)
+//        self.item.id = "\(self.list.items.count + 1)"
+//        self.list.items.append(self.item)
+        self.createItem { _ in
+            self.actionDelegate.updateListItems(self.list)
+        }
     }
     
     public func handleOutsideCardViewTapped() {
@@ -90,6 +92,16 @@ class AddItemViewModel {
         textField.delegate = vc
         textField.font = UIFont(name: avenirNextBold, size: 20.0)
         return textField
+    }
+    
+    //MARK:- Services
+    
+    private func createItem(completion: @escaping (String) -> ()) {
+        
+        LystService.createItem(forList: self.list, item: self.item) { _ in
+            completion("")
+        }
+        
     }
 
 }

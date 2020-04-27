@@ -40,11 +40,23 @@ class List {
             "id": self.id,
             "name" : self.name,
             "author" : self.author,
-            "category": self.category.rawValue
-            
+            "category": self.category.rawValue,
+            "items": self.listItemDict()
         ]
         
         return dict
+        
+    }
+    
+    public func listItemDict() -> [String : Any] {
+        
+        var itemDict: [String : Any] = [:]
+        
+        for item in items {
+            itemDict.updateValue(item.itemDict(), forKey: item.id)
+        }
+        
+        return itemDict
         
     }
     
@@ -61,20 +73,23 @@ class List {
         
         var items = [Item]()
         
-        let jsonItems = json["items"] as! [String : Any]
-        
-        for dict in jsonItems {
-
-            if let itemDict = dict.value as? [String : Any] {
-
-                let item = Item.parseItem(json: itemDict)
-                items.append(item)
-
+        if let jsonItems = json["items"] as? [String : Any] {
+            
+            for dict in jsonItems {
+                
+                if let itemDict = dict.value as? [String : Any] {
+                    
+                    let item = Item.parseItem(json: itemDict)
+                    items.append(item)
+                    
+                }
+                
             }
-
+            
+            list.items = items
+            
         }
         
-        list.items = items
         
         return list
         

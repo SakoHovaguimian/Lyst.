@@ -81,6 +81,12 @@ class SignUpViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.shouldPresentLoadingView(false)
+    }
+    
     //MARK:- Helper Functions
     
     private func configureViews() {
@@ -208,9 +214,19 @@ class SignUpViewController: UIViewController {
     //MARK:- @OBJC Functions
     
     @objc private func signUpButtonTapped(_ sender: UIButton) {
-        if let error = self.signUpViewModel.handleSignUpButtonTapped(sender) {
-            self.showSimpleError(title: "Error", message: error)
-        }
+        
+        self.shouldPresentLoadingView(true)
+        
+        self.signUpViewModel.handleSignUpButtonTapped(completion: { error in
+            
+            if let error = error {
+                
+                self.shouldPresentLoadingView(false)
+                self.showSimpleError(title: "Error", message: error)
+                
+            }
+            
+        })
     }
     
     @objc private func backButtonTapped(_ sender: UIButton) {

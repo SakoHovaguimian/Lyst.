@@ -25,29 +25,19 @@ class LoginViewModel {
         self.actionDelegate.pushSignUpVC()
     }
     
-    public func handleLoginButtonTapped(_ sender: UIButton) -> String? {
-
-       if let error = self.validateTextFields() {
-           return error
-       }
+    public func handleLoginButtonTapped(completion: @escaping (String?) -> ()) {
         
-        self.login { (user) in
-            
-            if let user = user {
-                
-                self.actionDelegate.dismissLoginVC(user: user)
-                
-            }
-            
+        return self.handleLogin { error in
+           completion(error)
         }
-        
-        return nil
         
     }
     
     private func login(completion: @escaping (User?) -> ()) {
         
         UserService.login(email: self.email, password: self.password) { (user) in
+            
+            guard let user = user else { completion(nil); return }
             
             completion(user)
             
@@ -62,6 +52,29 @@ class LoginViewModel {
         guard password.count > 2 else { return ValidationError.invalidPassword.error }
         
         return nil
+        
+    }
+    
+    private func handleLogin(completion: @escaping (String?) -> Void) {
+        
+        if let validationError = self.validateTextFields() {
+            return completion(validationError)
+        }
+        
+        self.login { (user) in
+            
+            if let user = user {
+                
+                self.actionDelegate.dismissLoginVC(user: user)
+                completion(nil)
+                
+            } else {
+                
+                completion("Incorrect Credentials")
+
+            }
+            
+        }
         
     }
     

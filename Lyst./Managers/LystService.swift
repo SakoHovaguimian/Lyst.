@@ -10,21 +10,22 @@ import UIKit
 import Firebase
 
 let dbRef = Database.database().reference()
-let lystRef = dbRef.child("Lists")
+let listRef = dbRef.child("Lists")
 
 class LystService {
     
-    static func uploadLyst(list: List, completion: @escaping (String?) -> ()) {
+    static func createList(list: List, completion: @escaping (String?) -> ()) {
         
         guard let currentUser = currentUser else {completion(nil); return }
         
-        let autoId = lystRef.childByAutoId().key ?? ""
+        let autoId = listRef.childByAutoId().key ?? ""
         
         let id = currentUser.uid
-        let ref = lystRef.child(id)
+        let ref = listRef.child(id)
         
         let updatedList = list
         updatedList.id = autoId
+        updatedList.author = id
         
         let values: [String : Any] = [autoId: updatedList.listDict()]
         ref.updateChildValues(values)
@@ -33,14 +34,14 @@ class LystService {
         
     }
     
-    static func fetchLystsForUser(completion: @escaping ([List]?) -> ()) {
+    static func fetchListsForUser(completion: @escaping ([List]?) -> ()) {
         
         guard let currentUser = currentUser else {completion(nil); return }
         
         var lists: [List] = []
 
         let id = currentUser.uid
-        let ref = lystRef.child(id)
+        let ref = listRef.child(id)
         
         ref.observe(.value) { (snapshot) in
             
@@ -61,17 +62,19 @@ class LystService {
                 
             }
             
+            completion(lists)
+            
         }
         
     }
     
-    static func fetchLyst(id: String, completion: @escaping (List?) -> ()) {
+    static func fetchList(id: String, completion: @escaping (List?) -> ()) {
         
         guard let currentUser = currentUser else {completion(nil); return }
         
-        let id = currentUser.uid
+        let userId = currentUser.uid
         
-        lystRef.child(id).child(id).observe(.value) { (snapshot) in
+        listRef.child(userId).child(id).observe(.value) { (snapshot) in
             
             if let dict = snapshot.value as? [String : Any] {
                 
@@ -84,24 +87,32 @@ class LystService {
         
     }
     
-    static func updateItem(forList list: List, item: Item, completion: @escaping (String?) -> ()) {
+    static func updateList(list: List) {
+        
+        guard let currentUser = currentUser else { return }
+        
+        let userId = currentUser.uid
+        let values: [String : Any] = list.listItemDict()
+        listRef.child(userId).child(list.id).child("items").updateChildValues(values)
+
+    }
+
+    
+    static func updateItem(forList list: List, item: Item, shouldRemove: Bool = false, completion: @escaping (String?) -> ()) {
         
         guard let currentUser = currentUser else {completion(nil); return }
         
         let id = currentUser.uid
         
-        let itemId = lystRef.childByAutoId().key ?? ""
+        let ref = listRef.child(id).child(list.id).child("items").child(item.id)
         
-        let ref = lystRef.child(id).child(list.id).child("items")
+        if shouldRemove {
+            ref.removeValue()
+            completion("")
+            return
+        }
         
-        let updatedItem = item
-        item.id = itemId
-        item.name = "Digimon was before Pokemon"
-        item.isCompleted = true
-        
-        let values: [String : Any] = [itemId : updatedItem.itemDict()]
-        
-        ref.updateChildValues(values)
+        ref.updateChildValues(item.itemDict())
         
         completion("Done")
         
@@ -113,14 +124,12 @@ class LystService {
         
         let id = currentUser.uid
         
-        let itemId = lystRef.childByAutoId().key ?? ""
+        let itemId = listRef.childByAutoId().key ?? ""
         
-        let ref = lystRef.child(id).child(list.id).child("items")
+        let ref = listRef.child(id).child(list.id).child("items")
         
         let updatedItem = item
         item.id = itemId
-        item.name = "Naruto was before Pokemon"
-        item.isCompleted = true
         
         let values: [String : Any] = [itemId : updatedItem.itemDict()]
         

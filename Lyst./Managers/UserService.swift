@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 
 let userRef = Database.database().reference().child("User")
-let currentUser = Auth.auth().currentUser
+var currentUser = Auth.auth().currentUser
 
 class UserService {
     
@@ -22,12 +22,20 @@ class UserService {
             guard error == nil else { completion(nil); return }
             
             let id = result?.user.uid
+            
+            currentUser = result?.user
 
             let user = User(name: fullNmae, email: email)
             user.id = id ?? ""
             
             self.updateUser(user) { (_) in
-                completion(user)
+                
+                self.login(email: email, password: password) { (user) in
+                    
+                    completion(user)
+                    
+                }
+                
             }
             
         }
@@ -53,6 +61,8 @@ class UserService {
             if let _ = error {
                 completion(nil)
             }
+            
+            currentUser = result?.user
             
             guard let uid = result?.user.uid else { completion(nil); return }
             

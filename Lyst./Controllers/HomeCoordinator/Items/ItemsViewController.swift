@@ -68,6 +68,7 @@ class ItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.fetchList()
         self.configureViews()
         
     }
@@ -176,6 +177,23 @@ class ItemsViewController: UIViewController {
         
     }
     
+    private func fetchList() {
+        
+        self.shouldPresentLoadingView(true)
+        
+        self.itemsViewModel.fetchList {
+            
+            self.itemsTableView.reloadData()
+            self.shouldPresentLoadingView(false)
+            
+        }
+        
+    }
+    
+    private func updateList() {
+        self.itemsViewModel.uncheckAllItems()
+    }
+    
     
     //MARK:- @OBJC Functions
     @objc private func backButtonTapped(_ sender: UIButton) {
@@ -197,6 +215,10 @@ class ItemsViewController: UIViewController {
 
     //MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.updateList()
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.itemsViewModel.numberOfSections

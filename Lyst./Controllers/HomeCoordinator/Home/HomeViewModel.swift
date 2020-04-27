@@ -104,6 +104,21 @@ class HomeViewModel {
         
     }
     
+    public func fetchLists(completion: @escaping () -> ()) {
+        
+        LystService.fetchListsForUser { (lists) in
+            
+            if let lists = lists {
+                
+                self.user?.lists = lists
+                completion()
+                
+            }
+            
+        }
+        
+    }
+    
     //MARK:- Table View Data
     
     //0 for profile header 1 and 2 for completed and incomplted tasks
