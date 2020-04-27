@@ -14,11 +14,13 @@ let lystRef = dbRef.child("Lists")
 
 class LystService {
     
-    static func uploadLyst(list: List, completion: @escaping (String) -> ()) {
+    static func uploadLyst(list: List, completion: @escaping (String?) -> ()) {
+        
+        guard let currentUser = currentUser else {completion(nil); return }
         
         let autoId = lystRef.childByAutoId().key ?? ""
         
-        let id = "222222" // User ID
+        let id = currentUser.uid
         let ref = lystRef.child(id)
         
         let updatedList = list
@@ -31,12 +33,13 @@ class LystService {
         
     }
     
-    static func fetchLystsForUser(completion: @escaping ([List]) -> ()) {
+    static func fetchLystsForUser(completion: @escaping ([List]?) -> ()) {
+        
+        guard let currentUser = currentUser else {completion(nil); return }
         
         var lists: [List] = []
-        
-        //Fetch User for id
-        let id = "222222"
+
+        let id = currentUser.uid
         let ref = lystRef.child(id)
         
         ref.observe(.value) { (snapshot) in
@@ -62,10 +65,13 @@ class LystService {
         
     }
     
-    static func fetchLyst(id: String, completion: @escaping (List) -> ()) {
+    static func fetchLyst(id: String, completion: @escaping (List?) -> ()) {
         
+        guard let currentUser = currentUser else {completion(nil); return }
         
-        lystRef.child("222222").child(id).observe(.value) { (snapshot) in
+        let id = currentUser.uid
+        
+        lystRef.child(id).child(id).observe(.value) { (snapshot) in
             
             if let dict = snapshot.value as? [String : Any] {
                 
@@ -78,11 +84,15 @@ class LystService {
         
     }
     
-    static func updateItem(forList list: List, item: Item, completion: @escaping (String) -> ()) {
+    static func updateItem(forList list: List, item: Item, completion: @escaping (String?) -> ()) {
+        
+        guard let currentUser = currentUser else {completion(nil); return }
+        
+        let id = currentUser.uid
         
         let itemId = lystRef.childByAutoId().key ?? ""
         
-        let ref = lystRef.child("222222").child(list.id).child("items")
+        let ref = lystRef.child(id).child(list.id).child("items")
         
         let updatedItem = item
         item.id = itemId
@@ -97,11 +107,15 @@ class LystService {
         
     }
     
-    static func createItem(forList list: List, item: Item, completion: @escaping (String) -> ()) {
+    static func createItem(forList list: List, item: Item, completion: @escaping (String?) -> ()) {
+        
+        guard let currentUser = currentUser else {completion(nil); return }
+        
+        let id = currentUser.uid
         
         let itemId = lystRef.childByAutoId().key ?? ""
         
-        let ref = lystRef.child("222222").child(list.id).child("items")
+        let ref = lystRef.child(id).child(list.id).child("items")
         
         let updatedItem = item
         item.id = itemId

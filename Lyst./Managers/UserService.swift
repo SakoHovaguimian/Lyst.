@@ -11,6 +11,7 @@ import Firebase
 import FirebaseAuth
 
 let userRef = Database.database().reference().child("User")
+let currentUser = Auth.auth().currentUser
 
 class UserService {
     

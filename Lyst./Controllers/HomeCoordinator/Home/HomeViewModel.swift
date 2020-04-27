@@ -62,6 +62,7 @@ class HomeViewModel {
     }
     
     public func handleLogOutButtonTapped(_ sender: UIButton) {
+        UserService.logout()
         self.actionDelegate.presentLoginVC(animated: true)
         logSuccess("LOGGING OUT")
     }

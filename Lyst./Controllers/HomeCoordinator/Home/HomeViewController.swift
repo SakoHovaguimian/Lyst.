@@ -109,6 +109,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = .white
         self.fetchUserData()
         
     }
@@ -288,6 +289,8 @@ class HomeViewController: UIViewController {
     
     private func fetchUserData() {
         
+        self.shouldPresentLoadingView(true)
+        
         if self.homeViewModel.checkIfUserIsLoggedIn() {
         
             self.homeViewModel.fetchUser {
@@ -302,6 +305,8 @@ class HomeViewController: UIViewController {
             self.homeViewModel.presentLoginController()
             
         }
+        
+        self.shouldPresentLoadingView(false)
         
     }
     

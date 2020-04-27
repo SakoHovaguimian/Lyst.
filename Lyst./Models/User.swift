@@ -13,8 +13,8 @@ class User {
     var id: String = ""
     var name: String
     var email: String
-    var lists: [List] = List.generateList()
-    var sharedLists: [List] = List.generateList().reversed()
+    var lists: [List] = []
+    var sharedLists: [List] = []
     
     var firstName: String {
         return self.fetchFirstName()
