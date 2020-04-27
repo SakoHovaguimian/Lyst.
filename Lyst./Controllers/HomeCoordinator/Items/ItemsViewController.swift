@@ -15,6 +15,8 @@ class ItemsViewController: UIViewController {
     
     private var itemsViewModel: ItemsViewModel!
     
+    private var popOverViewController: PopOverViewController?
+    
     //MARK:- Views
     private(set) lazy var itemsTableView: UITableView = {
         return self.setupTableView()
@@ -194,6 +196,25 @@ class ItemsViewController: UIViewController {
         self.itemsViewModel.uncheckAllItems()
     }
     
+    private func loadPopOverViewController() {
+        
+        self.popOverViewController = PopOverViewController()
+        self.popOverViewController?.view.alpha = 0.0
+
+        self.popOverViewController?.modalPresentationStyle = .popover
+        self.popOverViewController?.optionsButtonDelegate = self
+
+        let popOverVC = self.popOverViewController?.popoverPresentationController
+        popOverVC?.delegate = self
+        popOverVC?.sourceView = self.optionsButton
+        popOverVC?.popoverBackgroundViewClass = nil
+        
+        self.popOverViewController?.preferredContentSize = CGSize(width: 250, height: 150)
+
+        self.present(self.popOverViewController!, animated: true)
+        
+    }
+    
     
     //MARK:- @OBJC Functions
     @objc private func backButtonTapped(_ sender: UIButton) {
@@ -206,7 +227,8 @@ class ItemsViewController: UIViewController {
     }
     
     @objc private func optionsButtonTapped(_ sender: UIButton) {
-        self.itemsViewModel.handleOptionsButtonTapped(sender)
+//        self.itemsViewModel.handleOptionsButtonTapped(sender)
+        self.loadPopOverViewController()
     }
     
 }
@@ -279,6 +301,25 @@ extension ItemsViewController: DidFinishItemDelegate {
     func didFinishItem(_ item: Item) {
         self.itemsViewModel.updateItemFinishedState(item)
         self.itemsTableView.reloadData()
+    }
+    
+}
+
+extension ItemsViewController: UIPopoverPresentationControllerDelegate {
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        self.popOverViewController = nil
+    }
+}
+
+extension ItemsViewController: OptionButtonTappedDelegate {
+    
+    func handleOptionButtonTapped(forOption option: Option) {
+        logSuccess(option.name)
     }
     
 }

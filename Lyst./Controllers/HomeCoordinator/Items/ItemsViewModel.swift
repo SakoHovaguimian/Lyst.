@@ -23,6 +23,8 @@ class ItemsViewModel {
     private(set) var list: List!
     private(set) var user: User!
     
+    public var buttonState = false
+    
     //0 for profile header 1 and 2 for completed and incomplted tasks
     public var numberOfSections: Int {
         return 3

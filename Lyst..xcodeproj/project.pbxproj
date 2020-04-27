@@ -29,6 +29,8 @@
 		3D75E05A2455556000ACC28E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D75E0592455556000ACC28E /* GoogleService-Info.plist */; };
 		3D75E05C245555C300ACC28E /* LystService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D75E05B245555C300ACC28E /* LystService.swift */; };
 		3D75E05E24563F1000ACC28E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D75E05D24563F1000ACC28E /* UserService.swift */; };
+		3D94F59D24578F83009EE507 /* PopOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D94F59C24578F83009EE507 /* PopOverViewController.swift */; };
+		3D94F5A0245792C7009EE507 /* PopOverOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D94F59F245792C7009EE507 /* PopOverOptionView.swift */; };
 		3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9A776C2448DA53006CE57D /* UIViewController+ext.swift */; };
 		3DACFBA6244A6F4C00A08BBD /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DACFBA5244A6F4C00A08BBD /* List.swift */; };
 		3DB753362446A49E00CC183C /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB753352446A49E00CC183C /* MainCoordinator.swift */; };
@@ -85,6 +87,8 @@
 		3D75E0592455556000ACC28E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3D75E05B245555C300ACC28E /* LystService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LystService.swift; sourceTree = "<group>"; };
 		3D75E05D24563F1000ACC28E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		3D94F59C24578F83009EE507 /* PopOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOverViewController.swift; sourceTree = "<group>"; };
+		3D94F59F245792C7009EE507 /* PopOverOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOverOptionView.swift; sourceTree = "<group>"; };
 		3D9A776C2448DA53006CE57D /* UIViewController+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ext.swift"; sourceTree = "<group>"; };
 		3DACFBA5244A6F4C00A08BBD /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		3DB753352446A49E00CC183C /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
@@ -263,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				3DB753352446A49E00CC183C /* MainCoordinator.swift */,
+				3D94F59C24578F83009EE507 /* PopOverViewController.swift */,
 				3D66C30E2453697F00BAB04B /* AuthCoordinator */,
 				3D66C30D2453697300BAB04B /* HomeCoordinator */,
 			);
@@ -274,6 +279,7 @@
 			children = (
 				3DD0E061244F9E8400EA7941 /* TableHeaderViews */,
 				3DD0E060244F9E7700EA7941 /* TextFields */,
+				3D94F59F245792C7009EE507 /* PopOverOptionView.swift */,
 				3DD8255F2450E296004FD9FE /* TokenCollectionViewFlowLayout.swift */,
 				3DDAA253244E7EA10004206C /* ImageWithOutRender.swift */,
 			);
@@ -534,6 +540,7 @@
 				3DB753482447478100CC183C /* ListTableViewCell.swift in Sources */,
 				3DC71366244760840062303C /* UIColor+ext.swift in Sources */,
 				3DDB3CA12447919B00DB770E /* LoginViewController.swift in Sources */,
+				3D94F5A0245792C7009EE507 /* PopOverOptionView.swift in Sources */,
 				3D09C70B2447F620005C5D3C /* SignUpViewModel.swift in Sources */,
 				3DBCE4232452506400CA157E /* AddItemViewController.swift in Sources */,
 				3DDB3CA02447919900DB770E /* LoginViewModel.swift in Sources */,
@@ -562,6 +569,7 @@
 				3D00763D244A11DF0016E5CA /* ItemTableViewCell.swift in Sources */,
 				3D1210752448FCE200C8107A /* ItemsViewController.swift in Sources */,
 				3DD825642450E334004FD9FE /* LinkedAccountsCollectionViewCell.swift in Sources */,
+				3D94F59D24578F83009EE507 /* PopOverViewController.swift in Sources */,
 				3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */,
 				3D75E05E24563F1000ACC28E /* UserService.swift in Sources */,
 				3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */,

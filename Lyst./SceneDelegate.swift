@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import Animo
+import Kingfisher
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
