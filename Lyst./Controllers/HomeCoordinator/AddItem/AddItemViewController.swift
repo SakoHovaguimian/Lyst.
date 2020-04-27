@@ -115,6 +115,11 @@ class AddItemViewController: UIViewController {
 
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.shouldPresentLoadingView(false)
+    }
+    
     //MARK:- Helper Functions
     private func configureViews() {
         
@@ -279,6 +284,7 @@ class AddItemViewController: UIViewController {
     }
     
     @objc private func createItemButtonTapped(_ sender: UIButton) {
+        self.shouldPresentLoadingView(true)
         self.addItemViewModel.handleCreateItemButtonTapped(sender)
         logSuccess("CREATED Item Item: \(self.addItemViewModel.item.name)")
         
@@ -329,7 +335,7 @@ extension AddItemViewController: UITextFieldDelegate {
 extension AddItemViewController: MediaPickerDelegate {
     func didSelect(image: UIImage?) {
         if let image = image {
-            self.addItemViewModel.item.image = image
+            self.addItemViewModel.selectedImage = image
             self.addImageButton.setImage(image, for: .normal)
         }
     }

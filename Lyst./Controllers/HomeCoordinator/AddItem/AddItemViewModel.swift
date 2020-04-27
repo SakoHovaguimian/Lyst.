@@ -19,6 +19,8 @@ class AddItemViewModel {
     private(set) var list: List!
     private(set) var item = Item()
     
+    public var selectedImage: UIImage?
+    
     public var categorySelectedRow = 0
     
     weak var actionDelegate: AddItemVCActionDelegate!
@@ -98,8 +100,24 @@ class AddItemViewModel {
     
     private func createItem(completion: @escaping (String) -> ()) {
         
-        LystService.createItem(forList: self.list, item: self.item) { _ in
-            completion("")
+        ItemService.createItem(forList: self.list, item: self.item) { item in
+        
+            if let image = self.selectedImage, let item = item {
+                
+                ItemService.saveImage(item: item, image: image) { url in
+                   
+                    item.imageURL = url
+                    
+                    ItemService.updateItem(forList: self.list, item: item) { _ in
+                        
+                        completion("")
+                        
+                    }
+                    
+                }
+                
+            }
+            
         }
         
     }

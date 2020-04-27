@@ -13,6 +13,7 @@ protocol ItemVCActionDelegate: class {
     func popItemViewController()
     func openLinkAccountVC(list: List)
     func presentAddItemVC(list: List)
+    func presentWebView(item: Item)
 }
 
 class ItemsViewModel {
@@ -42,8 +43,13 @@ class ItemsViewModel {
     }
     
     public func handleOptionsButtonTapped(_ sender: UIButton) {
-        logSuccess("Options Button Tapped: Loading....")
         self.actionDelegate.openLinkAccountVC(list: self.list)
+        logSuccess("Options Button Tapped: Loading....")
+    }
+    
+    public func handleLinkButtonTapped(item: Item) {
+        self.actionDelegate.presentWebView(item: item)
+        print(logSuccess("Link Button Tapped"))
     }
     
     public func numberOfItemsInSection(_ section: Int) -> Int {
@@ -79,11 +85,25 @@ class ItemsViewModel {
         
     }
     
+    public func getItemAt(indexPath: IndexPath) -> Item? {
+
+        let item: Item?
+        
+        if indexPath.section == 1 {
+            item = self.list.incompleteItems[indexPath.row]
+        } else {
+            item = self.list.completedItems[indexPath.row]
+        }
+        
+       return item
+        
+    }
+    
     public func updateItemFinishedState(_ item: Item) {
         self.updateItem(item: item) {
-            
         }
     }
+    
     
     //MARK:- SERVICES
     
@@ -98,21 +118,21 @@ class ItemsViewModel {
     
     public func updateItem(item: Item, completion: @escaping () -> ()) {
         item.isCompleted.toggle()
-        LystService.updateItem(forList: self.list, item: item) { list in
+        ItemService.updateItem(forList: self.list, item: item) { list in
             completion()
         }
         
     }
     
     public func removeItem(item: Item, completion: @escaping () -> ()) {
-        LystService.updateItem(forList: self.list, item: item, shouldRemove: true) { list in
+        ItemService.updateItem(forList: self.list, item: item, shouldRemove: true) { list in
             completion()
         }
         
     }
     
     public func uncheckAllItems() {
-        self.list.items.forEach({ $0.isCompleted = true })
+        self.list.items.forEach({ $0.isCompleted = false })
         LystService.updateList(list: self.list)
     }
     

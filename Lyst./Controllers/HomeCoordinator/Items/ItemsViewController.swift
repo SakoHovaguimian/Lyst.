@@ -217,7 +217,9 @@ class ItemsViewController: UIViewController {
 extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.updateList()
+//        self.updateList()
+        guard let item = self.itemsViewModel.getItemAt(indexPath: indexPath) else { return }
+        self.itemsViewModel.handleLinkButtonTapped(item: item)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

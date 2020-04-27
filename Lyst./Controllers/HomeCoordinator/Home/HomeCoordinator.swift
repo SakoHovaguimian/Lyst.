@@ -8,6 +8,7 @@
 
 import UIKit
 import Animo
+import SafariServices
 
 class HomeCoordinator: Coordinator {
     
@@ -98,6 +99,22 @@ class HomeCoordinator: Coordinator {
         
     }
     
+    private func openSafari(withItem item: Item) {
+        
+        if let link = item.link {
+            
+            let validUrlString = link.hasPrefix("http") ? link : "http://\(link)"
+            
+            if let url = URL(string: validUrlString) {
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:])
+                }
+            }
+            
+        }
+        
+    }
+    
 }
 
 //MARK:- LINK ACTION VIEW MODEL DELEGATE
@@ -112,6 +129,10 @@ extension HomeCoordinator: LinkVCActionDelegate {
 
 //MARK:- ITEM VIEW MODEL DELEGATE
 extension HomeCoordinator: ItemVCActionDelegate {
+    
+    func presentWebView(item: Item) {
+        self.openSafari(withItem: item)
+    }
     
     func openLinkAccountVC(list: List) {
         self.presentLinkAccountViewController(list: list)
