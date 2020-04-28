@@ -116,6 +116,10 @@ class AddItemViewModel {
                     
                 }
                 
+            } else {
+                
+                completion("")
+                
             }
             
         }

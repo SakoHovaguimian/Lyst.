@@ -35,11 +35,9 @@
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take  Out The Trash" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6e-oH-H76">
-                                <rect key="frame" x="43" y="29.5" width="152" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="6nq-A9-V2J"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take  Out The Trash Take  Out The Trash" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6e-oH-H76">
+                                <rect key="frame" x="43" y="17" width="173" height="46.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -53,6 +51,7 @@
                             <constraint firstAttribute="bottom" secondItem="q4c-gG-E0g" secondAttribute="bottom" id="XVc-VT-eoy"/>
                             <constraint firstItem="9W0-68-xcz" firstAttribute="centerY" secondItem="7gd-Qo-Nps" secondAttribute="centerY" id="bNX-Cd-AIB"/>
                             <constraint firstItem="9W0-68-xcz" firstAttribute="leading" secondItem="7gd-Qo-Nps" secondAttribute="leading" constant="8" id="gxs-59-cWh"/>
+                            <constraint firstItem="N6e-oH-H76" firstAttribute="width" secondItem="7gd-Qo-Nps" secondAttribute="width" multiplier="0.6" id="qEF-31-6vr"/>
                             <constraint firstItem="N6e-oH-H76" firstAttribute="centerY" secondItem="7gd-Qo-Nps" secondAttribute="centerY" id="rsE-ub-MDs"/>
                         </constraints>
                     </view>

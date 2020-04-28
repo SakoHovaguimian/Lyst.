@@ -18,10 +18,12 @@ class List {
     
     public var completedItems: [Item] {
         return self.items.filter({ $0.isCompleted == true })
+            .sorted(by: { $0.id > $1.id })
     }
     
     public var incompleteItems: [Item] {
         return self.items.filter({ $0.isCompleted == false })
+            .sorted(by: { $0.id > $1.id })
     }
     
     init(name: String, category: Category) {
