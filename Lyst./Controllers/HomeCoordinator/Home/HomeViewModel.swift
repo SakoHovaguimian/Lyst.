@@ -13,7 +13,7 @@ import FirebaseAuth
 
 protocol HomeVCActionsDelegate: class {
     func presentLoginVC(animated: Bool)
-    func presentAddListVC()
+    func presentAddListVC(config: DataStateConfig)
     func pushItemVC(list: List)
     //    func pushLinkAccountVC(user: User)
 }
@@ -47,7 +47,7 @@ class HomeViewModel {
     }
     
     public func handleAddButtonTapped(_ sender: UIButton) {
-        self.actionDelegate.presentAddListVC()
+        self.actionDelegate.presentAddListVC(config: .create)
         logSuccess("PRESENTING ADD LIST VC")
     }
     

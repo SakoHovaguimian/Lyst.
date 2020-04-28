@@ -14,6 +14,7 @@ protocol ItemVCActionDelegate: class {
     func openLinkAccountVC(list: List)
     func presentAddItemVC(list: List)
     func presentWebView(item: Item)
+    func presentAddLystVC(config: DataStateConfig, list: List)
 }
 
 class ItemsViewModel {
@@ -34,6 +35,8 @@ class ItemsViewModel {
         self.list = list
     }
     
+    //MARK:- BUTTONS AND ACTIONS
+    
     public func handleBackButtonTapped(_ sender: UIButton) {
         self.actionDelegate.popItemViewController()
     }
@@ -52,6 +55,52 @@ class ItemsViewModel {
         self.actionDelegate.presentWebView(item: item)
         print(logSuccess("Link Button Tapped"))
     }
+    
+    //MARK:- HELPER FUNCTIONS
+    
+    public func handleSelectedOption(_ option: Option) {
+        
+        switch option {
+            case .uncheck: self.uncheckAllItems()
+        case .rename: self.actionDelegate.presentAddLystVC(config: .update, list: self.list)
+            case .share: self.actionDelegate.openLinkAccountVC(list: self.list)
+        }
+        
+    }
+    
+    
+    //MARK:- SERVICES
+    
+    public func fetchList(completion: @escaping () -> ()) {
+        
+        LystService.fetchList(id: self.list.id) { list in
+            self.list = list
+            completion()
+        }
+        
+    }
+    
+    public func updateItem(item: Item, completion: @escaping () -> ()) {
+        item.isCompleted.toggle()
+        ItemService.updateItem(forList: self.list, item: item) { list in
+            completion()
+        }
+        
+    }
+    
+    public func removeItem(item: Item, completion: @escaping () -> ()) {
+        ItemService.updateItem(forList: self.list, item: item, shouldRemove: true) { list in
+            completion()
+        }
+        
+    }
+    
+    public func uncheckAllItems() {
+        self.list.items.forEach({ $0.isCompleted = false })
+        ItemService.updateAllItemsInList(self.list)
+    }
+    
+    //MARK:- TABLE VIEW LOGIC
     
     public func numberOfItemsInSection(_ section: Int) -> Int {
         guard section != 0 else { return 0 }
@@ -104,40 +153,6 @@ class ItemsViewModel {
         self.updateItem(item: item) {
         }
     }
-    
-    
-    //MARK:- SERVICES
-    
-    public func fetchList(completion: @escaping () -> ()) {
-        
-        LystService.fetchList(id: self.list.id) { list in
-            self.list = list
-            completion()
-        }
-        
-    }
-    
-    public func updateItem(item: Item, completion: @escaping () -> ()) {
-        item.isCompleted.toggle()
-        ItemService.updateItem(forList: self.list, item: item) { list in
-            completion()
-        }
-        
-    }
-    
-    public func removeItem(item: Item, completion: @escaping () -> ()) {
-        ItemService.updateItem(forList: self.list, item: item, shouldRemove: true) { list in
-            completion()
-        }
-        
-    }
-    
-    public func uncheckAllItems() {
-        self.list.items.forEach({ $0.isCompleted = false })
-        LystService.updateList(list: self.list)
-    }
-    
-    //MARK:- TABLE VIEW LOGIC
     
     public func configureCellForRowAt(indexPath: IndexPath, tableView: UITableView) -> ItemTableViewCell {
         

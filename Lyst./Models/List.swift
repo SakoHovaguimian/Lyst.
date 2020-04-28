@@ -66,7 +66,7 @@ class List {
         
         list.id = json["id"] as! String
         list.name = json["name"] as! String
-        list.author = json["author"] as! String
+        list.author = list.id
         
         let category = json["category"] as! String
         list.category = Category(rawValue: category) ?? .home

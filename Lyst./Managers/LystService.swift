@@ -25,7 +25,6 @@ class LystService {
         
         let updatedList = list
         updatedList.id = autoId
-        updatedList.author = id
         
         let values: [String : Any] = [autoId: updatedList.listDict()]
         ref.updateChildValues(values)
@@ -87,13 +86,13 @@ class LystService {
         
     }
     
-    static func updateList(list: List) {
+    static func updateList(_ list: List) {
         
         guard let currentUser = currentUser else { return }
         
         let userId = currentUser.uid
-        let values: [String : Any] = list.listItemDict()
-        listRef.child(userId).child(list.id).child("items").updateChildValues(values)
+        let values: [String : Any] = list.listDict()
+        listRef.child(userId).child(list.id).updateChildValues(values)
         
     }
     

@@ -55,6 +55,16 @@ class ItemService {
         
     }
     
+    static func updateAllItemsInList(_ list: List) {
+        
+        guard let currentUser = currentUser else { return }
+        
+        let userId = currentUser.uid
+        let values: [String : Any] = list.listItemDict()
+        listRef.child(userId).child(list.id).child("items").updateChildValues(values)
+        
+    }
+    
     static func saveImage(item: Item, image: UIImage, completion: @escaping (String) -> ()) {
         
         let meta = StorageMetadata()

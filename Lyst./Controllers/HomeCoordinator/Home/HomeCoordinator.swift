@@ -73,9 +73,9 @@ class HomeCoordinator: Coordinator {
         
     }
     
-    private func presentAddListViewController() {
+    private func presentAddListViewController(config: DataStateConfig, list: List? = nil) {
         
-        let viewModel = AddListViewModel()
+        let viewModel = AddListViewModel(config: config, list: list)
         viewModel.actionDelegate = self
         
         let addListVC = AddListViewController(viewModel: viewModel)
@@ -130,6 +130,10 @@ extension HomeCoordinator: LinkVCActionDelegate {
 //MARK:- ITEM VIEW MODEL DELEGATE
 extension HomeCoordinator: ItemVCActionDelegate {
     
+    func presentAddLystVC(config: DataStateConfig, list: List) {
+        self.presentAddListViewController(config: config, list: list)
+    }
+    
     func presentWebView(item: Item) {
         self.openSafari(withItem: item)
     }
@@ -174,8 +178,8 @@ extension HomeCoordinator: HomeVCActionsDelegate {
         self.pushItemViewController(list: list)
     }
     
-    func presentAddListVC() {
-        self.presentAddListViewController()
+    func presentAddListVC(config: DataStateConfig) {
+        self.presentAddListViewController(config: config)
     }
     
     func presentLoginVC(animated: Bool) {

@@ -46,7 +46,8 @@ class AddListViewController: UIViewController {
     
     private lazy var submitButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("Create Lyst", for: .normal)
+        btn.setTitle(self.addListViewModel.submitButtonText,
+                     for: .normal)
         btn.setTitleColor(.white, for: .normal)
         btn.titleLabel?.font = UIFont(name: avenirNextBold, size: 20.0)
         btn.addTarget(self,
@@ -283,7 +284,7 @@ class AddListViewController: UIViewController {
     }
     
     @objc private func createListButtonTapped(_ sender: UIButton) {
-        self.addListViewModel.handleCreateListButtonTapped(sender)
+        self.addListViewModel.handleSubmitButtonTapped(sender)
         logSuccess("CREATED LIST LIST: \(self.addListViewModel.list.name)")
         
     }
