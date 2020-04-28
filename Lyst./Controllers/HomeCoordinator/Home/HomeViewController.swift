@@ -75,6 +75,7 @@ class HomeViewController: UIViewController {
         btn.addTarget(self,
                       action: #selector(self.logoutButtonTapped(_:)),
                       for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
     
@@ -83,6 +84,7 @@ class HomeViewController: UIViewController {
         btn.addTarget(self,
                       action: #selector(self.linkAccountButtonTapped(_:)),
                       for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
     
@@ -91,6 +93,7 @@ class HomeViewController: UIViewController {
         btn.addTarget(self,
                       action: #selector(self.settingButtonTapped(_:)),
                       for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
     
@@ -254,13 +257,11 @@ class HomeViewController: UIViewController {
         self.menuStackView.anchor(left: self.view.leftAnchor,
                                   bottom: self.addButton.topAnchor,
                                   right: self.view.rightAnchor,
-                                  paddingLeft: 64,
-                                  paddingBottom: 80,
-                                  paddingRight: 64)
+                                  paddingBottom: 80)
+
         
         
         self.menuStackView.addArrangedSubview(self.settingsButton)
-        //        self.menuStackView.addArrangedSubview(self.linkAccountButton)
         self.menuStackView.addArrangedSubview(self.logoutButton)
         
         self.menuStackView.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height)

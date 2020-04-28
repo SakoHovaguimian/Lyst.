@@ -319,6 +319,7 @@ extension ItemsViewController: UIPopoverPresentationControllerDelegate {
 extension ItemsViewController: OptionButtonTappedDelegate {
     
     func handleOptionButtonTapped(forOption option: Option) {
+        self.itemsViewModel.handleSelectedOption(option)
         logSuccess(option.name)
     }
     

@@ -9,6 +9,22 @@
 import UIKit
 import Animo
 
+enum DataStateConfig: String {
+    
+    case create
+    case update
+    
+    var name: String {
+        
+        switch self {
+            case .create: return "Create Lyst"
+            case .update: return "Update Lyst"
+        }
+        
+    }
+    
+}
+
 protocol AddListVCActionDelegate: class {
     func popAddListViewController()
     func addCreatedList(_ list: List)
@@ -16,11 +32,30 @@ protocol AddListVCActionDelegate: class {
 
 class AddListViewModel {
     
+    //MARK:- Properties
+    
     private(set) var list = List(name: "", category: .shopping)
+    private(set) var config: DataStateConfig!
     
     public var categorySelectedRow = 0
     
     weak var actionDelegate: AddListVCActionDelegate!
+    
+    public var submitButtonText: String {
+        return self.config.name
+    }
+    
+    init(config: DataStateConfig, list: List? = nil) {
+        
+        self.config = config
+        
+        if let list = list {
+            self.list = list
+        }
+        
+    }
+    
+    //MARK:- Button Actions
     
     private func handlePopViewController() {
         self.actionDelegate.popAddListViewController()
@@ -30,15 +65,15 @@ class AddListViewModel {
         self.handlePopViewController()
     }
     
-    public func handleCreateListButtonTapped(_ sender: UIButton) {
-        self.createList { _ in
-            self.actionDelegate.addCreatedList(self.list)
-        }
+    public func handleSubmitButtonTapped(_ sender: UIButton) {
+        self.handleSubmitButtonHelper()
     }
     
     public func handleOutsideCardViewTapped() {
         self.handlePopViewController()
     }
+    
+    //MARK:- Helper Functions
     
     public func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {
         
@@ -63,6 +98,28 @@ class AddListViewModel {
         
     }
     
+    private func handleSubmitButtonHelper() {
+        
+        if self.config == .create {
+            
+            self.createList { _ in
+                
+                self.actionDelegate.popAddListViewController()
+                
+            }
+            
+        } else {
+            
+            self.updateList { _ in
+                
+                self.actionDelegate.popAddListViewController()
+                
+            }
+            
+        }
+        
+    }
+    
     //MARK:- Services
     
     private func createList(completion: @escaping (String) -> ()) {
@@ -70,6 +127,13 @@ class AddListViewModel {
         LystService.createList(list: self.list) { _ in
             completion("")
         }
+        
+    }
+    
+    private func updateList(completion: @escaping (String) -> ()) {
+        
+        LystService.updateList(self.list)
+        completion("")
         
     }
     

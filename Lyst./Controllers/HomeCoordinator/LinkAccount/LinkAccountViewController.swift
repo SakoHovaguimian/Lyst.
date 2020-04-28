@@ -75,14 +75,6 @@ class LinkAccountViewController: UIViewController {
         return btn
     }()
     
-    private lazy var pinStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.distribution = .fillEqually
-        stack.axis = .horizontal
-        stack.spacing = 16
-        return stack
-    }()
-    
     private lazy var submitButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("Link", for: .normal)

@@ -13,12 +13,14 @@ enum Option: Int, CaseIterable {
     
     case uncheck
     case rename
+    case share
     
     var name: String {
         
         switch self {
             case .uncheck: return "Uncheck All Items"
             case .rename: return "Rename Lyst"
+            case .share: return "Share Lyst"
         }
         
     }
@@ -88,8 +90,8 @@ class PopOverViewController: UIViewController {
     
     @objc private func handleButtonTapped(sender: UIButton) {
         if let option = Option(rawValue: sender.tag) {
-            self.optionsButtonDelegate.handleOptionButtonTapped(forOption: option)
             self.dismiss(animated: true, completion: nil)
+            self.optionsButtonDelegate.handleOptionButtonTapped(forOption: option)
         }
     }
     

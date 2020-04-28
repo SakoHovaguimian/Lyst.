@@ -44,7 +44,6 @@
 		3DBCE42224524F7500CA157E /* AddItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBCE42024524F4700CA157E /* AddItemViewModel.swift */; };
 		3DBCE4232452506400CA157E /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBCE42124524F4700CA157E /* AddItemViewController.swift */; };
 		3DC71366244760840062303C /* UIColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC71365244760840062303C /* UIColor+ext.swift */; };
-		3DD0E05F244F9DAC00EA7941 /* PinTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD0E05E244F9DAC00EA7941 /* PinTextField.swift */; };
 		3DD825602450E296004FD9FE /* TokenCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD8255F2450E296004FD9FE /* TokenCollectionViewFlowLayout.swift */; };
 		3DD825642450E334004FD9FE /* LinkedAccountsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD825622450E30C004FD9FE /* LinkedAccountsCollectionViewCell.swift */; };
 		3DD825652450E647004FD9FE /* LinkedAccountsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3DD825632450E30C004FD9FE /* LinkedAccountsCollectionViewCell.xib */; };
@@ -102,7 +101,6 @@
 		3DBCE42024524F4700CA157E /* AddItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemViewModel.swift; sourceTree = "<group>"; };
 		3DBCE42124524F4700CA157E /* AddItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
 		3DC71365244760840062303C /* UIColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ext.swift"; sourceTree = "<group>"; };
-		3DD0E05E244F9DAC00EA7941 /* PinTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinTextField.swift; sourceTree = "<group>"; };
 		3DD8255F2450E296004FD9FE /* TokenCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		3DD825622450E30C004FD9FE /* LinkedAccountsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedAccountsCollectionViewCell.swift; sourceTree = "<group>"; };
 		3DD825632450E30C004FD9FE /* LinkedAccountsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkedAccountsCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -368,7 +366,6 @@
 			isa = PBXGroup;
 			children = (
 				3D5F731D2447BBA2003BCF16 /* InputTextField.swift */,
-				3DD0E05E244F9DAC00EA7941 /* PinTextField.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -555,7 +552,6 @@
 				3D75E05C245555C300ACC28E /* LystService.swift in Sources */,
 				3DDB3C96244781DD00DB770E /* Constants.swift in Sources */,
 				3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */,
-				3DD0E05F244F9DAC00EA7941 /* PinTextField.swift in Sources */,
 				3DD825602450E296004FD9FE /* TokenCollectionViewFlowLayout.swift in Sources */,
 				3DB7533A2446A4E100CC183C /* HomeCoordinator.swift in Sources */,
 				3DDAA254244E7EA10004206C /* ImageWithOutRender.swift in Sources */,
