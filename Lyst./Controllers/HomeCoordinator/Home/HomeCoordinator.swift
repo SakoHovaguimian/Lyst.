@@ -156,7 +156,6 @@ extension HomeCoordinator: UserCreatedDelegate {
         
         if let homeVC = self.navigationController.viewControllers.first as? HomeViewController {
             homeVC.homeViewModel.updateUser(withUser: user)
-            testUser = user
             self.childCoordinators.removeLast()
         }
         

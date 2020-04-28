@@ -32,7 +32,6 @@ class ItemsViewModel {
     
     init(list: List) {
         self.list = list
-        self.user = testUser
     }
     
     public func handleBackButtonTapped(_ sender: UIButton) {

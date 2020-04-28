@@ -34,7 +34,6 @@ class LinkAccountViewModel {
     
     init(list: List) {
         self.list = list
-        self.user = testUser
     }
     
     public func validateLinkAccounts() -> String? {
