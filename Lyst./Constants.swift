@@ -26,6 +26,5 @@ let avenirNextRegular = "AvenirNextCondensed-Regular"
 let avenirNextMedium = "AvenirNextCondensed-Medium"
 
 //MARK:- TEST USERS
-var testUser: User = User(name: "KC Gunderson", email: "sako@me.com")
 
 

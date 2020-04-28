@@ -20,13 +20,13 @@ enum Category: String, CaseIterable {
     var name: String {
         
         switch self {
-       
-            case .shopping: return "Shopping"
-            case .home: return "Home"
-            case .work: return "Work"
-            case .misc: return "Misc."
-            case .personal: return "Personal Growth"
-            case .business: return "Business"
+            
+        case .shopping: return "Shopping"
+        case .home: return "Home"
+        case .work: return "Work"
+        case .misc: return "Misc."
+        case .personal: return "Personal Growth"
+        case .business: return "Business"
             
         }
     }
@@ -34,7 +34,7 @@ enum Category: String, CaseIterable {
     var imageName: String {
         
         switch self {
-       
+            
         case .shopping: return "cart"
         case .home: return "home"
         case .work: return "tools"
@@ -47,16 +47,16 @@ enum Category: String, CaseIterable {
     
     var gradient: [UIColor] {
         
-         switch self {
-        
-         case .shopping: return [UIColor.royalBlue1!, UIColor.royalBlue2!]
-         case .home: return [UIColor.teal1!, UIColor.teal2!]
-         case .work: return [UIColor.orange1!, UIColor.orange2!]
-         case .misc: return [UIColor.whitePink1!, UIColor.whitePink2!]
-         case .personal: return [UIColor.pink1!, UIColor.pink2!]
-         case .business: return [UIColor.green1!, UIColor.green2!]
-             
-         }
+        switch self {
+            
+        case .shopping: return [UIColor.royalBlue1!, UIColor.royalBlue2!]
+        case .home: return [UIColor.teal1!, UIColor.teal2!]
+        case .work: return [UIColor.orange1!, UIColor.orange2!]
+        case .misc: return [UIColor.whitePink1!, UIColor.whitePink2!]
+        case .personal: return [UIColor.pink1!, UIColor.pink2!]
+        case .business: return [UIColor.green1!, UIColor.green2!]
+            
+        }
         
     }
     

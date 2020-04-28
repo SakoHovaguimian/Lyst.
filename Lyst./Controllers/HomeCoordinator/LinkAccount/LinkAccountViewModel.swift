@@ -28,15 +28,14 @@ class LinkAccountViewModel {
         "Mithc Treece",
         "Libby Bibona",
         "Christopher Carl Bibona"
-    ].shuffled()
+        ].shuffled()
     
     public var enteredEmail: String = ""
     
     init(list: List) {
         self.list = list
-        self.user = testUser
     }
-
+    
     public func validateLinkAccounts() -> String? {
         guard enteredEmail.isValidEmail() else { return ValidationError.invalidEmail.error }
         return nil
@@ -67,7 +66,7 @@ class LinkAccountViewModel {
         
         if string.count > 0 {
             let nextTag = textField.tag + 1
-
+            
             let nextResponder = textField.superview?.viewWithTag(nextTag)
             
             textField.text = string
@@ -80,9 +79,9 @@ class LinkAccountViewModel {
             return false
             
         } else if string.count == 0 {
-
+            
             let previousTag = textField.tag - 1
-
+            
             let previousResponder = textField.superview?.viewWithTag(previousTag)
             
             textField.text = ""
@@ -97,7 +96,7 @@ class LinkAccountViewModel {
         
         textField.resignFirstResponder()
         return false
-
+        
     }
     
     public func updateTextFieldForViewModel(_ textField: UITextField, string: String?) {

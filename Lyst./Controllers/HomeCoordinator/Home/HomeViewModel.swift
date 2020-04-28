@@ -8,12 +8,14 @@
 
 import UIKit
 import Animo
+import Firebase
+import FirebaseAuth
 
 protocol HomeVCActionsDelegate: class {
     func presentLoginVC(animated: Bool)
     func presentAddListVC()
     func pushItemVC(list: List)
-//    func pushLinkAccountVC(user: User)
+    //    func pushLinkAccountVC(user: User)
 }
 
 class HomeViewModel {
@@ -21,7 +23,7 @@ class HomeViewModel {
     weak var actionDelegate: HomeVCActionsDelegate!
     
     private(set) var user: User? = nil
-     
+    
     public var lists: [List] {
         return self.user?.lists ?? []
     }
@@ -60,6 +62,7 @@ class HomeViewModel {
     }
     
     public func handleLogOutButtonTapped(_ sender: UIButton) {
+        UserService.logout()
         self.actionDelegate.presentLoginVC(animated: true)
         logSuccess("LOGGING OUT")
     }
@@ -69,7 +72,7 @@ class HomeViewModel {
     }
     
     public func handleLinkAccountButtonTapped(_ sender: UIButton) {
-//        self.actionDelegate.pushLinkAccountVC(user: self.user!)
+        //        self.actionDelegate.pushLinkAccountVC(user: self.user!)
         logSuccess("LINKING ACCOUNTS...")
     }
     
@@ -80,6 +83,40 @@ class HomeViewModel {
     public func presentLoginController()  {
         self.actionDelegate.presentLoginVC(animated: false)
         logDebugMessage("Load Login Controller")
+    }
+    
+    //MARK:- Services
+    
+    public func checkIfUserIsLoggedIn() -> Bool {
+        return Auth.auth().currentUser != nil
+    }
+    
+    public func fetchUser(completion: @escaping() -> ()) {
+        
+        guard let user = Auth.auth().currentUser else { completion(); return }
+        
+        UserService.fetchUser(uid: user.uid) { (user) in
+            
+            self.user = user
+            completion()
+            
+        }
+        
+    }
+    
+    public func fetchLists(completion: @escaping () -> ()) {
+        
+        LystService.fetchListsForUser { (lists) in
+            
+            if let lists = lists {
+                
+                self.user?.lists = lists
+                completion()
+                
+            }
+            
+        }
+        
     }
     
     //MARK:- Table View Data
@@ -110,7 +147,7 @@ class HomeViewModel {
             return vw
             
         } else {
-    
+            
             if section == 2 && self.sharedLists.isEmpty {
                 return nil
             }

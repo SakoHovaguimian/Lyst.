@@ -8,6 +8,7 @@
 
 import UIKit
 import Animo
+import SafariServices
 
 class HomeCoordinator: Coordinator {
     
@@ -25,7 +26,7 @@ class HomeCoordinator: Coordinator {
         viewModel.actionDelegate = self
         
         let homeVC = HomeViewController(viewModel: viewModel)
-            
+        
         self.navigationController.modalPresentationStyle = .fullScreen
         self.navigationController.navigationBar.isHidden = true
         self.navigationController.pushViewController(homeVC, animated: false)
@@ -98,6 +99,22 @@ class HomeCoordinator: Coordinator {
         
     }
     
+    private func openSafari(withItem item: Item) {
+        
+        if let link = item.link {
+            
+            let validUrlString = link.hasPrefix("http") ? link : "http://\(link)"
+            
+            if let url = URL(string: validUrlString) {
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:])
+                }
+            }
+            
+        }
+        
+    }
+    
 }
 
 //MARK:- LINK ACTION VIEW MODEL DELEGATE
@@ -112,6 +129,10 @@ extension HomeCoordinator: LinkVCActionDelegate {
 
 //MARK:- ITEM VIEW MODEL DELEGATE
 extension HomeCoordinator: ItemVCActionDelegate {
+    
+    func presentWebView(item: Item) {
+        self.openSafari(withItem: item)
+    }
     
     func openLinkAccountVC(list: List) {
         self.presentLinkAccountViewController(list: list)
@@ -135,7 +156,6 @@ extension HomeCoordinator: UserCreatedDelegate {
         
         if let homeVC = self.navigationController.viewControllers.first as? HomeViewController {
             homeVC.homeViewModel.updateUser(withUser: user)
-            testUser = user
             self.childCoordinators.removeLast()
         }
         
@@ -146,9 +166,9 @@ extension HomeCoordinator: UserCreatedDelegate {
 //MARK:- HOME VIEW MODEL DELEGATE
 extension HomeCoordinator: HomeVCActionsDelegate {
     
-//    func pushLinkAccountVC(user: User) {
-//        self.presentLinkAccountViewController(user: user)
-//    }
+    //    func pushLinkAccountVC(user: User) {
+    //        self.presentLinkAccountViewController(user: user)
+    //    }
     
     func pushItemVC(list: List) {
         self.pushItemViewController(list: list)
@@ -162,7 +182,7 @@ extension HomeCoordinator: HomeVCActionsDelegate {
         logDebugMessage("Coordinator is attemplting to log")
         self.presentLoginCoordinator(animated: animated)
     }
-
+    
     
 }
 
@@ -196,7 +216,7 @@ extension HomeCoordinator: AddItemVCActionDelegate {
     }
     
     func updateListItems(_ list: List) {
-    
+        
         if let homeVC = self.navigationController.viewControllers.first as? HomeViewController {
             
             var listToUpdate = homeVC.homeViewModel.user?.lists

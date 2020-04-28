@@ -48,6 +48,7 @@ class ItemTableViewCell: UITableViewCell {
         self.addShadows()
         
         self.itemNameLabel.text = self.item.name
+//        self.itemNameLabel.textColor = .charcoalBlack
         
         self.checkBoxButton.backgroundColor =  self.item.isCompleted ? .imgurGreen : .white
         self.checkBoxButton.isSelected = self.item.isCompleted ? true : false

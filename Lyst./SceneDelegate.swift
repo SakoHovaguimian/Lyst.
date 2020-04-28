@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import Firebase
 import Animo
+import Kingfisher
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -27,6 +29,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = self.coordinator.navigationController
         window?.makeKeyAndVisible()
+        
+        FirebaseApp.configure()
         
         self.coordinator.start()
         

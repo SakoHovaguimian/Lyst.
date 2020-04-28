@@ -19,6 +19,8 @@ class AddItemViewModel {
     private(set) var list: List!
     private(set) var item = Item()
     
+    public var selectedImage: UIImage?
+    
     public var categorySelectedRow = 0
     
     weak var actionDelegate: AddItemVCActionDelegate!
@@ -36,9 +38,11 @@ class AddItemViewModel {
     }
     
     public func handleCreateItemButtonTapped(_ sender: UIButton) {
-        self.item.id = "\(self.list.items.count + 1)"
-        self.list.items.append(self.item)
-        self.actionDelegate.updateListItems(self.list)
+        //        self.item.id = "\(self.list.items.count + 1)"
+        //        self.list.items.append(self.item)
+        self.createItem { _ in
+            self.actionDelegate.updateListItems(self.list)
+        }
     }
     
     public func handleOutsideCardViewTapped() {
@@ -53,9 +57,9 @@ class AddItemViewModel {
         
         switch textField.tag {
             
-            case 0: self.item.name = text
-            case 1: self.item.link = text
-            default: logError("Something went wrong")
+        case 0: self.item.name = text
+        case 1: self.item.link = text
+        default: logError("Something went wrong")
             
         }
         
@@ -91,5 +95,31 @@ class AddItemViewModel {
         textField.font = UIFont(name: avenirNextBold, size: 20.0)
         return textField
     }
-
+    
+    //MARK:- Services
+    
+    private func createItem(completion: @escaping (String) -> ()) {
+        
+        ItemService.createItem(forList: self.list, item: self.item) { item in
+            
+            if let image = self.selectedImage, let item = item {
+                
+                ItemService.saveImage(item: item, image: image) { url in
+                    
+                    item.imageURL = url
+                    
+                    ItemService.updateItem(forList: self.list, item: item) { _ in
+                        
+                        completion("")
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+    }
+    
 }

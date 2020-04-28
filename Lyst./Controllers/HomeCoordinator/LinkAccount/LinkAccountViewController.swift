@@ -141,8 +141,8 @@ class LinkAccountViewController: UIViewController {
         self.view.backgroundColor = .clear
         
         self.view.simpleGradient(colors: backgroundGradient)
-
-//        self.configureAlphaView()
+        
+        //        self.configureAlphaView()
         self.configureButtons()
         self.configureLabels()
         self.configureTextFields()
@@ -195,23 +195,23 @@ class LinkAccountViewController: UIViewController {
                                 paddingLeft: 16,
                                 paddingRight: 16,
                                 height: 30)
-
+        
     }
     
     private func configureButtons() {
-
+        
         //Close Button
         self.view.addSubview(self.closeButton)
         
         self.closeButton.anchor(top: self.view.safeAreaLayoutGuide.topAnchor,
-                               right: self.view.rightAnchor,
-                               paddingTop: 16,
-                               paddingRight: 16,
-                               width: 40,
-                               height: 40)
+                                right: self.view.rightAnchor,
+                                paddingTop: 16,
+                                paddingRight: 16,
+                                width: 40,
+                                height: 40)
         
     }
-        
+    
     
     private func configureTextFields() {
         
@@ -303,9 +303,9 @@ class LinkAccountViewController: UIViewController {
     
 }
 
-    //MARK:- Extension
+//MARK:- Extension
 
-    //MARK:- TABLE VIEW DELEGATE & DATASOURCE
+//MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension LinkAccountViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -317,10 +317,10 @@ extension LinkAccountViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-    
+        
         self.linkAccountViewModel.updateTextFieldForViewModel(self.emailTextField, string: nil)
         self.updateButtonState(self.textFields, self.submitButton)
-
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -333,7 +333,7 @@ extension LinkAccountViewController: UITextFieldDelegate {
     
 }
 
-    //MARK:- COLLECTION VIEW DELEGATE & DATASOURCE
+//MARK:- COLLECTION VIEW DELEGATE & DATASOURCE
 
 extension LinkAccountViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     

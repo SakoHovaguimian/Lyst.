@@ -36,21 +36,63 @@ class List {
     public func listDict() -> [String : Any] {
         
         let dict: [String : Any] = [
-        
+            
             "id": self.id,
             "name" : self.name,
             "author" : self.author,
             "category": self.category.rawValue,
-            "items": self.itemsDict()
-            
+            "items": self.listItemDict()
         ]
         
         return dict
         
     }
     
-    public func itemsDict() -> [[String : Any]] {
-        return items.map({$0.itemDict() })
+    public func listItemDict() -> [String : Any] {
+        
+        var itemDict: [String : Any] = [:]
+        
+        for item in items {
+            itemDict.updateValue(item.itemDict(), forKey: item.id)
+        }
+        
+        return itemDict
+        
+    }
+    
+    static func parseList(json: [String : Any]) -> List {
+        
+        let list = List(name: "", category: .home)
+        
+        list.id = json["id"] as! String
+        list.name = json["name"] as! String
+        list.author = json["author"] as! String
+        
+        let category = json["category"] as! String
+        list.category = Category(rawValue: category) ?? .home
+        
+        var items = [Item]()
+        
+        if let jsonItems = json["items"] as? [String : Any] {
+            
+            for dict in jsonItems {
+                
+                if let itemDict = dict.value as? [String : Any] {
+                    
+                    let item = Item.parseItem(json: itemDict)
+                    items.append(item)
+                    
+                }
+                
+            }
+            
+            list.items = items
+            
+        }
+        
+        
+        return list
+        
     }
     
     static func generateList() -> [List] {

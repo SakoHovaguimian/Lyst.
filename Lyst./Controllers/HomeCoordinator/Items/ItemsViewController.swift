@@ -15,6 +15,8 @@ class ItemsViewController: UIViewController {
     
     private var itemsViewModel: ItemsViewModel!
     
+    private var popOverViewController: PopOverViewController?
+    
     //MARK:- Views
     private(set) lazy var itemsTableView: UITableView = {
         return self.setupTableView()
@@ -68,6 +70,7 @@ class ItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.fetchList()
         self.configureViews()
         
     }
@@ -138,9 +141,9 @@ class ItemsViewController: UIViewController {
         
         self.optionsButton.centerY(inView: backImageView, constant: 3)
         self.optionsButton.anchor(right: self.view.rightAnchor,
-                              paddingRight: 16,
-                              width: 32,
-                              height: 32)
+                                  paddingRight: 16,
+                                  width: 32,
+                                  height: 32)
         
         //Floating Add Button
         self.view.addSubview(self.floatingAddButton)
@@ -176,6 +179,42 @@ class ItemsViewController: UIViewController {
         
     }
     
+    private func fetchList() {
+        
+        self.shouldPresentLoadingView(true)
+        
+        self.itemsViewModel.fetchList {
+            
+            self.itemsTableView.reloadData()
+            self.shouldPresentLoadingView(false)
+            
+        }
+        
+    }
+    
+    private func updateList() {
+        self.itemsViewModel.uncheckAllItems()
+    }
+    
+    private func loadPopOverViewController() {
+        
+        self.popOverViewController = PopOverViewController()
+        self.popOverViewController?.view.alpha = 0.0
+
+        self.popOverViewController?.modalPresentationStyle = .popover
+        self.popOverViewController?.optionsButtonDelegate = self
+
+        let popOverVC = self.popOverViewController?.popoverPresentationController
+        popOverVC?.delegate = self
+        popOverVC?.sourceView = self.optionsButton
+        popOverVC?.popoverBackgroundViewClass = nil
+        
+        self.popOverViewController?.preferredContentSize = CGSize(width: 250, height: 150)
+
+        self.present(self.popOverViewController!, animated: true)
+        
+    }
+    
     
     //MARK:- @OBJC Functions
     @objc private func backButtonTapped(_ sender: UIButton) {
@@ -188,15 +227,22 @@ class ItemsViewController: UIViewController {
     }
     
     @objc private func optionsButtonTapped(_ sender: UIButton) {
-        self.itemsViewModel.handleOptionsButtonTapped(sender)
+//        self.itemsViewModel.handleOptionsButtonTapped(sender)
+        self.loadPopOverViewController()
     }
     
 }
 
-    //MARK:- Extensions
+//MARK:- Extensions
 
-    //MARK:- TABLE VIEW DELEGATE & DATASOURCE
+//MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //        self.updateList()
+        guard let item = self.itemsViewModel.getItemAt(indexPath: indexPath) else { return }
+        self.itemsViewModel.handleLinkButtonTapped(item: item)
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.itemsViewModel.numberOfSections
@@ -240,10 +286,10 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if let cgImage =  UIImage(named: "delete_trash")?.cgImage {
-             action.image = ImageWithoutRender(cgImage: cgImage, scale: UIScreen.main.nativeScale, orientation: .up)
+            action.image = ImageWithoutRender(cgImage: cgImage, scale: UIScreen.main.nativeScale, orientation: .up)
         }
         action.backgroundColor = UIColor.init(displayP3Red: 0/255, green: 0/255, blue: 0/255, alpha: 0.0)
-
+        
         return UISwipeActionsConfiguration(actions: [action])
     }
     
@@ -255,6 +301,25 @@ extension ItemsViewController: DidFinishItemDelegate {
     func didFinishItem(_ item: Item) {
         self.itemsViewModel.updateItemFinishedState(item)
         self.itemsTableView.reloadData()
+    }
+    
+}
+
+extension ItemsViewController: UIPopoverPresentationControllerDelegate {
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        self.popOverViewController = nil
+    }
+}
+
+extension ItemsViewController: OptionButtonTappedDelegate {
+    
+    func handleOptionButtonTapped(forOption option: Option) {
+        logSuccess(option.name)
     }
     
 }

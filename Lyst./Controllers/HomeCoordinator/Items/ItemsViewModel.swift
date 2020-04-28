@@ -13,6 +13,7 @@ protocol ItemVCActionDelegate: class {
     func popItemViewController()
     func openLinkAccountVC(list: List)
     func presentAddItemVC(list: List)
+    func presentWebView(item: Item)
 }
 
 class ItemsViewModel {
@@ -22,6 +23,8 @@ class ItemsViewModel {
     private(set) var list: List!
     private(set) var user: User!
     
+    public var buttonState = false
+    
     //0 for profile header 1 and 2 for completed and incomplted tasks
     public var numberOfSections: Int {
         return 3
@@ -29,7 +32,6 @@ class ItemsViewModel {
     
     init(list: List) {
         self.list = list
-        self.user = testUser
     }
     
     public func handleBackButtonTapped(_ sender: UIButton) {
@@ -42,8 +44,13 @@ class ItemsViewModel {
     }
     
     public func handleOptionsButtonTapped(_ sender: UIButton) {
-        logSuccess("Options Button Tapped: Loading....")
         self.actionDelegate.openLinkAccountVC(list: self.list)
+        logSuccess("Options Button Tapped: Loading....")
+    }
+    
+    public func handleLinkButtonTapped(item: Item) {
+        self.actionDelegate.presentWebView(item: item)
+        print(logSuccess("Link Button Tapped"))
     }
     
     public func numberOfItemsInSection(_ section: Int) -> Int {
@@ -60,24 +67,77 @@ class ItemsViewModel {
         guard indexPath.section != 0 else { return false }
         let itemCount = indexPath.section == 1 ? self.list.incompleteItems.count : self.list.completedItems.count
         return indexPath.row == itemCount - 1
-       
+        
     }
     
     public func removeItemAt(indexPath: IndexPath) {
         
+        let item: Item?
+        
         if indexPath.section == 1 {
-            let item = self.list.incompleteItems[indexPath.row]
-            self.list.removeItem(item)
+            item = self.list.incompleteItems[indexPath.row]
         } else {
-            let item = self.list.completedItems[indexPath.row]
-            self.list.removeItem(item)
+            item = self.list.completedItems[indexPath.row]
+        }
+        
+        self.removeItem(item: item!) {
+            
         }
         
     }
     
-    public func updateItemFinishedState(_ item: Item) {
-        item.isCompleted.toggle()
+    public func getItemAt(indexPath: IndexPath) -> Item? {
+        
+        let item: Item?
+        
+        if indexPath.section == 1 {
+            item = self.list.incompleteItems[indexPath.row]
+        } else {
+            item = self.list.completedItems[indexPath.row]
+        }
+        
+        return item
+        
     }
+    
+    public func updateItemFinishedState(_ item: Item) {
+        self.updateItem(item: item) {
+        }
+    }
+    
+    
+    //MARK:- SERVICES
+    
+    public func fetchList(completion: @escaping () -> ()) {
+        
+        LystService.fetchList(id: self.list.id) { list in
+            self.list = list
+            completion()
+        }
+        
+    }
+    
+    public func updateItem(item: Item, completion: @escaping () -> ()) {
+        item.isCompleted.toggle()
+        ItemService.updateItem(forList: self.list, item: item) { list in
+            completion()
+        }
+        
+    }
+    
+    public func removeItem(item: Item, completion: @escaping () -> ()) {
+        ItemService.updateItem(forList: self.list, item: item, shouldRemove: true) { list in
+            completion()
+        }
+        
+    }
+    
+    public func uncheckAllItems() {
+        self.list.items.forEach({ $0.isCompleted = false })
+        LystService.updateList(list: self.list)
+    }
+    
+    //MARK:- TABLE VIEW LOGIC
     
     public func configureCellForRowAt(indexPath: IndexPath, tableView: UITableView) -> ItemTableViewCell {
         

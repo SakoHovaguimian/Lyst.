@@ -15,14 +15,10 @@ class Item {
     
     var name: String = ""
     var link: String?
-    var image: UIImage?
+    var imageURL: String?
     
     var isCompleted: Bool = false
     var dateCompleted: String = ""
-    
-    var linkURL: URL {
-        return URL(string: self.link ?? "")!
-    }
     
     public func itemDict() -> [String : Any] {
         
@@ -37,8 +33,11 @@ class Item {
             dict.updateValue(link, forKey: "link")
         }
         
-        return dict
+        if let imageURL = self.imageURL {
+            dict.updateValue(imageURL, forKey: "imageURL")
+        }
         
+        return dict
         
     }
     
@@ -53,6 +52,10 @@ class Item {
         
         if let link = json["link"] as? String {
             item.link = link
+        }
+        
+        if let imageURL = json["imageURL"] as? String {
+            item.imageURL = imageURL
         }
         
         return item

@@ -31,7 +31,9 @@ class AddListViewModel {
     }
     
     public func handleCreateListButtonTapped(_ sender: UIButton) {
-        self.actionDelegate.addCreatedList(self.list)
+        self.createList { _ in
+            self.actionDelegate.addCreatedList(self.list)
+        }
     }
     
     public func handleOutsideCardViewTapped() {
@@ -60,5 +62,16 @@ class AddListViewModel {
         })
         
     }
+    
+    //MARK:- Services
+    
+    private func createList(completion: @escaping (String) -> ()) {
+        
+        LystService.createList(list: self.list) { _ in
+            completion("")
+        }
+        
+    }
+    
     
 }

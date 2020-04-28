@@ -112,7 +112,12 @@ class AddItemViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         self.addItemViewModel.animateAlphaFor(self.alphaView, value: 0.5)
-
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.shouldPresentLoadingView(false)
     }
     
     //MARK:- Helper Functions
@@ -190,7 +195,7 @@ class AddItemViewController: UIViewController {
         
         //Item Name
         self.cardView.addSubview(self.itemNameTextField)
-
+        
         self.itemNameTextField.anchor(top: self.itemNameDescLabel.bottomAnchor,
                                       left: self.view.leftAnchor,
                                       right: self.view.rightAnchor,
@@ -212,7 +217,7 @@ class AddItemViewController: UIViewController {
         
         //Item Link
         self.cardView.addSubview(self.itemLinkTextField)
-
+        
         self.itemLinkTextField.anchor(top: self.itemLinkDescLabel.bottomAnchor,
                                       left: self.view.leftAnchor,
                                       right: self.view.rightAnchor,
@@ -220,7 +225,7 @@ class AddItemViewController: UIViewController {
                                       paddingLeft: 32,
                                       paddingRight: 32,
                                       height: 50)
-
+        
     }
     
     private func configureSubmitButton() {
@@ -279,6 +284,7 @@ class AddItemViewController: UIViewController {
     }
     
     @objc private func createItemButtonTapped(_ sender: UIButton) {
+        self.shouldPresentLoadingView(true)
         self.addItemViewModel.handleCreateItemButtonTapped(sender)
         logSuccess("CREATED Item Item: \(self.addItemViewModel.item.name)")
         
@@ -312,7 +318,7 @@ extension AddItemViewController: UITextFieldDelegate {
         
         self.addItemViewModel.updateTextFieldForViewModel(textField, string: nil)
         self.updateButtonState(self.textFields, self.submitButton)
-
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -329,7 +335,7 @@ extension AddItemViewController: UITextFieldDelegate {
 extension AddItemViewController: MediaPickerDelegate {
     func didSelect(image: UIImage?) {
         if let image = image {
-            self.addItemViewModel.item.image = image
+            self.addItemViewModel.selectedImage = image
             self.addImageButton.setImage(image, for: .normal)
         }
     }

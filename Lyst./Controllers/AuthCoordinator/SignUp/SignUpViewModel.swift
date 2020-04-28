@@ -51,18 +51,11 @@ class SignUpViewModel {
         self.actionDelegate.popSignUpVC()
     }
     
-    public func handleSignUpButtonTapped(_ sender: UIButton) -> String? {
+    public func handleSignUpButtonTapped(completion: @escaping (String?) -> ()) {
         
-        if let error = self.validateTextFields() {
-            return error
+        return self.handleSignUp { error in
+           completion(error)
         }
-        
-        let user = User(name: self.fullName,
-                        email: self.email)
-        
-        self.actionDelegate.didCreateUser(user: user)
-        
-        return nil
         
     }
     
@@ -75,6 +68,41 @@ class SignUpViewModel {
         guard password.count > 2 else { return ValidationError.invalidPassword.error }
         
         return nil
+        
+    }
+    
+    private func createUser(completion: @escaping(User?) -> ()) {
+        
+        UserService.createUser(email: self.email, password: self.password, fullNmae: self.fullName) { user in
+            
+            if let user = user {
+                completion(user)
+            }
+            
+        }
+        
+    }
+    
+    private func handleSignUp(completion: @escaping (String?) -> Void) {
+        
+        if let validationError = self.validateTextFields() {
+            return completion(validationError)
+        }
+        
+        self.createUser { (user) in
+            
+            if let user = user {
+                
+                self.actionDelegate.didCreateUser(user: user)
+                completion(nil)
+                
+            } else {
+                
+                completion("Incorrect Credentials")
+
+            }
+            
+        }
         
     }
     
