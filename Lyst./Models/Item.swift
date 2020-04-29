@@ -8,6 +8,15 @@
 
 import UIKit
 
+enum Content: Int {
+    
+    case text
+    case link
+    case photo
+    case all
+    
+}
+
 class Item {
     
     var id: String = ""
@@ -20,6 +29,30 @@ class Item {
     var isCompleted: Bool = false
     var dateCompleted: String = ""
     
+    var content: Content {
+        return self.typeOfContent()
+    }
+    
+    private func typeOfContent() -> Content {
+        
+        var content = Content.text
+        
+        if let _ = self.link {
+            content = .link
+        }
+        
+        if let _ = self.imageURL {
+            content = .photo
+        }
+        
+        if let _ = self.link, let _ = self.imageURL {
+            content = .all
+        }
+        
+        return content
+        
+    }
+    
     public func itemDict() -> [String : Any] {
         
         var dict: [String : Any] = [
@@ -30,7 +63,9 @@ class Item {
         ]
         
         if let link = self.link {
-            dict.updateValue(link, forKey: "link")
+            if link != "" {
+                dict.updateValue(link, forKey: "link")
+            }
         }
         
         if let imageURL = self.imageURL {
@@ -57,6 +92,8 @@ class Item {
         if let imageURL = json["imageURL"] as? String {
             item.imageURL = imageURL
         }
+        
+        item.name = item.name.capitalized
         
         return item
         

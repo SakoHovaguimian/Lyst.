@@ -56,6 +56,11 @@ class ItemsViewModel {
         print(logSuccess("Link Button Tapped"))
     }
     
+    public func handleImageButtonTapped(item: Item) {
+        //Do Delegate To Show Image Full Screen or Straight To Detail
+        logSuccess("Image Button Tapped for: \(item.name)")
+    }
+    
     //MARK:- HELPER FUNCTIONS
     
     public func handleSelectedOption(_ option: Option) {
@@ -67,7 +72,6 @@ class ItemsViewModel {
         }
         
     }
-    
     
     //MARK:- SERVICES
     
@@ -154,14 +158,18 @@ class ItemsViewModel {
         }
     }
     
-    public func configureCellForRowAt(indexPath: IndexPath, tableView: UITableView) -> ItemTableViewCell {
+    public func configureCellForRowAt(indexPath: IndexPath, tableView: UITableView) -> ItemTableViewCell? {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.identifier, for: indexPath) as! ItemTableViewCell
-        guard indexPath.section != 0 else { return cell }
+        guard indexPath.section != 0 else { return nil }
+        
         let sectionItems = indexPath.section == 1 ? self.list.incompleteItems : self.list.completedItems
         let item = sectionItems[indexPath.row]
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: ItemTableViewCell.identifier, for: indexPath) as! ItemTableViewCell
+        
         let isFirstCell = self.isFirstCell(indexPath)
         let isLastCell = self.isLastCell(indexPath)
+        
         cell.configureViews(item: item, isFirstCell: isFirstCell, isLastCell: isLastCell)
         return cell
         
@@ -185,6 +193,21 @@ class ItemsViewModel {
             return vw
             
         }
+        
+    }
+    
+    public func heightForRowAt(indexPath: IndexPath, height: CGFloat) -> CGFloat {
+        
+        if let item = self.getItemAt(indexPath: indexPath) {
+            
+            switch item.content {
+                case .text, .link: return height / 8.5
+                case .photo, .all: return height / 7.0
+            }
+            
+        }
+        
+        return height / 8.5
         
     }
     

@@ -209,6 +209,8 @@ class ItemsViewController: UIViewController {
         popOverVC?.sourceView = self.optionsButton
         popOverVC?.popoverBackgroundViewClass = nil
         
+        self.view.alpha = 0.7
+        
         self.popOverViewController?.preferredContentSize = CGSize(width: 250, height: 150)
 
         self.present(self.popOverViewController!, animated: true)
@@ -238,12 +240,6 @@ class ItemsViewController: UIViewController {
 //MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //        self.updateList()
-        guard let item = self.itemsViewModel.getItemAt(indexPath: indexPath) else { return }
-        self.itemsViewModel.handleLinkButtonTapped(item: item)
-    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.itemsViewModel.numberOfSections
     }
@@ -255,8 +251,8 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = self.itemsViewModel.configureCellForRowAt(indexPath: indexPath, tableView: self.itemsTableView)
-        cell.itemDelegate = self
-        return cell
+        cell?.itemDelegate = self
+        return cell ?? UITableViewCell()
         
     }
     
@@ -265,7 +261,8 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.view.frame.height / 8.5
+        return self.itemsViewModel.heightForRowAt(indexPath: indexPath,
+                                                  height: self.view.frame.height)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -296,7 +293,16 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 //MARK:- ITEM UPDATE DELEGATE DidFinishItemDelegate
-extension ItemsViewController: DidFinishItemDelegate {
+extension ItemsViewController: ItemTableViewCellDelegate {
+    
+    func didTapLink(_ item: Item) {
+        self.itemsViewModel.handleLinkButtonTapped(item: item)
+    }
+    
+    func didTapImage(_ item: Item) {
+        self.itemsViewModel.handleImageButtonTapped(item: item)
+    }
+    
     
     func didFinishItem(_ item: Item) {
         self.itemsViewModel.updateItemFinishedState(item)
@@ -311,14 +317,20 @@ extension ItemsViewController: UIPopoverPresentationControllerDelegate {
         return .none
     }
     
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.view.alpha = 1.0
+    }
+    
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         self.popOverViewController = nil
     }
+    
 }
 
 extension ItemsViewController: OptionButtonTappedDelegate {
     
     func handleOptionButtonTapped(forOption option: Option) {
+        self.view.alpha = 1.0
         self.itemsViewModel.handleSelectedOption(option)
         logSuccess(option.name)
     }
