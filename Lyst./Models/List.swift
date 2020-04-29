@@ -92,6 +92,8 @@ class List {
             
         }
         
+        list.name = list.name.capitalized
+        
         
         return list
         

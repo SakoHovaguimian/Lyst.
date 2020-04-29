@@ -209,6 +209,8 @@ class ItemsViewController: UIViewController {
         popOverVC?.sourceView = self.optionsButton
         popOverVC?.popoverBackgroundViewClass = nil
         
+        self.view.alpha = 0.7
+        
         self.popOverViewController?.preferredContentSize = CGSize(width: 250, height: 150)
 
         self.present(self.popOverViewController!, animated: true)
@@ -315,14 +317,20 @@ extension ItemsViewController: UIPopoverPresentationControllerDelegate {
         return .none
     }
     
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.view.alpha = 1.0
+    }
+    
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         self.popOverViewController = nil
     }
+    
 }
 
 extension ItemsViewController: OptionButtonTappedDelegate {
     
     func handleOptionButtonTapped(forOption option: Option) {
+        self.view.alpha = 1.0
         self.itemsViewModel.handleSelectedOption(option)
         logSuccess(option.name)
     }

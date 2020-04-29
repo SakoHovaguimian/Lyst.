@@ -63,7 +63,9 @@ class Item {
         ]
         
         if let link = self.link {
-            dict.updateValue(link, forKey: "link")
+            if link != "" {
+                dict.updateValue(link, forKey: "link")
+            }
         }
         
         if let imageURL = self.imageURL {
@@ -90,6 +92,8 @@ class Item {
         if let imageURL = json["imageURL"] as? String {
             item.imageURL = imageURL
         }
+        
+        item.name = item.name.capitalized
         
         return item
         
