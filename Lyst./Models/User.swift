@@ -14,7 +14,7 @@ class User {
     var name: String
     var email: String
     var lists: [List] = []
-    var sharedLists: [List] = []
+    var subscriptions: [Subscription]?
     
     var firstName: String {
         return self.fetchFirstName()
@@ -53,6 +53,10 @@ class User {
         let id = json["id"] as! String
         let name = json["name"] as! String
         let email = json["email"] as! String
+        
+        if let shared = json["shared"] as? String {
+            print(shared)
+        }
         
         let user = User(name: name, email: email)
         user.id = id

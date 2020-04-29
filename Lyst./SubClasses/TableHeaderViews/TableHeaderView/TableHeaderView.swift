@@ -33,7 +33,7 @@ class TableHeaderView: UITableViewHeaderFooterView {
         self.nameLabel.text = "Hi, \(user.firstName)"
         self.nameLabel.textColor = .charcoalBlack
         
-        self.listCountLabel.text = "You have \(user.lists.count + user.sharedLists.count) lysts"
+        self.listCountLabel.text = "You have \(user.lists.count + (user.subscriptions?.count ?? 0)) lysts"
         
     }
     

@@ -20,7 +20,7 @@ class LystService {
         
         let autoId = listRef.childByAutoId().key ?? ""
         
-        let id = currentUser.uid
+        let id = currentUser.email?.MD5() ?? ""
         let ref = listRef.child(id)
         
         let updatedList = list
@@ -39,7 +39,7 @@ class LystService {
         
         var lists: [List] = []
         
-        let id = currentUser.uid
+        let id = currentUser.email?.MD5() ?? ""
         let ref = listRef.child(id)
         
         ref.observe(.value) { (snapshot) in
@@ -71,7 +71,7 @@ class LystService {
         
         guard let currentUser = currentUser else {completion(nil); return }
         
-        let userId = currentUser.uid
+        let userId = currentUser.email?.MD5() ?? ""
         
         listRef.child(userId).child(id).observe(.value) { (snapshot) in
             
@@ -90,7 +90,7 @@ class LystService {
         
         guard let currentUser = currentUser else { return }
         
-        let userId = currentUser.uid
+        let userId = currentUser.email?.MD5() ?? ""
         let values: [String : Any] = list.listDict()
         listRef.child(userId).child(list.id).updateChildValues(values)
         

@@ -15,7 +15,7 @@ class ItemService {
         
         guard let currentUser = currentUser else {completion(nil); return }
         
-        let id = currentUser.uid
+        let id = currentUser.email?.MD5() ?? ""
         
         let itemId = listRef.childByAutoId().key ?? ""
         
@@ -36,7 +36,7 @@ class ItemService {
         
         guard let currentUser = currentUser else {completion(nil); return }
         
-        let id = currentUser.uid
+        let id = currentUser.email?.MD5() ?? ""
         
         let ref = listRef.child(id).child(list.id).child("items").child(item.id)
         
@@ -59,7 +59,7 @@ class ItemService {
         
         guard let currentUser = currentUser else { return }
         
-        let userId = currentUser.uid
+        let userId = currentUser.email?.MD5() ?? ""
         let values: [String : Any] = list.listItemDict()
         listRef.child(userId).child(list.id).child("items").updateChildValues(values)
         

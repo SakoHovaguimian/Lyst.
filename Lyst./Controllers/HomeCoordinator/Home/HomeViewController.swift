@@ -112,6 +112,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserService.logout()
         self.view.backgroundColor = .white
         self.fetchUserData()
         

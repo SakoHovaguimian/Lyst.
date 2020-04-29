@@ -28,8 +28,8 @@ class HomeViewModel {
         return self.user?.lists ?? []
     }
     
-    public var sharedLists: [List] {
-        return self.user?.sharedLists ?? []
+    public var sharedLists: [Subscription] {
+        return self.user?.subscriptions ?? []
     }
     
     public var shouldHideTableView: Bool = false
@@ -95,7 +95,7 @@ class HomeViewModel {
         
         guard let user = Auth.auth().currentUser else { completion(); return }
         
-        UserService.fetchUser(uid: user.uid) { (user) in
+        UserService.fetchUser(email: user.email ?? "") { (user) in
             
             self.user = user
             completion()
@@ -133,7 +133,7 @@ class HomeViewModel {
     
     public func listFor(indexPath: IndexPath) -> List {
         
-        let list = indexPath.section == 1 ? self.lists[indexPath.row] :self.sharedLists[indexPath.row]
+        let list = (indexPath.section == 1 ? self.lists[indexPath.row] : self.sharedLists[indexPath.row].list)!
         return list
         
     }
