@@ -28,6 +28,7 @@
 		3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731F2447BD06003BCF16 /* UIView+ext.swift */; };
 		3D61E587245A02DF00922BD2 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61E586245A02DF00922BD2 /* Subscription.swift */; };
 		3D61E589245A0DC000922BD2 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61E588245A0DC000922BD2 /* String+ext.swift */; };
+		3D61E58B245A10AC00922BD2 /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61E58A245A10AC00922BD2 /* SubscriptionService.swift */; };
 		3D75E05A2455556000ACC28E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D75E0592455556000ACC28E /* GoogleService-Info.plist */; };
 		3D75E05C245555C300ACC28E /* LystService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D75E05B245555C300ACC28E /* LystService.swift */; };
 		3D75E05E24563F1000ACC28E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D75E05D24563F1000ACC28E /* UserService.swift */; };
@@ -87,6 +88,7 @@
 		3D5F731F2447BD06003BCF16 /* UIView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
 		3D61E586245A02DF00922BD2 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		3D61E588245A0DC000922BD2 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
+		3D61E58A245A10AC00922BD2 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
 		3D75E0592455556000ACC28E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3D75E05B245555C300ACC28E /* LystService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LystService.swift; sourceTree = "<group>"; };
 		3D75E05D24563F1000ACC28E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				3D75E05D24563F1000ACC28E /* UserService.swift */,
 				3D75E05B245555C300ACC28E /* LystService.swift */,
 				3DEDDFEF24576B7400D6625C /* ItemService.swift */,
+				3D61E58A245A10AC00922BD2 /* SubscriptionService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				3DD825642450E334004FD9FE /* LinkedAccountsCollectionViewCell.swift in Sources */,
 				3D94F59D24578F83009EE507 /* PopOverViewController.swift in Sources */,
 				3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */,
+				3D61E58B245A10AC00922BD2 /* SubscriptionService.swift in Sources */,
 				3D75E05E24563F1000ACC28E /* UserService.swift in Sources */,
 				3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */,
 				3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */,

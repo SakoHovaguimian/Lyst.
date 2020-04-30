@@ -11,15 +11,11 @@ import Firebase
 
 class ItemService {
     
-    static func createItem(forList list: List, item: Item, completion: @escaping (Item?) -> ()) {
-        
-        guard let currentUser = currentUser else {completion(nil); return }
-        
-        let id = currentUser.email?.MD5() ?? ""
+    static func createItem(forList list: List, item: Item, uid: String, completion: @escaping (Item?) -> ()) {
         
         let itemId = listRef.childByAutoId().key ?? ""
         
-        let ref = listRef.child(id).child(list.id).child("items")
+        let ref = listRef.child(uid).child(list.id).child("items")
         
         let updatedItem = item
         item.id = itemId
@@ -32,13 +28,9 @@ class ItemService {
         
     }
     
-    static func updateItem(forList list: List, item: Item, shouldRemove: Bool = false, completion: @escaping (String?) -> ()) {
+    static func updateItem(forList list: List, item: Item, uid: String, shouldRemove: Bool = false, completion: @escaping (String?) -> ()) {
         
-        guard let currentUser = currentUser else {completion(nil); return }
-        
-        let id = currentUser.email?.MD5() ?? ""
-        
-        let ref = listRef.child(id).child(list.id).child("items").child(item.id)
+        let ref = listRef.child(uid).child(list.id).child("items").child(item.id)
         
         if shouldRemove {
             ref.removeValue()
@@ -55,13 +47,10 @@ class ItemService {
         
     }
     
-    static func updateAllItemsInList(_ list: List) {
-        
-        guard let currentUser = currentUser else { return }
-        
-        let userId = currentUser.email?.MD5() ?? ""
+    static func updateAllItemsInList(uid: String, _ list: List) {
+  
         let values: [String : Any] = list.listItemDict()
-        listRef.child(userId).child(list.id).child("items").updateChildValues(values)
+        listRef.child(uid).child(list.id).child("items").updateChildValues(values)
         
     }
     

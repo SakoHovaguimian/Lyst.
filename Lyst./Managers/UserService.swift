@@ -47,7 +47,7 @@ class UserService {
         
         let dbRef = userRef.child(email.MD5())
         
-        dbRef.observeSingleEvent(of: .value) { (snapshot) in
+        dbRef.observe(.value) { (snapshot) in
             
             if let dict = snapshot.value as? [String : Any] {
                 

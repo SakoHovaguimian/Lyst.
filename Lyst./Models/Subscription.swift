@@ -12,15 +12,31 @@ class Subscription {
     
     var id: String?
     var author: String?
-    var listId: String?
     
     var list: List?
     
-    init(id: String, author: String, listId: String) {
+    init(id: String, author: String) {
     
         self.id = id
         self.author = author
-        self.listId = listId
+        
+    }
+    
+    public func subDict() -> [String : Any] {
+        
+        return [
+            "id": self.id ?? "",
+            "author": self.author ?? "",
+        ]
+        
+    }
+    
+    static func parseSub(json: [String : Any]) -> Subscription {
+        
+        let author = json["author"] as! String
+        let id = json["id"] as! String
+        
+        return Subscription(id: id, author: author)
         
     }
     

@@ -77,8 +77,10 @@ class ItemsViewModel {
     
     public func fetchList(completion: @escaping () -> ()) {
         
-        LystService.fetchList(id: self.list.id) { list in
-            self.list = list
+        let uid = self.list.authorUID()
+        
+        LystService.fetchList(uid: uid, id: self.list.id) { list in
+            self.list = list == nil ? self.list : list
             completion()
         }
         
@@ -86,14 +88,16 @@ class ItemsViewModel {
     
     public func updateItem(item: Item, completion: @escaping () -> ()) {
         item.isCompleted.toggle()
-        ItemService.updateItem(forList: self.list, item: item) { list in
+        let uid = self.list.authorUID()
+        ItemService.updateItem(forList: self.list, item: item, uid: uid) { list in
             completion()
         }
         
     }
     
     public func removeItem(item: Item, completion: @escaping () -> ()) {
-        ItemService.updateItem(forList: self.list, item: item, shouldRemove: true) { list in
+        let uid = self.list.authorUID()
+        ItemService.updateItem(forList: self.list, item: item, uid: uid, shouldRemove: true) { list in
             completion()
         }
         
@@ -101,7 +105,8 @@ class ItemsViewModel {
     
     public func uncheckAllItems() {
         self.list.items.forEach({ $0.isCompleted = false })
-        ItemService.updateAllItemsInList(self.list)
+        let uid = self.list.authorUID()
+        ItemService.updateAllItemsInList(uid: uid, self.list)
     }
     
     //MARK:- TABLE VIEW LOGIC

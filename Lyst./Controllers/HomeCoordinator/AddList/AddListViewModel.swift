@@ -132,7 +132,9 @@ class AddListViewModel {
     
     private func updateList(completion: @escaping (String) -> ()) {
         
-        LystService.updateList(self.list)
+        let uid = self.list.authorUID()
+        
+        LystService.updateList(uid: uid, self.list)
         completion("")
         
     }

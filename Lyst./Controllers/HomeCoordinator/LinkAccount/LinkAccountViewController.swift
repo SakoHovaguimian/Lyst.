@@ -284,9 +284,16 @@ class LinkAccountViewController: UIViewController {
     
     @objc private func submitButtonTapped(_ sender: UIButton) {
         
-        if let error = self.linkAccountViewModel.handleShareButtonTapped(sender) {
-            self.showSimpleError(title: "Error", message: error)
-            return
+        self.shouldPresentLoadingView(true)
+        
+        self.linkAccountViewModel.handleShareButtonTapped { error in
+            
+            self.shouldPresentLoadingView(false)
+            
+            if let error = error {
+                self.showSimpleError(title: "Error", message: "\(error)")
+            }
+            
         }
         
         logSuccess("SHARING ACCOUNT WITH...")

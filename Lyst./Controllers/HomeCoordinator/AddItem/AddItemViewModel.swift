@@ -100,7 +100,9 @@ class AddItemViewModel {
     
     private func createItem(completion: @escaping (String) -> ()) {
         
-        ItemService.createItem(forList: self.list, item: self.item) { item in
+        let uid = self.list.authorUID()
+        
+        ItemService.createItem(forList: self.list, item: self.item, uid: uid) { item in
             
             if let image = self.selectedImage, let item = item {
                 
@@ -108,7 +110,7 @@ class AddItemViewModel {
                     
                     item.imageURL = url
                     
-                    ItemService.updateItem(forList: self.list, item: item) { _ in
+                    ItemService.updateItem(forList: self.list, item: item, uid: uid) { _ in
                         
                         completion("")
                         

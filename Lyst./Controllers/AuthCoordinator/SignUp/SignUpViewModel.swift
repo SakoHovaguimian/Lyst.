@@ -65,7 +65,7 @@ class SignUpViewModel {
         guard fullName.count > 2 else { return ValidationError.invalidName.error }
         guard email.count > 2 else { return ValidationError.invalidEmail.error }
         guard email.isValidEmail() else { return ValidationError.invalidEmail.error }
-        guard password.count > 2 else { return ValidationError.invalidPassword.error }
+        guard password.count > 5 else { return ValidationError.invalidPassword.error }
         
         return nil
         

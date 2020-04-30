@@ -111,14 +111,24 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+//        UserService.logout()
         
-        UserService.logout()
         self.view.backgroundColor = .white
         self.fetchUserData()
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reloadTableView),
+                                               name:  Notification.Name(rawValue: "reload"), object: nil)
+        
+    }
+    
+    @objc private func reloadTableView() {
+        self.homeTableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(animated)
         
         self.homeTableView.reloadData()
@@ -299,8 +309,15 @@ class HomeViewController: UIViewController {
             
             self.homeViewModel.fetchUser {
                 
-                self.configureViews()
+                if self.view.subviews.count < 2 {
+                    self.configureViews()
+                }
+            
                 self.fetchLists()
+    
+                self.homeViewModel.fetchSubscriptions {
+                    self.homeTableView.reloadData()
+                }
                 
             }
             
@@ -319,9 +336,9 @@ class HomeViewController: UIViewController {
         self.shouldPresentLoadingView(true)
         
         self.homeViewModel.fetchLists {
-            
-            self.homeTableView.reloadData()
-            self.shouldPresentLoadingView(false)
+    
+                self.homeTableView.reloadData()
+                self.shouldPresentLoadingView(false)
             
         }
         

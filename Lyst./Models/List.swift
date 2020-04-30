@@ -68,7 +68,7 @@ class List {
         
         list.id = json["id"] as! String
         list.name = json["name"] as! String
-        list.author = list.id
+        list.author = json["author"] as! String
         
         let category = json["category"] as! String
         list.category = Category(rawValue: category) ?? .home
@@ -96,6 +96,15 @@ class List {
         
         
         return list
+        
+    }
+    
+    public func authorUID() -> String {
+        
+        guard let currentUser = currentUser else { return self.author }
+        let uid = currentUser.email?.MD5() ?? ""
+        
+        return self.author == currentUser.uid ? uid : self.author
         
     }
     

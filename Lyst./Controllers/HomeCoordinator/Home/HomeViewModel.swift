@@ -106,7 +106,7 @@ class HomeViewModel {
     
     public func fetchLists(completion: @escaping () -> ()) {
         
-        LystService.fetchListsForUser { (lists) in
+        LystService.fetchListsForUser() { (lists) in
             
             if let lists = lists {
                 
@@ -114,6 +114,18 @@ class HomeViewModel {
                 completion()
                 
             }
+            
+        }
+        
+    }
+    
+    public func fetchSubscriptions(completion: @escaping () -> ()) {
+        
+        SubscriptionService.fetchSubsriptions(user: self.user!) { user in
+            
+            self.updateUser(withUser: user)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: nil)
+            completion()
             
         }
         
