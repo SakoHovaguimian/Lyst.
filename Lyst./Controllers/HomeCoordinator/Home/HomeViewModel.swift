@@ -97,6 +97,7 @@ class HomeViewModel {
         
         UserService.fetchUser(email: user.email ?? "") { (user) in
             
+            user?.lists = self.lists
             self.user = user
             completion()
             
