@@ -142,7 +142,7 @@ class HomeViewController: UIViewController {
         
         self.configureViews()
         
-        self.fetchLists()
+        self.fetchUserData()
         
     }
     
@@ -316,6 +316,10 @@ class HomeViewController: UIViewController {
                 self.fetchLists()
     
                 self.homeViewModel.fetchSubscriptions {
+                    self.homeTableView.reloadData()
+                }
+                
+                self.homeViewModel.observeUser {
                     self.homeTableView.reloadData()
                 }
                 

@@ -47,6 +47,28 @@ class UserService {
         
         let dbRef = userRef.child(email.MD5())
         
+        dbRef.observeSingleEvent(of: .value) { (snapshot) in
+            
+            if let dict = snapshot.value as? [String : Any] {
+                
+                let user = User.parseUser(json: dict)
+                
+                completion(user)
+                
+            } else {
+                
+                completion(nil)
+                
+            }
+            
+        }
+        
+    }
+    
+    static func observeUser(email: String, completion: @escaping(User?) -> ()) {
+        
+        let dbRef = userRef.child(email.MD5())
+        
         dbRef.observe(.value) { (snapshot) in
             
             if let dict = snapshot.value as? [String : Any] {

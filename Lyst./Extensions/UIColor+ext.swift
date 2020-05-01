@@ -39,6 +39,17 @@ extension UIColor {
     static let background1 = UIColor(hex: "#f3e7e9")
     static let background2 = UIColor(hex: "#e3eeff")
     
+    static let ash1 = UIColor(hex: "#606c88")
+    static let ash2 = UIColor(hex: "#3f4c6b")
+    
+    static let magenta1 = UIColor(hex: "#8E2DE2")
+    static let magenta2 = UIColor(hex: "#4A00E0")
+    
+    static let mintBlue1 = UIColor(hex: "#6190E8")
+    static let mintBlue2 = UIColor(hex: "#A7BFE8")
+    
+    static let bloodRed1 = UIColor(hex: "#a73737")
+    static let bloodRed2 = UIColor(hex: "#7a2828")
 
     
     

@@ -105,6 +105,20 @@ class HomeViewModel {
         
     }
     
+    public func observeUser(completion: @escaping() -> ()) {
+        
+        guard let user = Auth.auth().currentUser else { completion(); return }
+        
+        UserService.observeUser(email: user.email ?? "") { user in
+            
+            user?.lists = self.lists
+            self.user = user
+            completion()
+            
+        }
+        
+    }
+    
     public func fetchLists(completion: @escaping () -> ()) {
         
         LystService.fetchListsForUser() { (lists) in
