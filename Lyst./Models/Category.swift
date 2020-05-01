@@ -43,7 +43,7 @@ enum Category: String, CaseIterable {
         
         switch self {
             
-            case.groceries: return "cart"
+            case .groceries: return "cart"
             case .shopping: return "shopping"
             case .home: return "home"
             case .gym: return "fitness"

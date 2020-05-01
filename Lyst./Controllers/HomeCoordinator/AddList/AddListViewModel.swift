@@ -34,7 +34,7 @@ class AddListViewModel {
     
     //MARK:- Properties
     
-    private(set) var list = List(name: "", category: .shopping)
+    private(set) var list = List(name: "", category: .groceries)
     private(set) var config: DataStateConfig!
     
     public var categorySelectedRow = 0

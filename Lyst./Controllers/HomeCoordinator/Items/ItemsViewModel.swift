@@ -67,8 +67,9 @@ class ItemsViewModel {
         
         switch option {
             case .uncheck: self.uncheckAllItems()
-        case .rename: self.actionDelegate.presentAddLystVC(config: .update, list: self.list)
+            case .rename: self.actionDelegate.presentAddLystVC(config: .update, list: self.list)
             case .share: self.actionDelegate.openLinkAccountVC(list: self.list)
+            case .members: logSuccess("View more members button tapped")
         }
         
     }
