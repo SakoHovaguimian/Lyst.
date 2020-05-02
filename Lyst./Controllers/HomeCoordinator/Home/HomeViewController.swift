@@ -138,11 +138,16 @@ class HomeViewController: UIViewController {
         self.toggleSettingMenu(hide: true)
         
         guard self.homeViewModel.user != nil else { return }
+        
+//        self.fetchLists()
+//        
+        self.homeViewModel.fetchSubscriptions {
+            self.homeTableView.reloadData()
+        }
+        
         guard self.view.subviews.isEmpty else { return }
         
         self.configureViews()
-        
-        self.fetchUserData()
         
     }
     

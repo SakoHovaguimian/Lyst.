@@ -56,6 +56,7 @@ class SubscriptionService {
                         allSubs.append(subscription)
                         
                         if allSubs.count == snapshot.childrenCount {
+                            print(user.subscriptions?.count)
                             updatedUser.subscriptions = allSubs
                             completion(updatedUser)
                             allSubs.removeAll()
