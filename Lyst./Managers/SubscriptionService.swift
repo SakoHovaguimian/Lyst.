@@ -33,6 +33,8 @@ class SubscriptionService {
         
         var allSubs = [Subscription]()
         
+        var firstTime = true
+        
         userRef.child(user.email.MD5()).child("subscriptions").observe(.value) { snapshot in
             
             snapshot.children.forEach { snap in
@@ -45,6 +47,7 @@ class SubscriptionService {
                     
                     LystService.fetchList(uid: subscription.author ?? "", id: subscription.id ?? "") { list in
                         
+                        
                         if let _ = user.subscriptions {
                             
                         user.subscriptions?.filter({$0.list?.id == subscription.id}).first?.list = list
@@ -56,11 +59,20 @@ class SubscriptionService {
                         allSubs.append(subscription)
                         
                         if allSubs.count == snapshot.childrenCount {
-                            print(user.subscriptions?.count)
-                            updatedUser.subscriptions = allSubs
-                            completion(updatedUser)
-                            allSubs.removeAll()
-                            return
+
+                            
+                            if firstTime {
+                                
+                                updatedUser.subscriptions = allSubs
+                                completion(updatedUser)
+                                allSubs.removeAll()
+                                firstTime = false
+                                
+                                 return
+                            }
+                            
+                           
+                            
                         }
                         
                     }

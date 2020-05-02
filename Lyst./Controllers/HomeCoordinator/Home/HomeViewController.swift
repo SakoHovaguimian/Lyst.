@@ -139,8 +139,6 @@ class HomeViewController: UIViewController {
         
         guard self.homeViewModel.user != nil else { return }
         
-//        self.fetchLists()
-//        
         self.homeViewModel.fetchSubscriptions {
             self.homeTableView.reloadData()
         }
