@@ -26,6 +26,9 @@
 		3D51AB87244E5D6E00E7D794 /* CompletionTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3D51AB86244E5D6E00E7D794 /* CompletionTableHeaderView.xib */; };
 		3D5F731E2447BBA2003BCF16 /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731D2447BBA2003BCF16 /* InputTextField.swift */; };
 		3D5F73202447BD06003BCF16 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5F731F2447BD06003BCF16 /* UIView+ext.swift */; };
+		3D61E587245A02DF00922BD2 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61E586245A02DF00922BD2 /* Subscription.swift */; };
+		3D61E589245A0DC000922BD2 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61E588245A0DC000922BD2 /* String+ext.swift */; };
+		3D61E58B245A10AC00922BD2 /* SubscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D61E58A245A10AC00922BD2 /* SubscriptionService.swift */; };
 		3D75E05A2455556000ACC28E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D75E0592455556000ACC28E /* GoogleService-Info.plist */; };
 		3D75E05C245555C300ACC28E /* LystService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D75E05B245555C300ACC28E /* LystService.swift */; };
 		3D75E05E24563F1000ACC28E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D75E05D24563F1000ACC28E /* UserService.swift */; };
@@ -83,6 +86,9 @@
 		3D51AB86244E5D6E00E7D794 /* CompletionTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompletionTableHeaderView.xib; sourceTree = "<group>"; };
 		3D5F731D2447BBA2003BCF16 /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
 		3D5F731F2447BD06003BCF16 /* UIView+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
+		3D61E586245A02DF00922BD2 /* Subscription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
+		3D61E588245A0DC000922BD2 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
+		3D61E58A245A10AC00922BD2 /* SubscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionService.swift; sourceTree = "<group>"; };
 		3D75E0592455556000ACC28E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3D75E05B245555C300ACC28E /* LystService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LystService.swift; sourceTree = "<group>"; };
 		3D75E05D24563F1000ACC28E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -237,6 +243,7 @@
 				3DDB3C99244787F100DB770E /* User.swift */,
 				3DACFBA5244A6F4C00A08BBD /* List.swift */,
 				3D1A75D5244F5D45008A73FE /* Item.swift */,
+				3D61E586245A02DF00922BD2 /* Subscription.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -247,6 +254,7 @@
 				3DC71365244760840062303C /* UIColor+ext.swift */,
 				3D5F731F2447BD06003BCF16 /* UIView+ext.swift */,
 				3D9A776C2448DA53006CE57D /* UIViewController+ext.swift */,
+				3D61E588245A0DC000922BD2 /* String+ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -340,6 +348,7 @@
 				3D75E05D24563F1000ACC28E /* UserService.swift */,
 				3D75E05B245555C300ACC28E /* LystService.swift */,
 				3DEDDFEF24576B7400D6625C /* ItemService.swift */,
+				3D61E58A245A10AC00922BD2 /* SubscriptionService.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -547,6 +556,7 @@
 				3D09C70D2447F6BF005C5D3C /* SignUpViewController.swift in Sources */,
 				3DDB3C9F2447919700DB770E /* LoginCoordinator.swift in Sources */,
 				3DEF040B2452046000651B82 /* AddListViewModel.swift in Sources */,
+				3D61E587245A02DF00922BD2 /* Subscription.swift in Sources */,
 				3D42A2FC2446A3D400415B50 /* AppDelegate.swift in Sources */,
 				3D5F731E2447BBA2003BCF16 /* InputTextField.swift in Sources */,
 				3D75E05C245555C300ACC28E /* LystService.swift in Sources */,
@@ -560,6 +570,7 @@
 				3DDB3C9A244787F100DB770E /* User.swift in Sources */,
 				3DB753442447440000CC183C /* TableHeaderView.swift in Sources */,
 				3DACFBA6244A6F4C00A08BBD /* List.swift in Sources */,
+				3D61E589245A0DC000922BD2 /* String+ext.swift in Sources */,
 				3D1A75D4244F5229008A73FE /* LinkAccountViewController.swift in Sources */,
 				3DBCE42224524F7500CA157E /* AddItemViewModel.swift in Sources */,
 				3D00763D244A11DF0016E5CA /* ItemTableViewCell.swift in Sources */,
@@ -567,6 +578,7 @@
 				3DD825642450E334004FD9FE /* LinkedAccountsCollectionViewCell.swift in Sources */,
 				3D94F59D24578F83009EE507 /* PopOverViewController.swift in Sources */,
 				3D1210732448FC6400C8107A /* ItemsViewModel.swift in Sources */,
+				3D61E58B245A10AC00922BD2 /* SubscriptionService.swift in Sources */,
 				3D75E05E24563F1000ACC28E /* UserService.swift in Sources */,
 				3D42A2FE2446A3D400415B50 /* SceneDelegate.swift in Sources */,
 				3D9A776D2448DA53006CE57D /* UIViewController+ext.swift in Sources */,

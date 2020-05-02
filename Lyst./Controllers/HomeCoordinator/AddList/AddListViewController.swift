@@ -79,7 +79,6 @@ class AddListViewController: UIViewController {
                                        secureEntry: false,
                                        tag: 1)
         textField.delegate = self
-        textField.inputView = self.categoryPickerView
         textField.text = Category.allCases[0].name
         textField.font = UIFont(name: avenirNextBold, size: 20.0)
         return textField
@@ -130,6 +129,10 @@ class AddListViewController: UIViewController {
         self.configurePickerView()
         self.configureAlphaView()
         self.configureCardView()
+        
+        if addListViewModel.config == .update {
+            self.listNameTextField.text = self.addListViewModel.list.name
+        }
         
     }
     
@@ -258,7 +261,7 @@ class AddListViewController: UIViewController {
         
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.pickerViewDoneButtonTapped))
         
-        let barAccessory = UIToolbar(frame: CGRect(x: 0, y: -10, width: self.view.frame.width, height: 44))
+        let barAccessory = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 44))
         barAccessory.barStyle = .default
         barAccessory.isTranslucent = false
         barAccessory.isUserInteractionEnabled = true
@@ -297,6 +300,7 @@ class AddListViewController: UIViewController {
     }
     
     @objc private func pickerViewDoneButtonTapped() {
+        self.categoryPickerView.isUserInteractionEnabled = false
         self.listCategoryTextField.resignFirstResponder()
     }
     
@@ -306,6 +310,14 @@ class AddListViewController: UIViewController {
 
 //MARK:- TABLE VIEW DELEGATE & DATASOURCE
 extension AddListViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+        textField.inputView = textField == self.listCategoryTextField ? self.categoryPickerView : nil
+        self.categoryPickerView.isUserInteractionEnabled = true
+        self.categoryPickerView.selectRow(self.addListViewModel.categorySelectedRow, inComponent: 0, animated: false)
+        
+    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
@@ -348,6 +360,8 @@ extension AddListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView( _ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        guard self.categoryPickerView.isUserInteractionEnabled == true else { return }
         
         self.addListViewModel.categorySelectedRow = row
         let category = Category.allCases[self.addListViewModel.categorySelectedRow]

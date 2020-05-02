@@ -199,7 +199,6 @@ class ItemsViewController: UIViewController {
     private func loadPopOverViewController() {
         
         self.popOverViewController = PopOverViewController()
-        self.popOverViewController?.view.alpha = 0.0
 
         self.popOverViewController?.modalPresentationStyle = .popover
         self.popOverViewController?.optionsButtonDelegate = self

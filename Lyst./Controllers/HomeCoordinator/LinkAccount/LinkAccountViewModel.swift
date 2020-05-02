@@ -50,52 +50,21 @@ class LinkAccountViewModel {
         self.actionDelegate.popLinkAccountViewController()
     }
     
-    public func handleShareButtonTapped(_ sender: UIButton) -> String? {
+    public func handleShareButtonTapped(completion: @escaping (String?) -> ()) {
         
         if let error = self.validateLinkAccounts() {
-            return error
+            completion(error)
         }
         
-        logSuccess("Email: \(self.enteredEmail)")
-        
-        return nil
-        
-    }
-    
-    public func handlePinTextFieldEntries(_ textField: UITextField, string: String) -> Bool {
-        
-        if string.count > 0 {
-            let nextTag = textField.tag + 1
+        self.addSubsrciption {
             
-            let nextResponder = textField.superview?.viewWithTag(nextTag)
+            self.actionDelegate.popLinkAccountViewController()
             
-            textField.text = string
-            nextResponder?.becomeFirstResponder()
+            logSuccess("Email: \(self.enteredEmail.MD5())")
             
-            if (nextResponder == nil) {
-                textField.resignFirstResponder()
-            }
-            
-            return false
-            
-        } else if string.count == 0 {
-            
-            let previousTag = textField.tag - 1
-            
-            let previousResponder = textField.superview?.viewWithTag(previousTag)
-            
-            textField.text = ""
-            
-            textField.resignFirstResponder()
-            
-            previousResponder?.becomeFirstResponder()
-            
-            return false
+            completion(nil)
             
         }
-        
-        textField.resignFirstResponder()
-        return false
         
     }
     
@@ -108,6 +77,18 @@ class LinkAccountViewModel {
         self.enteredEmail = text
         
     }
+    
+    //MARK:- Services
+    
+    private func addSubsrciption(completion: @escaping () -> ()) {
+        
+        SubscriptionService.addSubscriber(list: self.list, email: self.enteredEmail) { _ in
+            completion()
+        }
+        
+    }
+    
+    //MARK:- Collection View Helpers
     
     public func customCollectionLayout() -> UICollectionViewLayout {
         

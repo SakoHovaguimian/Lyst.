@@ -11,10 +11,11 @@ import Foundation
 class User {
     
     var id: String = ""
+    var userId: String?
     var name: String
     var email: String
     var lists: [List] = []
-    var sharedLists: [List] = []
+    var subscriptions: [Subscription]?
     
     var firstName: String {
         return self.fetchFirstName()
@@ -41,7 +42,8 @@ class User {
         let dict: [String : Any] = [
             "id": id,
             "name": name,
-            "email": email
+            "email": email,
+            "userId": email.MD5()
         ]
         
         return dict
@@ -53,9 +55,11 @@ class User {
         let id = json["id"] as! String
         let name = json["name"] as! String
         let email = json["email"] as! String
+        let userId = json["userId"] as! String
         
         let user = User(name: name, email: email)
         user.id = id
+        user.userId = userId
         
         return user
         

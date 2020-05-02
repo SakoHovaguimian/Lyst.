@@ -28,8 +28,8 @@ class HomeViewModel {
         return self.user?.lists ?? []
     }
     
-    public var sharedLists: [List] {
-        return self.user?.sharedLists ?? []
+    public var sharedLists: [Subscription] {
+        return self.user?.subscriptions ?? []
     }
     
     public var shouldHideTableView: Bool = false
@@ -95,8 +95,23 @@ class HomeViewModel {
         
         guard let user = Auth.auth().currentUser else { completion(); return }
         
-        UserService.fetchUser(uid: user.uid) { (user) in
+        UserService.fetchUser(email: user.email ?? "") { (user) in
             
+            user?.lists = self.lists
+            self.user = user
+            completion()
+            
+        }
+        
+    }
+    
+    public func observeUser(completion: @escaping() -> ()) {
+        
+        guard let user = Auth.auth().currentUser else { completion(); return }
+        
+        UserService.observeUser(email: user.email ?? "") { user in
+            
+            user?.lists = self.lists
             self.user = user
             completion()
             
@@ -106,7 +121,7 @@ class HomeViewModel {
     
     public func fetchLists(completion: @escaping () -> ()) {
         
-        LystService.fetchListsForUser { (lists) in
+        LystService.fetchListsForUser() { (lists) in
             
             if let lists = lists {
                 
@@ -114,6 +129,18 @@ class HomeViewModel {
                 completion()
                 
             }
+            
+        }
+        
+    }
+    
+    public func fetchSubscriptions(completion: @escaping () -> ()) {
+        
+        SubscriptionService.fetchSubsriptions(user: self.user!) { user in
+            
+            self.updateUser(withUser: user)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: nil)
+            completion()
             
         }
         
@@ -133,7 +160,7 @@ class HomeViewModel {
     
     public func listFor(indexPath: IndexPath) -> List {
         
-        let list = indexPath.section == 1 ? self.lists[indexPath.row] :self.sharedLists[indexPath.row]
+        let list = (indexPath.section == 1 ? self.lists[indexPath.row] : self.sharedLists[indexPath.row].list)!
         return list
         
     }

@@ -14,6 +14,7 @@ enum Option: Int, CaseIterable {
     case uncheck
     case rename
     case share
+    case members
     
     var name: String {
         
@@ -21,6 +22,7 @@ enum Option: Int, CaseIterable {
             case .uncheck: return "Uncheck All Items"
             case .rename: return "Rename Lyst"
             case .share: return "Share Lyst"
+            case .members: return "View Group Members"
         }
         
     }

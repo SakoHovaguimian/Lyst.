@@ -34,7 +34,7 @@ class AddListViewModel {
     
     //MARK:- Properties
     
-    private(set) var list = List(name: "", category: .shopping)
+    private(set) var list = List(name: "", category: Category.allCases[0])
     private(set) var config: DataStateConfig!
     
     public var categorySelectedRow = 0
@@ -132,7 +132,9 @@ class AddListViewModel {
     
     private func updateList(completion: @escaping (String) -> ()) {
         
-        LystService.updateList(self.list)
+        let uid = self.list.authorUID()
+        
+        LystService.updateList(uid: uid, self.list)
         completion("")
         
     }

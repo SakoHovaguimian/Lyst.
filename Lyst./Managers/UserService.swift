@@ -43,9 +43,9 @@ class UserService {
     }
     
     
-    static func fetchUser(uid: String, completion: @escaping(User) -> ()) {
+    static func fetchUser(email: String, completion: @escaping(User?) -> ()) {
         
-        let dbRef = userRef.child(uid)
+        let dbRef = userRef.child(email.MD5())
         
         dbRef.observeSingleEvent(of: .value) { (snapshot) in
             
@@ -55,6 +55,32 @@ class UserService {
                 
                 completion(user)
                 
+            } else {
+                
+                completion(nil)
+                
+            }
+            
+        }
+        
+    }
+    
+    static func observeUser(email: String, completion: @escaping(User?) -> ()) {
+        
+        let dbRef = userRef.child(email.MD5())
+        
+        dbRef.observe(.value) { (snapshot) in
+            
+            if let dict = snapshot.value as? [String : Any] {
+                
+                let user = User.parseUser(json: dict)
+                
+                completion(user)
+                
+            } else {
+                
+                completion(nil)
+                
             }
             
         }
@@ -63,7 +89,7 @@ class UserService {
     
     static private func updateUser(_ user: User, completion: @escaping (String) -> ()) {
         
-        let dbRef = userRef.child(user.id)
+        let dbRef = userRef.child(user.email.MD5())
         
         dbRef.updateChildValues(user.userDict()) { (error, ref) in
             
@@ -83,9 +109,9 @@ class UserService {
             
             currentUser = result?.user
             
-            guard let uid = result?.user.uid else { completion(nil); return }
+            guard let email = result?.user.email else { completion(nil); return }
             
-            self.fetchUser(uid: uid) { (user) in
+            self.fetchUser(email: email) { (user) in
                 
                 completion(user)
                 

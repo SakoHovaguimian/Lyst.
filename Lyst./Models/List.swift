@@ -68,7 +68,7 @@ class List {
         
         list.id = json["id"] as! String
         list.name = json["name"] as! String
-        list.author = list.id
+        list.author = json["author"] as! String
         
         let category = json["category"] as! String
         list.category = Category(rawValue: category) ?? .home
@@ -99,33 +99,12 @@ class List {
         
     }
     
-    static func generateList() -> [List] {
+    public func authorUID() -> String {
         
-        return [
-            self.createListsWithItems(),
-            List(name: "Shopping List", category: .business),
-            List(name: "Grocery List", category: .misc),
-            List(name: "Movies List", category: .shopping),
-            List(name: "Anime List", category: .business)
-        ]
+        guard let currentUser = currentUser else { return self.author }
+        let uid = currentUser.email?.MD5() ?? ""
         
-    }
-    
-    static func createListsWithItems() -> List{
-        
-        let list1 = List(name: "Items Test List", category: .business)
-        
-        let item1 = Item()
-        item1.id = "1"
-        item1.name = "Carrots"
-        
-        let item2 = Item()
-        item1.id = "2"
-        item2.name = "Brocolli"
-        
-        list1.items.append(contentsOf: [item1, item2])
-        
-        return list1
+        return self.author == currentUser.uid ? uid : self.author
         
     }
     

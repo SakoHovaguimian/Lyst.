@@ -144,7 +144,6 @@ extension HomeCoordinator: ItemVCActionDelegate {
     
     func popItemViewController() {
         self.navigationController.popViewController(animated: true)
-        logSuccess("POPPING ITEM VIEW CONTROLLER")
     }
     
     func presentAddItemVC(list: List) {

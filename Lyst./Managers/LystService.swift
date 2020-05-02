@@ -20,11 +20,12 @@ class LystService {
         
         let autoId = listRef.childByAutoId().key ?? ""
         
-        let id = currentUser.uid
+        let id = currentUser.email?.MD5() ?? ""
         let ref = listRef.child(id)
         
         let updatedList = list
         updatedList.id = autoId
+        updatedList.author = id
         
         let values: [String : Any] = [autoId: updatedList.listDict()]
         ref.updateChildValues(values)
@@ -39,7 +40,7 @@ class LystService {
         
         var lists: [List] = []
         
-        let id = currentUser.uid
+        let id = currentUser.email?.MD5() ?? ""
         let ref = listRef.child(id)
         
         ref.observe(.value) { (snapshot) in
@@ -67,32 +68,28 @@ class LystService {
         
     }
     
-    static func fetchList(id: String, completion: @escaping (List?) -> ()) {
+    static func fetchList(uid: String, id: String, completion: @escaping (List?) -> ()) {
         
-        guard let currentUser = currentUser else {completion(nil); return }
-        
-        let userId = currentUser.uid
-        
-        listRef.child(userId).child(id).observe(.value) { (snapshot) in
+        listRef.child(uid).child(id).observe(.value) { (snapshot) in
             
             if let dict = snapshot.value as? [String : Any] {
                 
                 let list = List.parseList(json: dict)
                 completion(list)
                 
+            } else {
+                
+                completion(nil)
+                
             }
-            
         }
         
     }
     
-    static func updateList(_ list: List) {
+    static func updateList(uid: String, _ list: List) {
         
-        guard let currentUser = currentUser else { return }
-        
-        let userId = currentUser.uid
         let values: [String : Any] = list.listDict()
-        listRef.child(userId).child(list.id).updateChildValues(values)
+        listRef.child(uid).child(list.id).updateChildValues(values)
         
     }
     
