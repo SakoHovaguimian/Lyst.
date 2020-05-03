@@ -56,21 +56,43 @@ class SubscriptionService {
                     }
                     
                 }
+                
             }
             
             completion(subscriptions)
             subscriptions.removeAll()
             
         }
+        
     }
     
     //Leave Sharing List
-    static func removeSubscriber(subscription: Subscription, email: String, completion: @escaping (String) -> ()) {
+    static func removeSubscription(subscription: Subscription, email: String, completion: @escaping (String) -> ()) {
         subRef.child(subscription.id ?? "").removeValue()
     }
     
     //Delete The List
+    static func deleteAllSubscriptions(for list: List, completion: @escaping () -> ()) {
+        
+        subRef.observe(.value) { snapshot in
+            
+            snapshot.children.forEach { snap in
+                
+                let subSnap = snap as? DataSnapshot
+                
+                if let dict = subSnap? .value as? [String : Any] {
 
+                    let subscription = Subscription.parseSub(json: dict)
+                    
+                    if subscription.listId == list.id {
+                        subRef.child(subscription.id!).removeValue()
+                    }
+                    
+                }
+                
+            }
+        
+    }
     
     //Fetch All Users Sharing The Lists
     
