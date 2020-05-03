@@ -140,7 +140,9 @@ class HomeViewController: UIViewController {
         guard self.homeViewModel.user != nil else { return }
         
         self.homeViewModel.fetchSubscriptions {
-            self.homeTableView.reloadData()
+            self.homeViewModel.fetchSubscriptionLists {
+                self.homeTableView.reloadData()
+            }
         }
         
         guard self.view.subviews.isEmpty else { return }
@@ -346,6 +348,16 @@ class HomeViewController: UIViewController {
     
                 self.homeTableView.reloadData()
                 self.shouldPresentLoadingView(false)
+            
+//            SubscriptionService.addSubscriberTestMode(list: self.homeViewModel.lists[0], email: "chris@me.com") { _ in
+//
+//            }
+            
+            self.homeViewModel.fetchSubscriptions {
+                self.homeViewModel.fetchSubscriptionLists {
+                    self.homeTableView.reloadData()
+                }
+            }
             
         }
         

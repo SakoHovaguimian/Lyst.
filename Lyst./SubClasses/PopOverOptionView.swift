@@ -58,7 +58,10 @@ class PopOverOptionView: UIView {
         self.button.tag = tag
         self.button.setTitle(self.option.name, for: .normal)
         self.button.titleLabel?.font = UIFont(name: avenirNextBold, size: 15.0)
-        self.button.setTitleColor(.charcoalBlack, for: .normal)
+        
+        let color: UIColor = option == .delete ? .red : UIColor.charcoalBlack!
+        
+        self.button.setTitleColor(color, for: .normal)
         self.button.backgroundColor = .white
         
     }

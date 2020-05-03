@@ -136,13 +136,37 @@ class HomeViewModel {
     
     public func fetchSubscriptions(completion: @escaping () -> ()) {
         
-        SubscriptionService.fetchSubsriptions(user: self.user!) { user in
+        SubscriptionService.fetchSubscriberTestMode() { subscriptions in
             
-            self.updateUser(withUser: user)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "reload"), object: nil)
+            self.user?.subscriptions = subscriptions
             completion()
             
         }
+        
+    }
+    
+    public func fetchSubscriptionLists(completion: @escaping () -> ()) {
+        
+        var count = 0
+        
+        self.user?.subscriptions?.forEach({ subscription in
+          
+            LystService.fetchList(uid: subscription.from, id: subscription.id ?? "") { list in
+                
+//                self.user?.subscriptions?.filter({ $0.id ?? "" == list?.id}).first?.list = list
+                self.user?.subscriptions?[count].list = list
+                
+                count += 1
+                
+                if count == self.sharedLists.count {
+                    completion()
+                    count = 0
+                }
+                
+            }
+            
+            
+        })
         
     }
     

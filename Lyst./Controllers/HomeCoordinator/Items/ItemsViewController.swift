@@ -210,7 +210,7 @@ class ItemsViewController: UIViewController {
         
         self.view.alpha = 0.7
         
-        self.popOverViewController?.preferredContentSize = CGSize(width: 250, height: 150)
+        self.popOverViewController?.preferredContentSize = CGSize(width: 250, height: 200)
 
         self.present(self.popOverViewController!, animated: true)
         
