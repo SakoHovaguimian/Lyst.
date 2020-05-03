@@ -136,7 +136,7 @@ class HomeViewModel {
     
     public func fetchSubscriptions(completion: @escaping () -> ()) {
         
-        SubscriptionService.fetchSubscriberTestMode() { subscriptions in
+        SubscriptionService.fetchSubscribers() { subscriptions in
             
             self.user?.subscriptions = subscriptions
             completion()
@@ -148,19 +148,25 @@ class HomeViewModel {
     public func fetchSubscriptionLists(completion: @escaping () -> ()) {
         
         var count = 0
+        var firstTime = true
         
         self.user?.subscriptions?.forEach({ subscription in
           
-            LystService.fetchList(uid: subscription.from, id: subscription.id ?? "") { list in
+            LystService.fetchList(uid: subscription.from, id: subscription.listId) { list in
                 
-//                self.user?.subscriptions?.filter({ $0.id ?? "" == list?.id}).first?.list = list
-                self.user?.subscriptions?[count].list = list
+                self.user?.subscriptions?.filter({ $0.listId == list?.id}).first?.list = list
                 
                 count += 1
                 
-                if count == self.sharedLists.count {
+                if firstTime == true {
+                    if count == self.sharedLists.count {
+                        completion()
+                        count = 0
+                        firstTime = false
+                    }
+
+                } else {
                     completion()
-                    count = 0
                 }
                 
             }

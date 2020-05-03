@@ -18,85 +18,13 @@ class SubscriptionService {
         
         guard currentUser != nil else { return }
         
-        let subsrciption = Subscription(id: list.id,
-                                        author: currentUser?.email?.MD5() ?? "")
+        let id = subRef.childByAutoId().key ?? ""
         
-        let values: [String : Any] = [list.id: subsrciption.subDict()]
-        
-        userRef.child(email.lowercased().MD5()).child("subscriptions").updateChildValues(values) { (error, dbRef) in
-            completion("")
-        }
-        
-    }
-    
-    static func fetchSubsriptions(user: User, completion: @escaping (User) -> ()) {
-        
-        let updatedUser = user
-        
-        var allSubs = [Subscription]()
-        
-        var firstTime = true
-        
-        userRef.child(user.email.MD5()).child("subscriptions").observe(.value) { snapshot in
-            
-            snapshot.children.forEach { snap in
-                
-                let subSnap = snap as? DataSnapshot
-                
-                if let dict = subSnap? .value as? [String : Any] {
-                    
-                    let subscription = Subscription.parseSub(json: dict)
-                    
-                    LystService.fetchList(uid: subscription.author ?? "", id: subscription.id ?? "") { list in
-                        
-                        if let _ = user.subscriptions {
-                            
-                            user.subscriptions?.filter({$0.list?.id == subscription.id}).first?.list = list
-                            completion(user)
-                            
-                        }
-                        
-                        subscription.list = list
-                        allSubs.append(subscription)
-                        
-                        if allSubs.count == snapshot.childrenCount {
-                            
-                            
-                            if firstTime {
-                                
-                                updatedUser.subscriptions = allSubs
-                                completion(updatedUser)
-                                allSubs.removeAll()
-                                firstTime = false
-                                
-                                return
-                            }
-                            
-                            
-                            
-                        }
-                        
-                    }
-                    
-                }
-                
-            }
-            
-        }
-        
-    }
-    
-    
-    static func addSubscriberTestMode(list: List, email: String, completion: @escaping (String) -> ()) {
-        
-        guard currentUser != nil else { return }
-        
-        let subsrciption = Subscription(id: list.id,
+        let subsrciption = Subscription(id: id,
                                         author: currentUser?.email?.MD5() ?? "")
         subsrciption.to = email.MD5()
         subsrciption.from = currentUser?.email?.MD5() ?? ""
-        
-        let id = subRef.childByAutoId().key ?? ""
+        subsrciption.listId = list.id
         
         let values: [String : Any] = subsrciption.subDict()
         
@@ -106,7 +34,7 @@ class SubscriptionService {
         
     }
     
-    static func fetchSubscriberTestMode(completion: @escaping ([Subscription]) -> ()) {
+    static func fetchSubscribers(completion: @escaping ([Subscription]) -> ()) {
         
         var subscriptions = [Subscription]()
         
@@ -131,8 +59,19 @@ class SubscriptionService {
             }
             
             completion(subscriptions)
+            subscriptions.removeAll()
             
         }
     }
+    
+    //Leave Sharing List
+    static func removeSubscriber(subscription: Subscription, email: String, completion: @escaping (String) -> ()) {
+        subRef.child(subscription.id ?? "").removeValue()
+    }
+    
+    //Delete The List
+
+    
+    //Fetch All Users Sharing The Lists
     
 }

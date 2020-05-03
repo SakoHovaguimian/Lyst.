@@ -14,6 +14,7 @@ class Subscription {
     var author: String?
     var to = ""
     var from = ""
+    var listId = ""
     
     var list: List?
     
@@ -30,7 +31,8 @@ class Subscription {
             "id": self.id ?? "",
             "author": self.author ?? "",
             "to": self.to,
-            "from": self.from
+            "from": self.from,
+            "listId": self.listId
         ]
         
     }
@@ -41,10 +43,12 @@ class Subscription {
         let id = json["id"] as! String
         let to = json["to"] as! String
         let from = json["from"] as! String
+        let listId = json["listId"] as! String
         
         let subscription = Subscription(id: id, author: author)
         subscription.to = to
         subscription.from = from
+        subscription.listId = listId
         
         return subscription
         

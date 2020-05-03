@@ -321,12 +321,14 @@ class HomeViewController: UIViewController {
                 self.fetchLists()
     
                 self.homeViewModel.fetchSubscriptions {
-                    self.homeTableView.reloadData()
+                    self.homeViewModel.fetchSubscriptionLists {
+                        self.homeTableView.reloadData()
+                    }
                 }
                 
-                self.homeViewModel.observeUser {
-                    self.homeTableView.reloadData()
-                }
+//                self.homeViewModel.observeUser {
+//                    self.homeTableView.reloadData()
+//                }
                 
             }
             
@@ -348,16 +350,6 @@ class HomeViewController: UIViewController {
     
                 self.homeTableView.reloadData()
                 self.shouldPresentLoadingView(false)
-            
-//            SubscriptionService.addSubscriberTestMode(list: self.homeViewModel.lists[0], email: "chris@me.com") { _ in
-//
-//            }
-            
-            self.homeViewModel.fetchSubscriptions {
-                self.homeViewModel.fetchSubscriptionLists {
-                    self.homeTableView.reloadData()
-                }
-            }
             
         }
         
