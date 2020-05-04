@@ -198,7 +198,8 @@ class ItemsViewController: UIViewController {
     
     private func loadPopOverViewController() {
         
-        self.popOverViewController = PopOverViewController()
+        let isAuthor = self.itemsViewModel.list.isAuthor()
+        self.popOverViewController = PopOverViewController(isAuthor: isAuthor)
 
         self.popOverViewController?.modalPresentationStyle = .popover
         self.popOverViewController?.optionsButtonDelegate = self

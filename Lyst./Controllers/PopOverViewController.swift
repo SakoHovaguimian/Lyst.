@@ -41,6 +41,8 @@ protocol OptionButtonTappedDelegate: class {
 
 class PopOverViewController: UIViewController {
     
+    private var isAuthor: Bool!
+    
     weak var optionsButtonDelegate: OptionButtonTappedDelegate!
     
     private lazy var optionsStackView: UIStackView = {
@@ -57,6 +59,15 @@ class PopOverViewController: UIViewController {
         self.configureViews()
         self.view.backgroundColor = .white
         
+    }
+    
+    init(isAuthor: Bool) {
+        self.isAuthor = isAuthor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func configureViews() {
@@ -84,6 +95,13 @@ class PopOverViewController: UIViewController {
             popOverOptionView.button.addTarget(self, action: #selector(self.handleButtonTapped(sender:)), for: .touchUpInside)
             
             options.append(popOverOptionView)
+            
+        }
+        
+        if isAuthor == false {
+            
+            options.remove(at: 2)
+            options.remove(at: 3)
             
         }
 

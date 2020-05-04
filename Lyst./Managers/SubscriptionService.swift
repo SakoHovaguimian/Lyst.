@@ -81,7 +81,7 @@ class SubscriptionService {
                 let subSnap = snap as? DataSnapshot
                 
                 if let dict = subSnap? .value as? [String : Any] {
-
+                    
                     let subscription = Subscription.parseSub(json: dict)
                     
                     if subscription.listId == list.id {
@@ -91,7 +91,7 @@ class SubscriptionService {
                 }
                 
             }
-        
+        }
     }
     
     //Fetch All Users Sharing The Lists

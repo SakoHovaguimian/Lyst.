@@ -108,5 +108,14 @@ class List {
         
     }
     
+    public func isAuthor() -> Bool {
+        
+        guard let currentUser = currentUser else { return false }
+        let uid = currentUser.email?.MD5() ?? ""
+        
+        return self.author == uid ? true : false
+        
+    }
+    
 }
 
