@@ -211,7 +211,8 @@ class ItemsViewController: UIViewController {
         
         self.view.alpha = 0.7
         
-        self.popOverViewController?.preferredContentSize = CGSize(width: 250, height: 200)
+        let size = isAuthor == true ? CGSize(width: 250, height: 200) : CGSize(width: 200, height: 150)
+        self.popOverViewController?.preferredContentSize = size
 
         self.present(self.popOverViewController!, animated: true)
         
@@ -250,7 +251,7 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = self.itemsViewModel.configureCellForRowAt(indexPath: indexPath, tableView: self.itemsTableView)
+        let cell = itemsViewModel.configureBasicContentCell(indexPath: indexPath, tableView: self.itemsTableView)
         cell?.itemDelegate = self
         return cell ?? UITableViewCell()
         
@@ -261,8 +262,7 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.itemsViewModel.heightForRowAt(indexPath: indexPath,
-                                                  height: self.view.frame.height)
+        return self.itemsViewModel.heightForRowAt(height: self.view.frame.height)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

@@ -32,6 +32,8 @@ class ItemTableViewCell: UITableViewCell {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var checkBoxButton: UIButton!
     @IBOutlet weak var itemNameLabel: UILabel!
+    @IBOutlet weak var safariButton: UIButton!
+    @IBOutlet weak var imageButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -57,42 +59,25 @@ class ItemTableViewCell: UITableViewCell {
         
         self.checkBoxButton.backgroundColor =  self.item.isCompleted ? .imgurGreen : .white
         self.checkBoxButton.isSelected = self.item.isCompleted ? true : false
-        
+
         self.configureContent()
         
     }
     
     private func configureContent() {
+
+        self.imageButton.isHidden = self.item.content == .all || self.item.content == .photo ? false : true
+        self.safariButton.isHidden = self.item.content == .all || self.item.content == .link ? false : true
         
-        self.viewWithTag(100)?.removeFromSuperview()
-        self.viewWithTag(101)?.removeFromSuperview()
-        
-        if item.content == .all {
-            
-            self.createImageView()
-            self.createLinkButton()
-            
-            return
-            
+        if self.item.content == .link {
+            self.safariButton.anchor(right: self.containerView.rightAnchor, paddingRight: 16)
+        } else {
+            self.safariButton.anchor(right: self.imageButton.leftAnchor, paddingRight: 10)
         }
-        
-        if item.content == .photo {
-            
-            self.createImageView()
-            return
-            
-        }
-        
-        if item.content == .link {
-            
-            self.createLinkButton()
-            
-            return
-            
-        }
-        
-        
+    
     }
+    
+
     
     private func cornersToRound() ->  UIRectCorner {
         
@@ -130,73 +115,6 @@ class ItemTableViewCell: UITableViewCell {
     
     @objc private func toggleCheckboxSelection() {
         self.itemDelegate.didFinishItem(self.item)
-    }
-    
-    private func createImageView() {
-        
-        let btn = UIButton(type: .custom)
-        btn.clipsToBounds = true
-        btn.layer.cornerRadius = 11
-        btn.tag = 100
-        btn.tintColor = .charcoalBlack
-        btn.addTarget(self,
-                      action: #selector(self.handleImageButtonTapped(_:)),
-                      for: .touchUpInside)
-        
-        let imageURL = URL(string: self.item.imageURL!)
-        let placeholder = UIImage(named: "loading")?.withRenderingMode(.alwaysTemplate)
-        
-        btn.kf.setImage(with: imageURL,
-                        for: .normal,
-                        placeholder: placeholder)
-        
-        self.containerView.addSubview(btn)
-        
-        btn.anchor(top: self.containerView.topAnchor,
-                   bottom: self.containerView.bottomAnchor,
-                   right: self.containerView.rightAnchor,
-                   paddingTop: 8,
-                   paddingLeft: 8,
-                   paddingBottom: 8,
-                   paddingRight: 8,
-                   width: (self.containerView.frame.width / 4))
-        
-    }
-    
-    private func createLinkButton() {
-        
-        let btn = UIButton(type: .custom)
-        btn.clipsToBounds = true
-        btn.tag = 101
-        btn.setImage(UIImage(named: "safari"), for: .normal)
-        btn.addTarget(self,
-                      action: #selector(self.handleLinkButtonTapped(_:)),
-                      for: .touchUpInside)
-        
-        self.containerView.addSubview(btn)
-        
-        if self.item.content == .link {
-            
-            btn.anchor(right: self.containerView.rightAnchor,
-                       paddingRight: 16,
-                       width: 64,
-                       height: 64)
-            
-            btn.centerY(inView: self.containerView)
-            
-        }
-        
-        if self.item.content == .all {
-            
-            btn.anchor(left: self.containerView.leftAnchor,
-                       bottom: self.containerView.bottomAnchor,
-                       paddingLeft: 32,
-                       paddingBottom: 8,
-                       width: 32,
-                       height: 32)
-            
-        }
-        
     }
     
     @objc private func handleLinkButtonTapped(_ sender: UIButton) {

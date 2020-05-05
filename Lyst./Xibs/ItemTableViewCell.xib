@@ -10,17 +10,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ItemTableViewCell" rowHeight="80" id="KGk-i7-Jjw" customClass="ItemTableViewCell" customModule="Lyst_" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+            <rect key="frame" x="0.0" y="0.0" width="422" height="80"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
+                <rect key="frame" x="0.0" y="0.0" width="422" height="80"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7gd-Qo-Nps">
-                        <rect key="frame" x="16" y="0.0" width="288" height="80"/>
+                        <rect key="frame" x="16" y="0.0" width="390" height="80"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q4c-gG-E0g">
-                                <rect key="frame" x="0.0" y="79" width="288" height="1"/>
+                                <rect key="frame" x="0.0" y="79" width="390" height="1"/>
                                 <color key="backgroundColor" red="0.90182976973684215" green="0.90182976973684215" blue="0.90182976973684215" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="L0q-5i-arQ"/>
@@ -35,24 +35,45 @@
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Take  Out The Trash Take  Out The Trash" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6e-oH-H76">
-                                <rect key="frame" x="43" y="17" width="173" height="46.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brocolli" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6e-oH-H76">
+                                <rect key="frame" x="43" y="9" width="255" height="62"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crl-Wh-R5E">
+                                <rect key="frame" x="349" y="27.5" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="Gsm-xu-N0z"/>
+                                    <constraint firstAttribute="width" constant="25" id="QMV-9M-fsy"/>
+                                </constraints>
+                                <state key="normal" image="placeholder"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUK-MH-Yem">
+                                <rect key="frame" x="314" y="27.5" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="2IL-wo-hAU"/>
+                                    <constraint firstAttribute="width" constant="25" id="OAG-4g-XIR"/>
+                                </constraints>
+                                <state key="normal" image="safari"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="N6e-oH-H76" firstAttribute="leading" secondItem="9W0-68-xcz" secondAttribute="trailing" constant="15" id="6M8-Lq-hNG"/>
+                            <constraint firstItem="AUK-MH-Yem" firstAttribute="centerY" secondItem="7gd-Qo-Nps" secondAttribute="centerY" id="807-WT-Dl2"/>
                             <constraint firstItem="q4c-gG-E0g" firstAttribute="leading" secondItem="7gd-Qo-Nps" secondAttribute="leading" id="D8g-4g-jlN"/>
                             <constraint firstAttribute="trailing" secondItem="q4c-gG-E0g" secondAttribute="trailing" id="Pf8-Dz-N9s"/>
                             <constraint firstAttribute="bottom" secondItem="q4c-gG-E0g" secondAttribute="bottom" id="XVc-VT-eoy"/>
+                            <constraint firstItem="crl-Wh-R5E" firstAttribute="leading" secondItem="AUK-MH-Yem" secondAttribute="trailing" constant="10" id="aV8-j9-wh5"/>
                             <constraint firstItem="9W0-68-xcz" firstAttribute="centerY" secondItem="7gd-Qo-Nps" secondAttribute="centerY" id="bNX-Cd-AIB"/>
+                            <constraint firstItem="crl-Wh-R5E" firstAttribute="centerY" secondItem="7gd-Qo-Nps" secondAttribute="centerY" id="dIM-Th-rqe"/>
                             <constraint firstItem="9W0-68-xcz" firstAttribute="leading" secondItem="7gd-Qo-Nps" secondAttribute="leading" constant="8" id="gxs-59-cWh"/>
-                            <constraint firstItem="N6e-oH-H76" firstAttribute="width" secondItem="7gd-Qo-Nps" secondAttribute="width" multiplier="0.6" id="qEF-31-6vr"/>
+                            <constraint firstAttribute="trailing" secondItem="crl-Wh-R5E" secondAttribute="trailing" constant="16" id="hxW-J2-AMN"/>
+                            <constraint firstItem="q4c-gG-E0g" firstAttribute="top" secondItem="N6e-oH-H76" secondAttribute="bottom" constant="8" id="nvd-ze-q7E"/>
                             <constraint firstItem="N6e-oH-H76" firstAttribute="centerY" secondItem="7gd-Qo-Nps" secondAttribute="centerY" id="rsE-ub-MDs"/>
+                            <constraint firstItem="AUK-MH-Yem" firstAttribute="leading" secondItem="N6e-oH-H76" secondAttribute="trailing" constant="16" id="xRw-Cz-KVd"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -69,9 +90,15 @@
             <connections>
                 <outlet property="checkBoxButton" destination="9W0-68-xcz" id="jYA-QW-eYP"/>
                 <outlet property="containerView" destination="7gd-Qo-Nps" id="DRT-LO-hoa"/>
+                <outlet property="imageButton" destination="crl-Wh-R5E" id="WGa-GH-reR"/>
                 <outlet property="itemNameLabel" destination="N6e-oH-H76" id="hcm-Pp-hvS"/>
+                <outlet property="safariButton" destination="AUK-MH-Yem" id="4GS-w0-mRG"/>
             </connections>
-            <point key="canvasLocation" x="-114.49275362318842" y="66.294642857142861"/>
+            <point key="canvasLocation" x="-40.579710144927539" y="66.294642857142861"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="placeholder" width="64" height="64"/>
+        <image name="safari" width="32" height="32"/>
+    </resources>
 </document>

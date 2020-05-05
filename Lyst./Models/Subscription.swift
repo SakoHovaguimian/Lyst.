@@ -18,10 +18,13 @@ class Subscription {
     
     var list: List?
     
-    init(id: String, author: String) {
+    init(id: String, author: String, to: String, from: String, listId: String) {
     
         self.id = id
         self.author = author
+        self.to = to
+        self.from = from
+        self.listId = listId
         
     }
     
@@ -45,10 +48,12 @@ class Subscription {
         let from = json["from"] as! String
         let listId = json["listId"] as! String
         
-        let subscription = Subscription(id: id, author: author)
-        subscription.to = to
-        subscription.from = from
-        subscription.listId = listId
+        let subscription = Subscription(id: id,
+                                        author: author,
+                                        to: to,
+                                        from: from,
+                                        listId: listId)
+
         
         return subscription
         

@@ -21,11 +21,11 @@ class SubscriptionService {
         let id = subRef.childByAutoId().key ?? ""
         
         let subsrciption = Subscription(id: id,
-                                        author: currentUser?.email?.MD5() ?? "")
-        subsrciption.to = email.MD5()
-        subsrciption.from = currentUser?.email?.MD5() ?? ""
-        subsrciption.listId = list.id
-        
+                                        author: currentUser?.email?.MD5() ?? "",
+                                        to: email.MD5(),
+                                        from:  currentUser?.email?.MD5() ?? "",
+                                        listId: list.id)
+
         let values: [String : Any] = subsrciption.subDict()
         
         subRef.child(id).updateChildValues(values) { (error, dbRef) in
