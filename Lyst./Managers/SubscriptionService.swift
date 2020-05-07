@@ -46,7 +46,7 @@ class SubscriptionService {
                 
                 let subSnap = snap as? DataSnapshot
                 
-                if let dict = subSnap? .value as? [String : Any] {
+                if let dict = subSnap?.value as? [String : Any] {
                     
                     let email = currentUser?.email?.MD5() ?? ""
                     let subscription = Subscription.parseSub(json: dict)

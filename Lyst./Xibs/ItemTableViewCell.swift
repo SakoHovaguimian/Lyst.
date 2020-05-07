@@ -68,6 +68,9 @@ class ItemTableViewCell: UITableViewCell {
 
         self.imageButton.isHidden = self.item.content == .all || self.item.content == .photo ? false : true
         self.safariButton.isHidden = self.item.content == .all || self.item.content == .link ? false : true
+    
+        self.imageButton.setImage(UIImage(named: "placeholder")?.withRenderingMode(.alwaysTemplate),
+                                   for: .normal)
         
         if self.item.content == .link {
             self.safariButton.anchor(right: self.containerView.rightAnchor, paddingRight: 16)
@@ -76,11 +79,8 @@ class ItemTableViewCell: UITableViewCell {
         }
     
     }
-    
 
-    
     private func cornersToRound() ->  UIRectCorner {
-        
         
         var corner: UIRectCorner = []
         
@@ -96,7 +96,6 @@ class ItemTableViewCell: UITableViewCell {
         }
         
         return corner
-        
         
     }
     

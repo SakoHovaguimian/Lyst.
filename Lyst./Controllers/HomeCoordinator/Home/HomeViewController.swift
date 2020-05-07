@@ -139,6 +139,8 @@ class HomeViewController: UIViewController {
         
         guard self.homeViewModel.user != nil else { return }
         
+        self.fetchLists()
+        
         self.homeViewModel.fetchSubscriptions {
             self.homeViewModel.fetchSubscriptionLists {
                 self.homeTableView.reloadData()
@@ -374,8 +376,8 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func logoutButtonTapped(_ sender: UIButton) {
-        self.menuStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
-        self.view.subviews.forEach({ $0.removeFromSuperview() })
+//        self.menuStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
+//        self.view.subviews.forEach({ $0.removeFromSuperview() })
         self.homeViewModel.handleLogOutButtonTapped(sender)
     }
     

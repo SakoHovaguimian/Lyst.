@@ -44,10 +44,12 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crl-Wh-R5E">
                                 <rect key="frame" x="349" y="27.5" width="25" height="25"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="Gsm-xu-N0z"/>
                                     <constraint firstAttribute="width" constant="25" id="QMV-9M-fsy"/>
                                 </constraints>
+                                <color key="tintColor" red="0.11159340387134714" green="0.62223722636435375" blue="0.90510639391447367" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="placeholder"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUK-MH-Yem">

@@ -105,6 +105,22 @@ class ItemsViewModel {
         
     }
     
+    public func fetchItems(completion: @escaping () -> ()) {
+        
+        let uid = self.list.authorUID()
+    
+        ItemService.fetchItems(forList: self.list, uid: uid) { items in
+            
+            if let items = items {
+                self.list.items = items
+            }
+            
+            completion()
+            
+        }
+        
+    }
+    
     public func uncheckAllItems() {
         self.list.items.forEach({ $0.isCompleted = false })
         let uid = self.list.authorUID()

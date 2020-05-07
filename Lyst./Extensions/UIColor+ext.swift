@@ -13,6 +13,7 @@ extension UIColor {
     
     static let lighterGray = UIColor(hex: "#F4F5F7")
     static let charcoalBlack = UIColor(hex: "#39484F")
+    static let safariBlue = UIColor(hex: "#006CFF")
     
     //Gradient Colors
     static let pink1 = UIColor(hex: "#ffafbd")

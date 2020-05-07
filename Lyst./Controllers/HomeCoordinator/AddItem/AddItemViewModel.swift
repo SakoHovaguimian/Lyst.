@@ -40,9 +40,14 @@ class AddItemViewModel {
     public func handleCreateItemButtonTapped(_ sender: UIButton) {
         //        self.item.id = "\(self.list.items.count + 1)"
         //        self.list.items.append(self.item)
+        if self.selectedImage != nil {
+            self.item.imageURL = "loading..."
+        }
+        
         self.createItem { _ in
             self.actionDelegate.updateListItems(self.list)
         }
+        
     }
     
     public func handleOutsideCardViewTapped() {

@@ -47,8 +47,34 @@ class ItemService {
         
     }
     
+    static func fetchItems(forList list: List, uid: String, completion: @escaping ([Item]?) -> ()) {
+        
+        var items: [Item] = []
+        
+        listRef.child(uid).child(list.id).child("items").observe(.value) { (snapshot) in
+            
+            items.removeAll()
+            
+            snapshot.children.forEach { snap in
+                
+                let itemSnap = snap as? DataSnapshot
+                
+                if let dict = itemSnap?.value as? [String : Any] {
+                    
+                    let item = Item.parseItem(json: dict)
+                    items.append(item)
+                    
+                }
+                
+            }
+            
+            completion(items)
+            
+        }
+        
+    }
     static func updateAllItemsInList(uid: String, _ list: List) {
-  
+        
         let values: [String : Any] = list.listItemDict()
         listRef.child(uid).child(list.id).child("items").updateChildValues(values)
         

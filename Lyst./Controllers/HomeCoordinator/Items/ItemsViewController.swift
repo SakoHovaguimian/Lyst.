@@ -70,8 +70,13 @@ class ItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.fetchList()
         self.configureViews()
+        self.fetchItems()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
     }
     
@@ -179,11 +184,11 @@ class ItemsViewController: UIViewController {
         
     }
     
-    private func fetchList() {
+    private func fetchItems() {
         
         self.shouldPresentLoadingView(true)
         
-        self.itemsViewModel.fetchList {
+        self.itemsViewModel.fetchItems {
             
             self.itemsTableView.reloadData()
             self.shouldPresentLoadingView(false)
