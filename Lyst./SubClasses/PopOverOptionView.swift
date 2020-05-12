@@ -20,11 +20,11 @@ class PopOverOptionView: UIView {
         return btn
     }()
     
-    init(option: Option, tag: Int) {
+    init(option: Option, isAuthor: Bool) {
         super.init(frame: .zero)
         self.option = option
         
-        self.configureViews(tag: tag)
+        self.configureViews(isAuthor: isAuthor)
         
     }
     
@@ -32,10 +32,10 @@ class PopOverOptionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureViews(tag: Int) {
+    private func configureViews(isAuthor: Bool) {
         
         self.backgroundColor = .white
-        self.configureButton(tag: tag)
+        self.configureButton(isAuthor: isAuthor)
         
         let seperatorView = UIView()
         seperatorView.backgroundColor = .lighterGray
@@ -49,14 +49,21 @@ class PopOverOptionView: UIView {
         
     }
     
-    private func configureButton(tag: Int) {
+    private func configureButton(isAuthor: Bool) {
         
         self.addSubview(self.button)
         
         self.button.addConstraintsToFillView(self)
         
-        self.button.tag = tag
-        self.button.setTitle(self.option.name, for: .normal)
+        self.button.tag = option.rawValue
+        
+        var isNotAuthorText: String?
+        
+        if option == .delete && isAuthor == false {
+            isNotAuthorText = "Remove Lyst"
+        }
+        
+        self.button.setTitle(isNotAuthorText ?? self.option.name, for: .normal)
         self.button.titleLabel?.font = UIFont(name: avenirNextBold, size: 15.0)
         
         let color: UIColor = option == .delete ? .red : UIColor.charcoalBlack!

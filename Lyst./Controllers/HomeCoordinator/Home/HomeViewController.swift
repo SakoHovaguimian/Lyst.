@@ -131,19 +131,15 @@ class HomeViewController: UIViewController {
         
         super.viewWillAppear(animated)
         
-        self.homeTableView.reloadData()
-        
         setNeedsStatusBarAppearanceUpdate()
         
         self.toggleSettingMenu(hide: true)
         
         guard self.homeViewModel.user != nil else { return }
         
-        self.fetchLists()
-        
         self.homeViewModel.fetchSubscriptions {
             self.homeViewModel.fetchSubscriptionLists {
-                self.homeTableView.reloadData()
+                self.fetchLists()
             }
         }
         

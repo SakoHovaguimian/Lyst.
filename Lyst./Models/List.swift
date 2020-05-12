@@ -117,5 +117,18 @@ class List {
         
     }
     
+    public func optionsAvailableForUser() -> [Option] {
+        
+        if self.isAuthor() {
+            
+            return Option.allCases
+            
+        } else {
+            
+            return [.uncheck, .members, .delete]
+        }
+        
+    }
+    
 }
 

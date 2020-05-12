@@ -70,7 +70,7 @@ class ItemsViewModel {
             case .rename: self.actionDelegate.presentAddLystVC(config: .update, list: self.list)
             case .share: self.actionDelegate.openLinkAccountVC(list: self.list)
             case .members: logSuccess("View more members button tapped")
-            case .delete: logSuccess("Delete button Tapped")
+            case .delete: self.removeOrDeleteList()
         }
         
     }
@@ -125,6 +125,24 @@ class ItemsViewModel {
         self.list.items.forEach({ $0.isCompleted = false })
         let uid = self.list.authorUID()
         ItemService.updateAllItemsInList(uid: uid, self.list)
+    }
+    
+    public func handleRemoveList() {
+        logDebugMessage("This is not the author, remove from this user only")
+    }
+    
+    public func handleDeleteList() {
+        logDebugMessage("This is the author, remove from everybody")
+    }
+    
+    public func removeOrDeleteList() {
+        
+        if self.list.isAuthor() {
+            self.handleDeleteList()
+        } else {
+            self.handleRemoveList()
+        }
+        
     }
     
     //MARK:- TABLE VIEW LOGIC

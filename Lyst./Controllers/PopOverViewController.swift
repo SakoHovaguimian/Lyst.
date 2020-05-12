@@ -41,7 +41,7 @@ protocol OptionButtonTappedDelegate: class {
 
 class PopOverViewController: UIViewController {
     
-    private var isAuthor: Bool!
+    private var list: List!
     
     weak var optionsButtonDelegate: OptionButtonTappedDelegate!
     
@@ -61,8 +61,8 @@ class PopOverViewController: UIViewController {
         
     }
     
-    init(isAuthor: Bool) {
-        self.isAuthor = isAuthor
+    init(list: List) {
+        self.list = list
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -86,22 +86,14 @@ class PopOverViewController: UIViewController {
 
         var options = [PopOverOptionView]()
         
-        for i in 0..<Option.numberOfItems {
+        for option in self.list.optionsAvailableForUser() {
             
-            let option = Option(rawValue: i)
-            
-            let popOverOptionView = PopOverOptionView(option: option!, tag: i)
+            let popOverOptionView = PopOverOptionView(option: option,
+                                                      isAuthor: self.list.isAuthor())
 
             popOverOptionView.button.addTarget(self, action: #selector(self.handleButtonTapped(sender:)), for: .touchUpInside)
             
             options.append(popOverOptionView)
-            
-        }
-        
-        if isAuthor == false {
-            
-            options.remove(at: 2)
-            options.remove(at: 3)
             
         }
 
