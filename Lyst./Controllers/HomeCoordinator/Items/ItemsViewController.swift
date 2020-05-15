@@ -341,10 +341,15 @@ extension ItemsViewController: UIPopoverPresentationControllerDelegate {
 extension ItemsViewController: OptionButtonTappedDelegate {
     
     func handleOptionButtonTapped(forOption option: Option) {
+        
         self.view.alpha = 1.0
-        self.shouldPresentLoadingView(true)
+        
+        if option == .delete {
+            self.shouldPresentLoadingView(true)
+        }
+        
         self.itemsViewModel.handleSelectedOption(option)
-        logSuccess(option.name)
+
     }
     
 }
