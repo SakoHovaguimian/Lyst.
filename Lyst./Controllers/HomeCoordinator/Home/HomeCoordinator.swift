@@ -48,9 +48,9 @@ class HomeCoordinator: Coordinator {
         
     }
     
-    private func pushItemViewController(list: List) {
+    private func pushItemViewController(user: User, list: List) {
         
-        let viewModel = ItemsViewModel(list: list)
+        let viewModel = ItemsViewModel(user: user, list: list)
         viewModel.actionDelegate = self
         
         let itemVC = ItemsViewController(viewModel: viewModel)
@@ -150,6 +150,17 @@ extension HomeCoordinator: ItemVCActionDelegate {
         self.presentAddItemViewController(list: list)
     }
     
+    func removeListForUser(list: List) {
+        
+        if let homeVC = self.navigationController.viewControllers.first as? HomeViewController {
+            homeVC.homeViewModel.user?.subscriptions = homeVC.homeViewModel.user?.subscriptions?.filter({ $0.listId != list.id })
+            homeVC.homeViewModel.user?.lists = homeVC.homeViewModel.user!.lists.filter({ $0.id != list.id })
+            homeVC.homeTableView.reloadData()
+            self.navigationController.popViewController(animated: true)
+        }
+        
+    }
+    
 }
 
 //MARK:- LOGIN COORDINATOR DELEGATE
@@ -173,8 +184,8 @@ extension HomeCoordinator: HomeVCActionsDelegate {
     //        self.presentLinkAccountViewController(user: user)
     //    }
     
-    func pushItemVC(list: List) {
-        self.pushItemViewController(list: list)
+    func pushItemVC(user: User, list: List) {
+        self.pushItemViewController(user: user, list: list)
     }
     
     func presentAddListVC(config: DataStateConfig) {

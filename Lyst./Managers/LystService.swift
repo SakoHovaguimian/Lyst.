@@ -93,5 +93,11 @@ class LystService {
         
     }
     
+    static func deleteList(uid: String, list: List) {
+        
+        listRef.child(uid).child(list.id).removeValue()
+        
+    }
+    
     
 }

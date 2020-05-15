@@ -69,6 +69,7 @@ class SubscriptionService {
     //Leave Sharing List
     static func removeSubscription(subscription: Subscription, email: String, completion: @escaping (String) -> ()) {
         subRef.child(subscription.id ?? "").removeValue()
+        completion("")
     }
     
     //Delete The List
@@ -91,6 +92,8 @@ class SubscriptionService {
                 }
                 
             }
+            
+            completion()
         }
     }
     

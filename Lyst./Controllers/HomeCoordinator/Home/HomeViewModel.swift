@@ -14,7 +14,7 @@ import FirebaseAuth
 protocol HomeVCActionsDelegate: class {
     func presentLoginVC(animated: Bool)
     func presentAddListVC(config: DataStateConfig)
-    func pushItemVC(list: List)
+    func pushItemVC(user: User, list: List)
     //    func pushLinkAccountVC(user: User)
 }
 
@@ -77,7 +77,7 @@ class HomeViewModel {
     }
     
     public func handlePushItemsViewController(list: List) {
-        self.actionDelegate.pushItemVC(list: list)
+        self.actionDelegate.pushItemVC(user: self.user!, list: list)
     }
     
     public func presentLoginController()  {
@@ -149,6 +149,8 @@ class HomeViewModel {
         
         var count = 0
         var firstTime = true
+        
+        if self.user?.subscriptions?.count == 0 { completion() }
         
         self.user?.subscriptions?.forEach({ subscription in
           

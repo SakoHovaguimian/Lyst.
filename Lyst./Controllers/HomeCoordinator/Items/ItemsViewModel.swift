@@ -15,6 +15,7 @@ protocol ItemVCActionDelegate: class {
     func presentAddItemVC(list: List)
     func presentWebView(item: Item)
     func presentAddLystVC(config: DataStateConfig, list: List)
+    func removeListForUser(list: List)
 }
 
 class ItemsViewModel {
@@ -26,13 +27,9 @@ class ItemsViewModel {
     
     public var buttonState = false
     
-    //0 for profile header 1 and 2 for completed and incomplted tasks
-    public var numberOfSections: Int {
-        return 3
-    }
-    
-    init(list: List) {
+    init(user: User, list: List) {
         self.list = list
+        self.user = user
     }
     
     //MARK:- BUTTONS AND ACTIONS
@@ -128,10 +125,33 @@ class ItemsViewModel {
     }
     
     public func handleRemoveList() {
-        logDebugMessage("This is not the author, remove from this user only")
+        
+        let subscription = user.subscriptions?.filter({ $0.listId == self.list.id }).first
+        
+        if let subscription = subscription {
+            
+            SubscriptionService.removeSubscription(subscription: subscription, email: self.user
+                .email) { _ in
+                    
+                    self.actionDelegate.removeListForUser(list: self.list)
+                    
+                    logDebugMessage("\(self.user.name) has successfully removed the list: ] \(self.list.name)")
+                    
+            }
+        }
+        
     }
     
     public func handleDeleteList() {
+        
+        SubscriptionService.deleteAllSubscriptions(for: self.list) {
+
+            self.actionDelegate.removeListForUser(list: self.list)
+            LystService.deleteList(uid: self.user.userId ?? "", list: self.list)
+            
+        }
+        
+        
         logDebugMessage("This is the author, remove from everybody")
     }
     
@@ -146,6 +166,11 @@ class ItemsViewModel {
     }
     
     //MARK:- TABLE VIEW LOGIC
+    
+    //0 for profile header 1 and 2 for completed and incomplted tasks
+    public var numberOfSections: Int {
+        return 3
+    }
     
     public func numberOfItemsInSection(_ section: Int) -> Int {
         guard section != 0 else { return 0 }

@@ -80,6 +80,12 @@ class ItemsViewController: UIViewController {
         
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.shouldPresentLoadingView(false)
+    }
+    
     //MARK:- Helper Functions
     private func configureViews() {
         
@@ -336,6 +342,7 @@ extension ItemsViewController: OptionButtonTappedDelegate {
     
     func handleOptionButtonTapped(forOption option: Option) {
         self.view.alpha = 1.0
+        self.shouldPresentLoadingView(true)
         self.itemsViewModel.handleSelectedOption(option)
         logSuccess(option.name)
     }
